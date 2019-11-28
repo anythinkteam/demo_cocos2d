@@ -46,22 +46,34 @@ if(APPLE OR WINDOWS)
     cocos_mark_multi_resources(common_res_files RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
 endif()
 
-# add cross-platforms source files and header files 
+# add cross-platforms source files and header files
 list(APPEND GAME_SOURCE
-     Classes/AppDelegate.cpp
-     Classes/HelloWorldScene.cpp
-     )
+        Classes/AppDelegate.cpp
+        Classes/HelloWorldScene.cpp
+        Classes/demo/DemoMainScene.cpp
+        )
 list(APPEND GAME_HEADER
-     Classes/AppDelegate.h
-     Classes/HelloWorldScene.h
-     )
+        Classes/AppDelegate.h
+        Classes/HelloWorldScene.h
+        Classes/demo/DemoMainScene.h
+        )
+
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME MyGame)
     list(APPEND GAME_SOURCE
          proj.android/app/jni/hellocpp/main.cpp
+         proj.android/app/jni/sdkcpp/ATCocosSdk.cpp
+         proj.android/app/jni/sdkcpp/ATUtil.cpp
+         proj.android/app/jni/sdkcpp/com_anythink_cocos2dx_bridge_ATListenerEventJniHelper.cpp
+         proj.android/app/jni/sdkcpp/ATListenerManager.cpp
          )
+    list(APPEND GAME_HEADER
+            proj.android/app/jni/sdkcpp/ATUtil.h
+            proj.android/app/jni/sdkcpp/com_anythink_cocos2dx_bridge_ATListenerEventJniHelper.h
+            proj.android/app/jni/sdkcpp/ATListenerManager.h
+            )
 elseif(LINUX)
     list(APPEND GAME_SOURCE
          proj.linux/main.cpp

@@ -134,38 +134,40 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':libcocos2dx')
 
-    implementation fileTree(dir: 'libs/aar_uparpu', include: ['*.aar','*.jar']) //TopOn的基础包必须导入
-    implementation fileTree(dir: 'libs/aar_plugin', include: ['*.aar','*.jar']) //插件包必须导入
-    implementation fileTree(dir: 'libs/aar_gms_service', include: ['*.aar','*.jar']) //海外平台或者Admob必须导入
+    implementation fileTree(dir: 'libs/aars_anythink', include: ['*.aar','*.jar']) //TopOn的基础包必须导入
+    implementation fileTree(dir: 'libs/aars_international_network/aars_plugin', include: ['*.aar','*.jar']) //插件包必须导入
+    implementation fileTree(dir: 'libs/aars_international_network/aars_gms_service', include: ['*.aar','*.jar']) //海外平台或者Admob必须导入
 
-    implementation fileTree(dir: 'libs/aar_adcolony', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_admob', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_applovin', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_appnext', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_baidu', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_chartboost', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_facebook', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_flurry', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_gdt', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_inmobi', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_ironsource', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_ks', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_ksyun', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_luomi', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_maio', include: ['*.aar','*.jar'])
-//    implementation fileTree(dir: 'libs/aar_mintegral_china', include: ['*.aar','*.jar']) //MTG国内版本
-    implementation fileTree(dir: 'libs/aar_mintegral_international', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_mopub', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_nend', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_oneway', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_startapp', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_superawesome', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_tapjoy', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_toutiao', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_uniplay', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_unityads', include: ['*.aar','*.jar'])
-    implementation fileTree(dir: 'libs/aar_vungle', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_adcolony', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_admob', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_applovin', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_appnext', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_baidu', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_chartboost', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_facebook', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_flurry', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_gdt', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_inmobi', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_ironsource', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_ks', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_ksyun', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_luomi', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_maio', include: ['*.aar','*.jar'])
+//    implementation fileTree(dir: 'libs/aars_china_network/aar_mintegral_china', include: ['*.aar','*.jar']) //MTG国内版本
+    implementation fileTree(dir: 'libs/aars_international_network/aar_mintegral_international', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_mopub', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_nend', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_oneway', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_startapp', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_networkaar_superawesome', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_tapjoy', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_toutiao', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_uniplay', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_unityads', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_international_network/aar_vungle', include: ['*.aar','*.jar'])
+    implementation fileTree(dir: 'libs/aars_china_network/aar_sigmob', include: ['*.aar','*.jar'])
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
+
 
 }

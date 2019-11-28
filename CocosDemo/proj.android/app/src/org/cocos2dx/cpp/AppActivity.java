@@ -29,8 +29,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.uparpu.api.UpArpuSDK;
-import com.uparpu.cocos2dx.bridge.UpArpuSDKJniHelper;
+import com.anythink.core.api.ATSDK;
+import com.anythink.cocos2dx.bridge.ATSDKJniHelper;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
@@ -41,8 +41,8 @@ public class AppActivity extends Cocos2dxActivity {
         super.setEnableVirtualButton(false);
         super.onCreate(savedInstanceState);
 //        UpArpuSDKJniHelper.setLogDebug(true);
-        UpArpuSDK.init(getApplicationContext(), "a5c4ad280995c9", "7b4e37f819dbee652ef79c4506e14288");
-        UpArpuSDKJniHelper.init(this);
+        ATSDK.init(getApplicationContext(), "a5c4ad280995c9", "7b4e37f819dbee652ef79c4506e14288");
+        ATSDKJniHelper.init(this);
         // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
         if (!isTaskRoot()) {
             // Android launched another instance of the root activity into an existing task

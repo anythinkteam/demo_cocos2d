@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <com.anythink.cocos2dx.bridge.RecycleImageView
+        android:id="@+id/native_ad_logo"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_margin="2dp"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/native_ad_image"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="3dp"
+        android:scaleType="fitCenter"></FrameLayout>
+
+
+    <TextView
+        android:id="@+id/native_ad_install_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/native_ad_image"
+        android:layout_alignParentRight="true"
+        android:background="#ff21bcab"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginLeft="2dp"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/native_ad_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/native_ad_image"
+        android:layout_toRightOf="@id/native_ad_image"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@id/native_ad_install_btn"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/native_ad_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/native_ad_image"
+        android:layout_toRightOf="@id/native_ad_image"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:includeFontPadding="false"
+        android:layout_toLeftOf="@id/native_ad_install_btn"
+        android:textColor="#777777"
+        android:textSize="12dp" />
+
+    <FrameLayout
+        android:id="@+id/native_ad_content_image_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/native_ad_image"></FrameLayout>
+
+    <TextView
+        android:id="@+id/native_ad_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/native_ad_content_image_area"
+        android:layout_alignBottom="@id/native_ad_content_image_area"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#888888"
+        android:gravity="center"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:textColor="#ffffff"
+        android:textSize="6dp" />
+</RelativeLayout>

@@ -8,7 +8,7 @@
 #include "ATCocosSdk.h"
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
-#include "sdk/ATCocosSdk.h"
+#include "bridge/ATCocosSdk.h"
 #endif
 
 

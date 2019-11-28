@@ -15,11 +15,11 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
 #include <ui/UIWidget.h>
 #include "cocos2d.h"
-#include "sdk/ATCocosRewardedVideoAdListener.h"
-#include "sdk/ATCocosInterstitialAdListener.h"
-#include "sdk/ATCocosBannerAdListener.h"
-#include "sdk/ATCocosNativeAdListener.h"
-#include "sdk/ATCocosNativeBannerAdListener.h"
+#include "bridge/ATCocosRewardedVideoAdListener.h"
+#include "bridge/ATCocosInterstitialAdListener.h"
+#include "bridge/ATCocosBannerAdListener.h"
+#include "bridge/ATCocosNativeAdListener.h"
+#include "bridge/ATCocosNativeBannerAdListener.h"
 #endif
 
 
