@@ -4,3 +4,5 @@ CocosDemo/proj.ios_mac/AnyThink/sdk/GoogleMobileAds.framework/GoogleMobileAds fi
 CocosDemo/proj.ios_mac/AnyThink/sdk/FBAudienceNetwork.framework/FBAudienceNetwork filter=lfs diff=lfs merge=lfs -text
 CocosDemo/proj.ios_mac/AnyThink/sdk/BUAdSDK.framework/Versions/A/BUAdSDK filter=lfs diff=lfs merge=lfs -text
 CocosDemo/proj.ios_mac/AnyThink/sdk/MTGSDK.framework/Versions/A/MTGSDK filter=lfs diff=lfs merge=lfs -text
+CocosDemo/proj.ios_mac/AnyThink/sdk/InMobiSDK.framework/InMobiSDK filter=lfs diff=lfs merge=lfs -text
+CocosDemo/proj.ios_mac/AnyThink/sdk/WindSDK.framework/WindSDK filter=lfs diff=lfs merge=lfs -text
