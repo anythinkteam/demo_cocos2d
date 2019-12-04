@@ -119,11 +119,16 @@ bool DemoMainScene::init()
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
     appId = "a5b0e8491845b3";
     appKey = "7eae0567827cfe2b22874061763f30c9";
-    rvPlacementId = "b5b72b21184aa8";
-    interPlacementId = "b5bacad7373b89";
-    bannerPlacementId = "b5bacacfc470c9";
-    nativePlacementId = "b5c2c6d50e7f44";
-    nativebannerPlacementId = "b5c2c6d50e7f44";
+//    rvPlacementId = "b5b72b21184aa8";
+//    interPlacementId = "b5bacad7373b89";
+//    bannerPlacementId = "b5bacacfc470c9";
+//    nativePlacementId = "b5c2c6d50e7f44";
+//    nativebannerPlacementId = "b5c2c6d50e7f44";
+    rvPlacementId = "b5d807a31aa7dd";
+    interPlacementId = "b5d807a4846f50";
+    bannerPlacementId = "b5baf522891992";
+    nativePlacementId = "b5b0f553483724";
+    nativebannerPlacementId = "b5b0f553483724";
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
     appId = "a5c4ad280995c9";
