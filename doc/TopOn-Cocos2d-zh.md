@@ -297,11 +297,11 @@ ATCocosSdk::setBannerAdListener(this, bannerPlacementId);
 
 | API | 参数说明 | 功能说明|
 | --- | --- |---|
-| loadNativeAd| unitId: char, parameters:CCDictionary|用于加载native广告，unitId为广告位id；parameters可为第三方平台设置信息，可为空|
-|showNativeAd|unitId:String, parameters:CCDictionary|展示指定广告位的Native广告，parameters为指定native广告展示的位置|
-|removeNativeAd|unitId:char|移除原生广告|
-|isNativeAdReady|unitId:String|判断指定广告位的广告是否加载完成|
-|setNativeAdListener|listener:ATNativeListener|设置回调对象|
+| loadNativeAd| const char * placementId, parameters:CCDictionary|用于加载native广告，unitId为广告位id；parameters可为第三方平台设置信息，可为空|
+|showNativeAd|const char * placementId, parameters:CCDictionary|展示指定广告位的Native广告，parameters为指定native广告展示的位置|
+|removeNativeAd|const char * placementId|移除原生广告|
+|isNativeAdReady|const char * placementId|判断指定广告位的广告是否加载完成|
+|setNativeAdListener|ATCocosNativeAdListener * listener, const char * placementId|设置回调对象|
 
 
 
@@ -311,12 +311,16 @@ ATCocosSdk::setBannerAdListener(this, bannerPlacementId);
 
 | API | 参数说明 | 功能说明|
 | --- | --- |---|
-|onNativeAdLoadSuccess| unitId: char |广告加载完成|
-|onNativeAdLoadFailed|unitId: char, errorMsg: char |广告加载失败，errorMsg为加载失败的原因|
-|onNativeAdClick|unitId:char|广告产生点击|
-|onNativeAdShow|unitId:String|广告展示|
-|onNativeAdVideoStart|unitId: char |原生视频播放开始，不同network可能支持不一样|
-|onNativeAdVideoEnd|unitId: char |原生视频播放结束，不同network可能支持不一样|
+|onNativeAdLoadSuccess|const char * placementId|广告加载完成|
+|onNativeAdLoadFailed|const char * placementId, const char * errorString |广告加载失败，errorMsg为加载失败的原因|
+|onNativeAdClick|const char * placementId|广告产生点击|
+|onNativeAdShow|const char * placementId|广告展示|
+|onNativeAdVideoStart|const char * placementId|原生视频播放开始，不同network可能支持不一样|
+|onNativeAdVideoEnd|const char * placementId|原生视频播放结束，不同network可能支持不一样|
+|onNativeAdShowWithExtra|const char * placementId, const char * extra|广告位展示<br>extra包含adsourceId和networkId|
+|onNativeAdClickWithExtra|const char * placementId, const char * extra|广告位产生点击<br>extra包含adsourceId和networkId|
+|onNativeAdVideoStartWithExtra|const char * placementId, const char * extra|原生视频播放开始，不同network可能支持不一样br>extra包含adsourceId和networkId|
+|onNativeAdVideoEndWithExtra|const char * placementId, const char * extra|原生视频播放结束，不同network可能支持不一样br>extra包含adsourceId和networkId|
 
 ### 7.3 元素配置说明
 #### 7.3.1 Android原生广告布局配置
@@ -429,6 +433,11 @@ iOS支持的分辨率(配置指定传入宽高参数)：auto。
 |onNativeBannerAutoRefreshFail|const char * placementId, const char * errorString|广告自动刷新失败及相关的错误信息|
 |onNativeBannerClose|const char * placementId|用户点击banner关闭按钮|
 |onNativeBannerAutoRefresh|const char * placementId|广告自动刷新|
+|onNativeBannerShowWithExtra|const char * placementId, const char * extra|广告位展示<br>extra包含adsourceId和networkId|
+|onNativeBannerClickedWithExtra|const char * placementId|广告位产生点击<br>extra包含adsourceId和networkId|
+|onNativeBannerAutoRefreshFailWithExtra|const char * placementId, const char * errorString|广告自动刷新失败及相关的错误信息<br>extra包含adsourceId和networkId|
+|onNativeBannerCloseWithExtra|const char * placementId|用户点击banner关闭按钮<br>extra包含adsourceId和networkId|
+|onNativeBannerAutoRefreshWithExtra|const char * placementId|广告自动刷新<br>extra包含adsourceId和networkId|
 
 ### 8.3 相关素材配置说明
 
@@ -594,6 +603,9 @@ new ATSplashAd(this, container, skipView, "b5bea7bfd93f01", this);
 
 <h2 id='11'>11 版本更新记录说明 </h2>
 最新的SDK版本号更新如下：</br>
-| SDK Version | SDK Version |
-|---|---|
-| 5.1.0 | 支持TopOn SDK 5.1.0版本|
+
+|| SDK version | SDK Version |note|
+|---|---|---|---|
+|cocos| 5.1.0 | 支持TopOn SDK 5.1.0版本|KS需要额外引入KSThirdRelySDK.framework (这个framework是由*AFNetworking/Godzippa/MJExtension/SDWebImage* 四个第三方依赖的源码打包出来的framework，这是为了防止快手平台的广告在cocos下直接调用其第三方依赖而导致崩溃)|
+
+
