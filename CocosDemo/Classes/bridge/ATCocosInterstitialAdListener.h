@@ -22,6 +22,13 @@ public:
     
     virtual void onInterstitalClicked(const char * placementId) {};
     
+    //interstitial extra listener
+    virtual void onInterstitalShowWithExtra(const char * placementId,const char * extra) {};
+    
+    virtual void onInterstitalCloseWithExtra(const char * placementId,const char * extra) {};
+    
+    virtual void onInterstitalClickedWithExtra(const char * placementId,const char * extra) {};
+    
 };
 
 #endif /* ATCocosInterstitialAdListener_h */

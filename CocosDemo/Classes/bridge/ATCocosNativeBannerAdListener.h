@@ -25,6 +25,16 @@ public:
     virtual void onNativeBannerClose(const char * placementId) {};
     
     virtual void onNativeBannerAutoRefresh(const char * placementId) {};
+    //native banner extra
+    virtual void onNativeBannerShowWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onNativeBannerClickedWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onNativeBannerAutoRefreshFailWithExtra(const char * placementId, const char * errorString, const char * extra) {};
+    
+    virtual void onNativeBannerCloseWithExtra(const char * placementId,const char * extra) {};
+    
+    virtual void onNativeBannerAutoRefreshWithExtra(const char * placementId,const char * extra) {};
     
 
 };

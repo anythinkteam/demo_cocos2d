@@ -103,7 +103,8 @@ static AVAudioSessionCategory AudioSessionCategory;
       if (callback != NULL) {
           ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
           const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-          pDelegate->onRewardedVideoDidRewardSuccess(cPlacementId);
+          const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+          pDelegate->onRewardedVideoDidRewardSuccessWithExtra(cPlacementId, cExtra);
       }
 }
 
@@ -176,5 +177,69 @@ static AVAudioSessionCategory AudioSessionCategory;
         pDelegate->onRewardedVideoClicked(cPlacementId);
     }
     
+}
+#pragma mark - delegate with adsourceID and networkID
+-(void) rewardedVideoDidStartPlayingForPlacementID:(NSString *)placementID extra:(NSDictionary *)extra {
+    void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onRewardedVideoPlayStartWithExtra(cPlacementId, cExtra);
+    }
+}
+-(void) rewardedVideoDidEndPlayingForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    [[AVAudioSession sharedInstance] setCategory:AudioSessionCategory error:nil];
+    void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onRewardedVideoPlayEndWithExtra(cPlacementId, cExtra);
+    }
+}
+-(void) rewardedVideoDidFailToPlayForPlacementID:(NSString*)placementID error:(NSError*)error extra:(NSDictionary *)extra {
+    void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        
+        NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld", error.code] forKey:@"code"];
+        if ([error.userInfo[NSLocalizedDescriptionKey] length] > 0) {
+            errorDict[@"desc"] = error.userInfo[NSLocalizedDescriptionKey];
+        } else {
+            errorDict[@"desc"] = @"";
+        }
+        if ([error.userInfo[NSLocalizedFailureReasonErrorKey] length] > 0) {
+            errorDict[@"reason"] = error.userInfo[NSLocalizedFailureReasonErrorKey];
+        } else {
+            errorDict[@"reason"] = @"";
+        }
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onRewardedVideoShowFailWithExtra(cPlacementId, errorDict.jsonString.UTF8String, cExtra);
+    }
+}
+-(void) rewardedVideoDidCloseForPlacementID:(NSString*)placementID rewarded:(BOOL)rewarded extra:(NSDictionary *)extra {
+    void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onRewardedVideoCloseWithExtra(cPlacementId, rewarded, cExtra);
+    }
+}
+-(void) rewardedVideoDidClickForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onRewardedVideoClickedWithExtra(cPlacementId, cExtra);
+    }
 }
 @end

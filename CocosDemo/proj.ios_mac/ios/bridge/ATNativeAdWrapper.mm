@@ -297,4 +297,62 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
         pDelegate->onNativeAdVideoEnd(cPlacementId);
     }
 }
+
+#pragma mark - delegate with networkID and adsourceID
+-(void) didStartPlayingVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    //Drop ad view
+    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeAdVideoStartWithExtra(cPlacementId, cExtra);
+    }
+    
+}
+
+-(void) didEndPlayingVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    //Drop ad view
+    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeAdVideoEndWithExtra(cPlacementId, cExtra);
+    }
+    
+}
+
+-(void) didClickNativeAdInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    //Drop ad view
+    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeAdClickWithExtra(cPlacementId, cExtra);
+    }
+    
+}
+
+-(void) didShowNativeAdInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeAdShowWithExtra(cPlacementId, cExtra);
+    }
+    
+}
+
+-(void) didEnterFullScreenVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATNativeViewController:: didEnterFullScreenVideoInAdView:placementID:%@", placementID);
+}
+
+
 @end

@@ -23,6 +23,14 @@ public:
     virtual void onNativeAdShow(const char * placementId) {};
     
     virtual void onNativeAdClick(const char * placementId) {};
+    //native extra listener
+    virtual void onNativeAdVideoStartWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onNativeAdVideoEndWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onNativeAdShowWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onNativeAdClickWithExtra(const char * placementId, const char *extra) {};
     
 };
 

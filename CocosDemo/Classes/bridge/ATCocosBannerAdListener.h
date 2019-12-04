@@ -26,6 +26,17 @@ public:
     
     virtual void onBannerAutoRefreshFail(const char * placementId, const char * errorString) {};
     
+    //banner extra listener
+    virtual void onBannerShowWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onBannerClickedWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onBannerCloseWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onBannerAutoRefreshWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onBannerAutoRefreshFailWithExtra(const char * placementId, const char * errorString, const char * extra) {};
+    
 };
 
 #endif /* ATCocosBannerAdListener_h */

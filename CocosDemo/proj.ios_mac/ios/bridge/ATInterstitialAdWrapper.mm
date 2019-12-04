@@ -132,4 +132,50 @@
     }
    
 }
+
+#pragma mark - delegate with networkID and adsourceID
+
+-(void) interstitialDidShowForPlacementID:(NSString *)placementID extra:(NSDictionary *)extra {
+    void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosInterstitialAdListener* pDelegate = (ATCocosInterstitialAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char *cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onInterstitalShowWithExtra(cPlacementId, cExtra);
+    }}
+
+-(void) interstitialFailedToShowForPlacementID:(NSString*)placementID error:(NSError*)error extra:(NSDictionary *)extra {
+}
+
+-(void) interstitialDidFailToPlayVideoForPlacementID:(NSString*)placementID error:(NSError*)error extra:(NSDictionary*)extra {
+}
+
+-(void) interstitialDidStartPlayingVideoForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+}
+
+-(void) interstitialDidEndPlayingVideoForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+}
+
+-(void) interstitialDidCloseForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosInterstitialAdListener* pDelegate = (ATCocosInterstitialAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char *cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onInterstitalCloseWithExtra(cPlacementId, cExtra);
+    }}
+
+-(void) interstitialDidClickForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosInterstitialAdListener* pDelegate = (ATCocosInterstitialAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char *cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onInterstitalClickedWithExtra(cPlacementId, cExtra);
+    }
+    
+}
 @end

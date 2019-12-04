@@ -259,6 +259,79 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
         pDelegate->onNativeBannerAutoRefreshFail(cPlacementId, errorDict.jsonString.UTF8String);
     }
 }
+
+#pragma mark - native banner delegate with networkID and adsouceID
+
+-(void) didShowNativeBannerAdInView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    void* callback = [[ATNativeBannerAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeBannerAdListener* pDelegate = (ATCocosNativeBannerAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeBannerShowWithExtra(cPlacementId, cExtra);
+    }
+    
+}
+
+-(void) didClickNativeBannerAdInView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    void* callback = [[ATNativeBannerAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeBannerAdListener* pDelegate = (ATCocosNativeBannerAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeBannerClickedWithExtra(cPlacementId, cExtra);
+    }
+    
+}
+
+-(void) didClickCloseButtonInNativeBannerAdView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    void* callback = [[ATNativeBannerAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeBannerAdListener* pDelegate = (ATCocosNativeBannerAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeBannerCloseWithExtra(cPlacementId, cExtra);
+    }
+    
+}
+
+-(void) didAutorefreshNativeBannerAdInView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    void* callback = [[ATNativeBannerAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeBannerAdListener* pDelegate = (ATCocosNativeBannerAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeBannerAutoRefreshWithExtra(cPlacementId, cExtra);
+    }
+    
+}
+
+-(void) didFailToAutorefreshNativeBannerAdInView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra error:(NSError*)error {
+    void* callback = [[ATNativeBannerAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosNativeBannerAdListener* pDelegate = (ATCocosNativeBannerAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld", error.code] forKey:@"code"];
+        if ([error.userInfo[NSLocalizedDescriptionKey] length] > 0) {
+            errorDict[@"desc"] = error.userInfo[NSLocalizedDescriptionKey];
+        } else {
+            errorDict[@"desc"] = @"";
+        }
+        if ([error.userInfo[NSLocalizedFailureReasonErrorKey] length] > 0) {
+            errorDict[@"reason"] = error.userInfo[NSLocalizedFailureReasonErrorKey];
+        } else {
+            errorDict[@"reason"] = @"";
+        }
+        pDelegate->onNativeBannerAutoRefreshFailWithExtra(cPlacementId, errorDict.jsonString.UTF8String, cExtra);
+    }
+    
+}
 @end
 
 

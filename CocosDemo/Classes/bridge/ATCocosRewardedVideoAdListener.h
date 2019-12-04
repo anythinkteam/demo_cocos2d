@@ -11,9 +11,9 @@
 class ATCocosRewardedVideoAdListener {
     
 public:
-    
+        
     virtual void onRewardedVideoLoadSuccess(const char * placementId) {};
-    
+
     virtual void onRewardedVideoLoadFailed(const char * placementId, const char * errorString) {};
     
     virtual void onRewardedVideoPlayStart(const char * placementId) {};
@@ -26,7 +26,17 @@ public:
     
     virtual void onRewardedVideoClicked(const char * placementId) {};
     
-    virtual void onRewardedVideoDidRewardSuccess(const char * placementId) {};
+    virtual void onRewardedVideoDidRewardSuccessWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onRewardedVideoPlayStartWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onRewardedVideoPlayEndWithExtra(const char * placementId, const char * extra) {};
+    
+    virtual void onRewardedVideoShowFailWithExtra(const char * placementId, const char * errorString, const char * extra) {};
+    
+    virtual void onRewardedVideoCloseWithExtra(const char * placementId, bool isRewarded, const char * extra) {};
+    
+    virtual void onRewardedVideoClickedWithExtra(const char * placementId, const char * extra) {};
     
 };
 

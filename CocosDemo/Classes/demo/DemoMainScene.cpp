@@ -869,6 +869,7 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
 
 
 #pragma mark -实现各种回调事件
+//rewardedVideo listener
 void DemoMainScene::onRewardedVideoLoadSuccess(const char * placementId) {
     log("DemoMainScene::onRewardedVideoLoadSuccess %s", placementId);
 }
@@ -896,10 +897,33 @@ void DemoMainScene::onRewardedVideoClose(const char * placementId, bool isReward
 void DemoMainScene::onRewardedVideoClicked(const char * placementId) {
     log("DemoMainScene::onRewardedVideoClicked %s", placementId);
 }
+//rewardedVideo delegate with extra
 
-void DemoMainScene::onRewardedVideoDidRewardSuccess(const char * placementId) {
-    log("DemoMainScene::onRewardedVideoClicked %s", placementId);
+void DemoMainScene::onRewardedVideoDidRewardSuccessWithExtra(const char * placementId,const char * extra) {
+    log("DemoMainScene::onRewardedVideoClicked %s with extra %s", placementId,extra);
 }
+
+void DemoMainScene::onRewardedVideoPlayStartWithExtra(const char * placementId, const char * extra) {
+    log("DemoMainScene::onRewardedVideoPlayStartWithExtra %s , %s", placementId, extra);
+}
+
+void DemoMainScene::onRewardedVideoPlayEndWithExtra(const char * placementId, const char * extra) {
+    log("DemoMainScene::onRewardedVideoPlayEnd %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onRewardedVideoShowFailWithExtra(const char * placementId, const char * errorString, const char * extra) {
+    log("DemoMainScene::onRewardedVideoShowFail %s, error:%s with extra:%s", placementId, errorString,extra);
+}
+
+void DemoMainScene::onRewardedVideoCloseWithExtra(const char * placementId, bool isRewarded, const char * extra) {
+    log("DemoMainScene::onRewardedVideoClose %s, isRewarded:%s , with extra:%s", placementId, isRewarded?"true":"false",extra);
+}
+
+void DemoMainScene::onRewardedVideoClickedWithExtra(const char * placementId, const char * extra) {
+    log("DemoMainScene::onRewardedVideoClicked %s with extra %s", placementId,extra);
+}
+
+
 
 //interstitial listener
 void DemoMainScene::onInterstitalLoadSuccess(const char * placementId) {
@@ -921,8 +945,21 @@ void DemoMainScene::onInterstitalClose(const char * placementId) {
 void DemoMainScene::onInterstitalClicked(const char * placementId) {
     log("DemoMainScene::onInterstitalClicked %s", placementId);
 }
+//interstitial extra
+void DemoMainScene::onInterstitalShowWithExtra(const char * placementId, const char * extra) {
+    log("DemoMainScene::onInterstitalShow %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onInterstitalCloseWithExtra(const char * placementId, const char * extra) {
+    log("DemoMainScene::onInterstitalClose %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onInterstitalClickedWithExtra(const char * placementId, const char * extra) {
+    log("DemoMainScene::onInterstitalClicked %s with extra %s", placementId,extra);
+}
 
 
+//banner listener
 void DemoMainScene::onBannerAdLoadSuccess(const char * placementId) {
     log("DemoMainScene::onBannerAdLoadSuccess %s", placementId);
 }
@@ -950,6 +987,28 @@ void DemoMainScene::onBannerAutoRefresh(const char * placementId) {
 void DemoMainScene::onBannerAutoRefreshFail(const char * placementId, const char * errorString) {
     log("DemoMainScene::onBannerAutoRefreshFail %s, error:%s", placementId, errorString);
 }
+//banner extra
+void DemoMainScene::onBannerShowWithExtra(const char *placementId, const char *extra) {
+    log("DemoMainScene::onBannerShow %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onBannerClickedWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onBannerClicked %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onBannerCloseWithExtra(const char *placementId, const char *extra) {
+    log("DemoMainScene::onBannerClose %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onBannerAutoRefreshWithExtra(const char *placementId, const char *extra) {
+    log("DemoMainScene::onBannerAutoRefresh %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onBannerAutoRefreshFailWithExtra(const char *placementId, const char *errorString, const char *extra) {
+    log("DemoMainScene::onBannerAutoRefreshFail %s, error:%s with extra %s", placementId, errorString,extra);
+}
+
+//native listener
 
 void DemoMainScene::onNativeAdLoadSuccess(const char * placementId){
     log("DemoMainScene::onNativeAdLoadSuccess %s", placementId);
@@ -974,7 +1033,23 @@ void DemoMainScene::onNativeAdShow(const char * placementId){
 void DemoMainScene::onNativeAdClick(const char * placementId){
     log("DemoMainScene::onNativeAdClick %s", placementId);
 }
+//native extra
+void DemoMainScene::onNativeAdVideoStartWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeAdVideoStart %s with extra %s", placementId,extra);
+}
 
+void DemoMainScene::onNativeAdVideoEndWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeAdVideoEnd %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onNativeAdShowWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeAdShow %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onNativeAdClickWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeAdClick %s with extra %s", placementId,extra);
+}
+//native banner
 void DemoMainScene::onNativeBannerAdLoadSuccess(const char * placementId){
     log("DemoMainScene::onNativeBannerAdLoadSuccess %s", placementId);
 }
@@ -1002,3 +1077,24 @@ void DemoMainScene::onNativeBannerClose(const char * placementId){
 void DemoMainScene::onNativeBannerAutoRefresh(const char * placementId){
     log("DemoMainScene::onNativeBannerAutoRefresh %s", placementId);
 }
+//native banner extra
+void DemoMainScene::onNativeBannerShowWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeBannerShow %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onNativeBannerClickedWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeBannerClicked %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onNativeBannerAutoRefreshFailWithExtra(const char *placementId, const char *errorString, const char *extra){
+    log("DemoMainScene::onNativeBannerAutoRefreshFail %s, error:%s with extra %s", placementId, errorString,extra);
+}
+
+void DemoMainScene::onNativeBannerCloseWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeBannerClose %s with extra %s", placementId,extra);
+}
+
+void DemoMainScene::onNativeBannerAutoRefreshWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeBannerAutoRefresh %s with extra %s", placementId,extra);
+}
+
