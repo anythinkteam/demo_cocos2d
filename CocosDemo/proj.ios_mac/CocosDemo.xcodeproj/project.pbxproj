@@ -102,7 +102,6 @@
 		DC55DF8D238EB00F00235D03 /* AnyThinkBaiduBannerAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDEB238EB00400235D03 /* AnyThinkBaiduBannerAdapter.framework */; };
 		DC55DF8E238EB00F00235D03 /* AnyThinkChartboostInterstitialAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDEC238EB00400235D03 /* AnyThinkChartboostInterstitialAdapter.framework */; };
 		DC55DF8F238EB00F00235D03 /* AnyThinkUnityAdsInterstitialAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDED238EB00400235D03 /* AnyThinkUnityAdsInterstitialAdapter.framework */; };
-		DC55DF90238EB01000235D03 /* baidumobadsdk.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DC55DDEE238EB00400235D03 /* baidumobadsdk.bundle */; };
 		DC55DF91238EB01000235D03 /* AnyThinkBaiduRewardedVideoAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDEF238EB00400235D03 /* AnyThinkBaiduRewardedVideoAdapter.framework */; };
 		DC55DF92238EB01000235D03 /* AnyThinkNendNativeAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDF0238EB00400235D03 /* AnyThinkNendNativeAdapter.framework */; };
 		DC55DF93238EB01000235D03 /* AnyThinkFacebookRewardedVideoAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDF1238EB00400235D03 /* AnyThinkFacebookRewardedVideoAdapter.framework */; };
@@ -122,7 +121,6 @@
 		DC55DFA3238EB01000235D03 /* AnyThinkAdColonyRewardedVideoAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DE06238EB00400235D03 /* AnyThinkAdColonyRewardedVideoAdapter.framework */; };
 		DC55DFA4238EB01100235D03 /* AnyThinkMopubNativeAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DE07238EB00400235D03 /* AnyThinkMopubNativeAdapter.framework */; };
 		DC55DFA5238EB01100235D03 /* AnyThinkSigmobRewardedVideoAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DE08238EB00400235D03 /* AnyThinkSigmobRewardedVideoAdapter.framework */; };
-		DC55DFA6238EB01100235D03 /* MoPubSDKFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DE09238EB00400235D03 /* MoPubSDKFramework.framework */; };
 		DC55DFA7238EB01100235D03 /* AnyThinkMopubInterstitialAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DE0A238EB00400235D03 /* AnyThinkMopubInterstitialAdapter.framework */; };
 		DC55DFA8238EB01100235D03 /* AnyThinkInmobiNativeAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DE0B238EB00400235D03 /* AnyThinkInmobiNativeAdapter.framework */; };
 		DC55DFA9238EB01100235D03 /* NendAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DE0D238EB00400235D03 /* NendAd.framework */; };
@@ -936,7 +934,6 @@
 				DC55E037238EB01700235D03 /* AnyThinkNendBannerAdapter.framework in Frameworks */,
 				DC55DFAF238EB01100235D03 /* AnyThinkApplovinBannerAdapter.framework in Frameworks */,
 				DC55DF9E238EB01000235D03 /* CTSDK.framework in Frameworks */,
-				DC55DFA6238EB01100235D03 /* MoPubSDKFramework.framework in Frameworks */,
 				DC55DF76238EB00E00235D03 /* AnyThinkAdmobBannerAdapter.framework in Frameworks */,
 				DC55DF6C238EB00D00235D03 /* AnyThinkBaiduSplashAdapter.framework in Frameworks */,
 				DC55E03C238EB01700235D03 /* AnyThinkKSInterstitialAdapter.framework in Frameworks */,
@@ -1909,7 +1906,6 @@
 			files = (
 				DC55DF68238EB00D00235D03 /* AnyThinkSDK.bundle in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
-				DC55DF90238EB01000235D03 /* baidumobadsdk.bundle in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
 				DC55E026238EB01600235D03 /* BUAdSDK.bundle in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
