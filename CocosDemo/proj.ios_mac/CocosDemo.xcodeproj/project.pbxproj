@@ -47,6 +47,13 @@
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		9BDA882F2397C9CD00881E25 /* KSThirdRelySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDA882E2397C9CD00881E25 /* KSThirdRelySDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		9BDA897C239A33F600881E25 /* AnyThinkMintegralBannerAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDA8975239A33F500881E25 /* AnyThinkMintegralBannerAdapter.framework */; };
+		9BDA897D239A33F600881E25 /* OMSDK_Oguryco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDA8978239A33F600881E25 /* OMSDK_Oguryco.framework */; };
+		9BDA897E239A33F600881E25 /* OguryAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDA8979239A33F600881E25 /* OguryAds.framework */; };
+		9BDA897F239A33F600881E25 /* OguryConsentManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDA897A239A33F600881E25 /* OguryConsentManager.framework */; };
+		9BDA8980239A33F600881E25 /* Sigmob.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9BDA897B239A33F600881E25 /* Sigmob.bundle */; };
+		9BDA8983239A3DE600881E25 /* AnyThinkOguryInterstitialAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDA8981239A3DE500881E25 /* AnyThinkOguryInterstitialAdapter.framework */; };
+		9BDA8984239A3DE600881E25 /* AnyThinkOguryRewardedVideoAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDA8982239A3DE600881E25 /* AnyThinkOguryRewardedVideoAdapter.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
@@ -97,7 +104,6 @@
 		DC55DF87238EB00F00235D03 /* AnyThinkGDTSplashAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDDC238EB00300235D03 /* AnyThinkGDTSplashAdapter.framework */; };
 		DC55DF88238EB00F00235D03 /* Tapjoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDDE238EB00300235D03 /* Tapjoy.framework */; };
 		DC55DF89238EB00F00235D03 /* TapjoyResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DC55DDE0238EB00300235D03 /* TapjoyResources.bundle */; };
-		DC55DF8A238EB00F00235D03 /* AnyThinkMintegralBannerAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDE1238EB00300235D03 /* AnyThinkMintegralBannerAdapter.framework */; };
 		DC55DF8B238EB00F00235D03 /* OnewaySDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDE7238EB00400235D03 /* OnewaySDK.a */; };
 		DC55DF8C238EB00F00235D03 /* AnyThinkTTNativeAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDEA238EB00400235D03 /* AnyThinkTTNativeAdapter.framework */; };
 		DC55DF8D238EB00F00235D03 /* AnyThinkBaiduBannerAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC55DDEB238EB00400235D03 /* AnyThinkBaiduBannerAdapter.framework */; };
@@ -283,6 +289,13 @@
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9BDA882E2397C9CD00881E25 /* KSThirdRelySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KSThirdRelySDK.framework; sourceTree = "<group>"; };
+		9BDA8975239A33F500881E25 /* AnyThinkMintegralBannerAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkMintegralBannerAdapter.framework; sourceTree = "<group>"; };
+		9BDA8978239A33F600881E25 /* OMSDK_Oguryco.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OMSDK_Oguryco.framework; sourceTree = "<group>"; };
+		9BDA8979239A33F600881E25 /* OguryAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OguryAds.framework; sourceTree = "<group>"; };
+		9BDA897A239A33F600881E25 /* OguryConsentManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OguryConsentManager.framework; sourceTree = "<group>"; };
+		9BDA897B239A33F600881E25 /* Sigmob.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Sigmob.bundle; sourceTree = "<group>"; };
+		9BDA8981239A3DE500881E25 /* AnyThinkOguryInterstitialAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkOguryInterstitialAdapter.framework; sourceTree = "<group>"; };
+		9BDA8982239A3DE600881E25 /* AnyThinkOguryRewardedVideoAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkOguryRewardedVideoAdapter.framework; sourceTree = "<group>"; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -349,7 +362,6 @@
 		DC55DDDC238EB00300235D03 /* AnyThinkGDTSplashAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkGDTSplashAdapter.framework; sourceTree = "<group>"; };
 		DC55DDDE238EB00300235D03 /* Tapjoy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Tapjoy.framework; sourceTree = "<group>"; };
 		DC55DDE0238EB00300235D03 /* TapjoyResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapjoyResources.bundle; sourceTree = "<group>"; };
-		DC55DDE1238EB00300235D03 /* AnyThinkMintegralBannerAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkMintegralBannerAdapter.framework; sourceTree = "<group>"; };
 		DC55DDE3238EB00300235D03 /* OWInterstitialImageAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OWInterstitialImageAd.h; sourceTree = "<group>"; };
 		DC55DDE4238EB00300235D03 /* OWUserMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OWUserMetaData.h; sourceTree = "<group>"; };
 		DC55DDE5238EB00400235D03 /* OWRewardedAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OWRewardedAd.h; sourceTree = "<group>"; };
@@ -562,7 +574,6 @@
 				DC55E044238EBB7500235D03 /* libsqlite3.tbd in Frameworks */,
 				DC55E042238EBAB400235D03 /* libxml2.tbd in Frameworks */,
 				DC55DF9F238EB01000235D03 /* KSAdSDK.framework in Frameworks */,
-				DC55DF8A238EB00F00235D03 /* AnyThinkMintegralBannerAdapter.framework in Frameworks */,
 				DC55E021238EB01600235D03 /* MTGSDK.framework in Frameworks */,
 				294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */,
 				DC55DF84238EB00F00235D03 /* AnyThinkYeahmobiNativeAdapter.framework in Frameworks */,
@@ -576,6 +587,7 @@
 				DC55DF6A238EB00D00235D03 /* AnyThinkAppnextInterstitialAdapter.framework in Frameworks */,
 				DC55E029238EB01600235D03 /* Maio.framework in Frameworks */,
 				DC55DF88238EB00F00235D03 /* Tapjoy.framework in Frameworks */,
+				9BDA897F239A33F600881E25 /* OguryConsentManager.framework in Frameworks */,
 				DC55E032238EB01700235D03 /* AnyThinkVungleRewardedVideoAdapter.framework in Frameworks */,
 				DC55DFA5238EB01100235D03 /* AnyThinkSigmobRewardedVideoAdapter.framework in Frameworks */,
 				DC55DF92238EB01000235D03 /* AnyThinkNendNativeAdapter.framework in Frameworks */,
@@ -590,6 +602,7 @@
 				DC55E036238EB01700235D03 /* MTGSDKReward.framework in Frameworks */,
 				DC55E01B238EB01500235D03 /* AnyThinkAppnextBannerAdapter.framework in Frameworks */,
 				DC55E014238EB01500235D03 /* AnyThinkInmobiInterstitialAdapter.framework in Frameworks */,
+				9BDA897E239A33F600881E25 /* OguryAds.framework in Frameworks */,
 				DC55DF91238EB01000235D03 /* AnyThinkBaiduRewardedVideoAdapter.framework in Frameworks */,
 				DC55E005238EB01500235D03 /* AnyThinkMyOffer.framework in Frameworks */,
 				DC55E024238EB01600235D03 /* AppLovinSDK.framework in Frameworks */,
@@ -612,6 +625,7 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				DC55DF77238EB00E00235D03 /* MTGSDKBidding.framework in Frameworks */,
 				DC55DF73238EB00E00235D03 /* AnyThinkApplovinNativeAdapter.framework in Frameworks */,
+				9BDA897D239A33F600881E25 /* OMSDK_Oguryco.framework in Frameworks */,
 				DC55DF86238EB00F00235D03 /* AnyThinkApplovinInterstitialAdapter.framework in Frameworks */,
 				DC55E012238EB01500235D03 /* AnyThinkSigmobInterstitialAdapter.framework in Frameworks */,
 				DC55DF75238EB00E00235D03 /* BUAdSDK.framework in Frameworks */,
@@ -622,6 +636,7 @@
 				DC55DF94238EB01000235D03 /* MTGSDKBanner.framework in Frameworks */,
 				DC55E03A238EB01700235D03 /* AnyThinkMopubBannerAdapter.framework in Frameworks */,
 				DC55E025238EB01600235D03 /* AnyThinkIronSourceRewardedVideoAdapter.framework in Frameworks */,
+				9BDA8984239A3DE600881E25 /* AnyThinkOguryRewardedVideoAdapter.framework in Frameworks */,
 				DC55DF7E238EB00F00235D03 /* AnyThinkAdColonyInterstitialAdapter.framework in Frameworks */,
 				DC55E018238EB01500235D03 /* AnyThinkFlurryNativeAdapter.framework in Frameworks */,
 				DC55DF6E238EB00E00235D03 /* AnyThinkNendInterstitialAdapter.framework in Frameworks */,
@@ -660,6 +675,7 @@
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				DC55DF8C238EB00F00235D03 /* AnyThinkTTNativeAdapter.framework in Frameworks */,
 				9BDA882F2397C9CD00881E25 /* KSThirdRelySDK.framework in Frameworks */,
+				9BDA8983239A3DE600881E25 /* AnyThinkOguryInterstitialAdapter.framework in Frameworks */,
 				DC55E03D238EB01700235D03 /* AnyThinkVungleInterstitialAdapter.framework in Frameworks */,
 				DC55DF8D238EB00F00235D03 /* AnyThinkBaiduBannerAdapter.framework in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
@@ -689,6 +705,7 @@
 				DC55DF72238EB00E00235D03 /* AnyThinkIronSourceInterstitialAdapter.framework in Frameworks */,
 				DC55E01D238EB01600235D03 /* AnyThinkFacebookBannerAdapter.framework in Frameworks */,
 				DC55DFA2238EB01000235D03 /* AnyThinkInterstitial.framework in Frameworks */,
+				9BDA897C239A33F600881E25 /* AnyThinkMintegralBannerAdapter.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 				DC55E02E238EB01600235D03 /* AnyThinkAdmobRewardedVideoAdapter.framework in Frameworks */,
 				DC55E02D238EB01600235D03 /* AnyThinkApplovinRewardedVideoAdapter.framework in Frameworks */,
@@ -855,6 +872,16 @@
 			name = mac;
 			sourceTree = "<group>";
 		};
+		9BDA8977239A33F600881E25 /* OguryOED_1.0.3 */ = {
+			isa = PBXGroup;
+			children = (
+				9BDA8978239A33F600881E25 /* OMSDK_Oguryco.framework */,
+				9BDA8979239A33F600881E25 /* OguryAds.framework */,
+				9BDA897A239A33F600881E25 /* OguryConsentManager.framework */,
+			);
+			path = OguryOED_1.0.3;
+			sourceTree = "<group>";
+		};
 		DC0846F9238D19720069AA44 /* demo */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +932,11 @@
 		DC55DDBB238EB00300235D03 /* sdk */ = {
 			isa = PBXGroup;
 			children = (
+				9BDA8981239A3DE500881E25 /* AnyThinkOguryInterstitialAdapter.framework */,
+				9BDA8982239A3DE600881E25 /* AnyThinkOguryRewardedVideoAdapter.framework */,
+				9BDA8975239A33F500881E25 /* AnyThinkMintegralBannerAdapter.framework */,
+				9BDA8977239A33F600881E25 /* OguryOED_1.0.3 */,
+				9BDA897B239A33F600881E25 /* Sigmob.bundle */,
 				9BDA882E2397C9CD00881E25 /* KSThirdRelySDK.framework */,
 				DC55DDBC238EB00300235D03 /* AnyThinkSDK.bundle */,
 				DC55DDBD238EB00300235D03 /* AnyThinkTapjoyInterstitialAdapter.framework */,
@@ -938,7 +970,6 @@
 				DC55DDDB238EB00300235D03 /* AnyThinkApplovinInterstitialAdapter.framework */,
 				DC55DDDC238EB00300235D03 /* AnyThinkGDTSplashAdapter.framework */,
 				DC55DDDD238EB00300235D03 /* Tapjoy.embeddedframework */,
-				DC55DDE1238EB00300235D03 /* AnyThinkMintegralBannerAdapter.framework */,
 				DC55DDE2238EB00300235D03 /* Oneway */,
 				DC55DDEA238EB00400235D03 /* AnyThinkTTNativeAdapter.framework */,
 				DC55DDEB238EB00400235D03 /* AnyThinkBaiduBannerAdapter.framework */,
@@ -1371,6 +1402,7 @@
 				DC55E026238EB01600235D03 /* BUAdSDK.bundle in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				DC55DF89238EB00F00235D03 /* TapjoyResources.bundle in Resources */,
+				9BDA8980239A33F600881E25 /* Sigmob.bundle in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				DC55DFAA238EB01100235D03 /* NendAdResource.bundle in Resources */,
 				DC55E02A238EB01600235D03 /* AppLovinSDKResources.bundle in Resources */,
@@ -1465,6 +1497,7 @@
 					"$(PROJECT_DIR)/AnyThink/sdk/Baidu",
 					"$(PROJECT_DIR)/AnyThink/sdk/Tapjoy.embeddedframework",
 					"$(PROJECT_DIR)/AnyThink/sdk/NendAd.embeddedframework",
+					"$(PROJECT_DIR)/AnyThink/sdk/OguryOED_1.0.3",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1519,6 +1552,7 @@
 					"$(PROJECT_DIR)/AnyThink/sdk/Baidu",
 					"$(PROJECT_DIR)/AnyThink/sdk/Tapjoy.embeddedframework",
 					"$(PROJECT_DIR)/AnyThink/sdk/NendAd.embeddedframework",
+					"$(PROJECT_DIR)/AnyThink/sdk/OguryOED_1.0.3",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
