@@ -119,11 +119,16 @@ bool DemoMainScene::init()
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
     appId = "a5b0e8491845b3";
     appKey = "7eae0567827cfe2b22874061763f30c9";
-    rvPlacementId = "b5b72b21184aa8";
-    interPlacementId = "b5bacad7373b89";
-    bannerPlacementId = "b5bacacfc470c9";
-    nativePlacementId = "b5c2c6d50e7f44";
+    
+    
+    rvPlacementId = "b5b44a02bf08c0";
+    interPlacementId = "b5bacad6860972";
+    bannerPlacementId = "b5bacacef17717";
+    nativePlacementId = "b5b0f55228375a";
     nativebannerPlacementId = "b5c2c6d50e7f44";
+    
+    
+    
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
     appId = "a5c4ad280995c9";
@@ -900,7 +905,7 @@ void DemoMainScene::onRewardedVideoClicked(const char * placementId) {
 //rewardedVideo delegate with extra
 
 void DemoMainScene::onRewardedVideoDidRewardSuccessWithExtra(const char * placementId,const char * extra) {
-    log("DemoMainScene::onRewardedVideoClicked %s with extra %s", placementId,extra);
+    log("DemoMainScene::onRewardedVideoDidRewardSuccessWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onRewardedVideoPlayStartWithExtra(const char * placementId, const char * extra) {
@@ -947,15 +952,15 @@ void DemoMainScene::onInterstitalClicked(const char * placementId) {
 }
 //interstitial extra
 void DemoMainScene::onInterstitalShowWithExtra(const char * placementId, const char * extra) {
-    log("DemoMainScene::onInterstitalShow %s with extra %s", placementId,extra);
+    log("DemoMainScene::onInterstitalShowWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onInterstitalCloseWithExtra(const char * placementId, const char * extra) {
-    log("DemoMainScene::onInterstitalClose %s with extra %s", placementId,extra);
+    log("DemoMainScene::onInterstitalCloseWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onInterstitalClickedWithExtra(const char * placementId, const char * extra) {
-    log("DemoMainScene::onInterstitalClicked %s with extra %s", placementId,extra);
+    log("DemoMainScene::onInterstitalClickedWithExtra %s with extra %s", placementId,extra);
 }
 
 
@@ -989,23 +994,23 @@ void DemoMainScene::onBannerAutoRefreshFail(const char * placementId, const char
 }
 //banner extra
 void DemoMainScene::onBannerShowWithExtra(const char *placementId, const char *extra) {
-    log("DemoMainScene::onBannerShow %s with extra %s", placementId,extra);
+    log("DemoMainScene::onBannerShowWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onBannerClickedWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onBannerClicked %s with extra %s", placementId,extra);
+    log("DemoMainScene::onBannerClickedWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onBannerCloseWithExtra(const char *placementId, const char *extra) {
-    log("DemoMainScene::onBannerClose %s with extra %s", placementId,extra);
+    log("DemoMainScene::onBannerCloseWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onBannerAutoRefreshWithExtra(const char *placementId, const char *extra) {
-    log("DemoMainScene::onBannerAutoRefresh %s with extra %s", placementId,extra);
+    log("DemoMainScene::onBannerAutoRefreshWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onBannerAutoRefreshFailWithExtra(const char *placementId, const char *errorString, const char *extra) {
-    log("DemoMainScene::onBannerAutoRefreshFail %s, error:%s with extra %s", placementId, errorString,extra);
+    log("DemoMainScene::onBannerAutoRefreshFailWithExtra %s, error:%s with extra %s", placementId, errorString,extra);
 }
 
 //native listener
@@ -1035,19 +1040,19 @@ void DemoMainScene::onNativeAdClick(const char * placementId){
 }
 //native extra
 void DemoMainScene::onNativeAdVideoStartWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onNativeAdVideoStart %s with extra %s", placementId,extra);
+    log("DemoMainScene::onNativeAdVideoStartWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onNativeAdVideoEndWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onNativeAdVideoEnd %s with extra %s", placementId,extra);
+    log("DemoMainScene::onNativeAdVideoEndWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onNativeAdShowWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onNativeAdShow %s with extra %s", placementId,extra);
+    log("DemoMainScene::onNativeAdShowWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onNativeAdClickWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onNativeAdClick %s with extra %s", placementId,extra);
+    log("DemoMainScene::onNativeAdClickWithExtra %s with extra %s", placementId,extra);
 }
 //native banner
 void DemoMainScene::onNativeBannerAdLoadSuccess(const char * placementId){
@@ -1079,22 +1084,22 @@ void DemoMainScene::onNativeBannerAutoRefresh(const char * placementId){
 }
 //native banner extra
 void DemoMainScene::onNativeBannerShowWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onNativeBannerShow %s with extra %s", placementId,extra);
+    log("DemoMainScene::onNativeBannerShowWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onNativeBannerClickedWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onNativeBannerClicked %s with extra %s", placementId,extra);
+    log("DemoMainScene::onNativeBannerClickedWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onNativeBannerAutoRefreshFailWithExtra(const char *placementId, const char *errorString, const char *extra){
-    log("DemoMainScene::onNativeBannerAutoRefreshFail %s, error:%s with extra %s", placementId, errorString,extra);
+    log("DemoMainScene::onNativeBannerAutoRefreshFailWithExtra %s, error:%s with extra %s", placementId, errorString,extra);
 }
 
 void DemoMainScene::onNativeBannerCloseWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onNativeBannerClose %s with extra %s", placementId,extra);
+    log("DemoMainScene::onNativeBannerCloseWithExtra %s with extra %s", placementId,extra);
 }
 
 void DemoMainScene::onNativeBannerAutoRefreshWithExtra(const char *placementId, const char *extra){
-    log("DemoMainScene::onNativeBannerAutoRefresh %s with extra %s", placementId,extra);
+    log("DemoMainScene::onNativeBannerAutoRefreshWithExtra %s with extra %s", placementId,extra);
 }
 
