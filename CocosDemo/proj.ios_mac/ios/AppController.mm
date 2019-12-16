@@ -118,7 +118,7 @@ static AppDelegate s_sharedApplication;
     ATCocosSdk::initSDK(appId, appKey);
     
 //    [self.window makeKeyAndVisible];
-    [[ATAdManager sharedManager] loadADWithPlacementID:@"b5c1b048c498b9" extra:@{kATSplashExtraTolerateTimeoutKey:@3.0} customData:nil delegate:self window:window containerView:nil];
+    [[ATAdManager sharedManager] loadADWithPlacementID:@"b5c1b048c498b9" extra:@{kATSplashExtraTolerateTimeoutKey:@5.0} customData:nil delegate:self window:window containerView:nil];
     
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
