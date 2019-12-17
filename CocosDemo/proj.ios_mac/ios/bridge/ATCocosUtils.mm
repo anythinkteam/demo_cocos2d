@@ -30,8 +30,12 @@
     return [nsstring UTF8String];
 }
 + (const char *)cstringFromExtraNSDictionary:(NSDictionary *)dic {
-    const char* extra = [ATCocosUtils cstringFromNSString:[NSString stringWithFormat:@"adsourceId: %@, networkId: %@",dic[@"ad_source_id"],dic[@"network_firm_id"]]];
-    return extra;
+//    const char* extra = [ATCocosUtils cstringFromNSString:[NSString stringWithFormat:@"adsourceId: %@, networkId: %@",dic[@"ad_source_id"],dic[@"network_firm_id"]]];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    const char *extraJson = [ATCocosUtils cstringFromNSString:jsonStr];
+    return extraJson;
 }
 + (NSDictionary *)nsDictionaryFromCCDictionary:(cocos2d::CCDictionary *)ccDictionary {
     if (ccDictionary == NULL) {

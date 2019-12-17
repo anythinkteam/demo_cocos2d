@@ -184,6 +184,7 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
         config.mediaViewFrame = CGRectMake(0, 120.0f, CGRectGetWidth(button.bounds), 300.0f - 120.0f);
         config.delegate = self;
         config.renderingViewClass = [ATCocosNativeAdView class];
+        config.rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         
         ATCocosNativeAdView *adview = [[ATAdManager sharedManager] retriveAdViewWithPlacementID:placementID configuration:config];
         adview.ctaLabel.hidden = [adview.nativeAd.ctaText length] == 0;
