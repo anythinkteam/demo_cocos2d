@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
+import com.anythink.cocos2dx.bridge.utils.ATUtils;
 import com.anythink.core.api.AdError;
 import com.anythink.core.api.ATAdInfo;
 import com.anythink.banner.api.ATBannerListener;
@@ -41,27 +42,27 @@ public class ATBannerImpl {
 
             @Override
             public void onBannerClicked(ATAdInfo adInfo) {
-                ATListenerEventJniHelper.onBannerClicked(mUnitId);
+                ATListenerEventJniHelper.onBannerClicked(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onBannerShow(ATAdInfo adInfo) {
                 mIsAdReady = false;
-                ATListenerEventJniHelper.onBannerShow(mUnitId);
+                ATListenerEventJniHelper.onBannerShow(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onBannerClose() {
-                ATListenerEventJniHelper.onBannerClose(mUnitId);
+                ATListenerEventJniHelper.onBannerClose(mUnitId, "");
             }
 
             @Override
-            public void onBannerAutoRefreshed(ATAdInfo adInfo) { ATListenerEventJniHelper.onBannerAutoRefreshed(mUnitId);
+            public void onBannerAutoRefreshed(ATAdInfo adInfo) { ATListenerEventJniHelper.onBannerAutoRefreshed(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onBannerAutoRefreshFail(AdError adError) {
-                ATListenerEventJniHelper.onBannerAutoRefreshFail(mUnitId, adError.printStackTrace());
+                ATListenerEventJniHelper.onBannerAutoRefreshFail(mUnitId, adError.printStackTrace(), "");
             }
         });
         mBannerView.loadAd();

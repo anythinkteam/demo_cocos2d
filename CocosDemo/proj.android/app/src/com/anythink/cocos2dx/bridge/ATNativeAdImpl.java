@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
+import com.anythink.cocos2dx.bridge.utils.ATUtils;
 import com.anythink.core.api.AdError;
 import com.anythink.core.api.ATAdInfo;
 import com.anythink.nativead.api.NativeAd;
@@ -70,12 +71,12 @@ public class ATNativeAdImpl {
                         nativeAd.setNativeEventListener(new ATNativeEventListener() {
                             @Override
                             public void onAdImpressed(ATNativeAdView upArpuNativeAdView, ATAdInfo adInfo) {
-                                ATListenerEventJniHelper.onNativeAdShow(mUnitId);
+                                ATListenerEventJniHelper.onNativeAdShow(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
                             }
 
                             @Override
                             public void onAdClicked(ATNativeAdView upArpuNativeAdView, ATAdInfo adInfo) {
-                                ATListenerEventJniHelper.onNativeAdClick(mUnitId);
+                                ATListenerEventJniHelper.onNativeAdClick(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
                             }
 
                             @Override

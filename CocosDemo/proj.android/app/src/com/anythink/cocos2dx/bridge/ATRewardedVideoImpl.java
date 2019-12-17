@@ -2,6 +2,7 @@ package com.anythink.cocos2dx.bridge;
 
 import android.app.Activity;
 
+import com.anythink.cocos2dx.bridge.utils.ATUtils;
 import com.anythink.core.api.AdError;
 import com.anythink.core.api.ATAdInfo;
 import com.anythink.rewardvideo.api.ATRewardVideoAd;
@@ -37,34 +38,34 @@ public class ATRewardedVideoImpl {
 
             @Override
             public void onRewardedVideoAdPlayStart(ATAdInfo adInfo) {
-                ATListenerEventJniHelper.onRewardedVideoAdPlayStart(mUnitId);
+                ATListenerEventJniHelper.onRewardedVideoAdPlayStart(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
                 mIsRewarded = false;
             }
 
             @Override
             public void onRewardedVideoAdPlayEnd(ATAdInfo adInfo) {
-                ATListenerEventJniHelper.onRewardedVideoAdPlayEnd(mUnitId);
+                ATListenerEventJniHelper.onRewardedVideoAdPlayEnd(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onRewardedVideoAdPlayFailed(AdError adError, ATAdInfo adInfo) {
-                ATListenerEventJniHelper.onRewardedVideoAdPlayFailed(mUnitId, adError.printStackTrace());
+                ATListenerEventJniHelper.onRewardedVideoAdPlayFailed(mUnitId, adError.printStackTrace(), ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onRewardedVideoAdClosed(ATAdInfo atAdInfo) {
-                ATListenerEventJniHelper.onRewardedVideoAdClosed(mUnitId, mIsRewarded);
+                ATListenerEventJniHelper.onRewardedVideoAdClosed(mUnitId, mIsRewarded, ATUtils.adInfoToJsonstring(atAdInfo));
             }
 
             @Override
             public void onRewardedVideoAdPlayClicked(ATAdInfo adInfo) {
-                ATListenerEventJniHelper.onRewardedVideoAdPlayClicked(mUnitId);
+                ATListenerEventJniHelper.onRewardedVideoAdPlayClicked(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onReward(ATAdInfo atAdInfo) {
                 mIsRewarded = true;
-                ATListenerEventJniHelper.onRewardedVideoAdRewarded(mUnitId);
+                ATListenerEventJniHelper.onRewardedVideoAdRewarded(mUnitId, ATUtils.adInfoToJsonstring(atAdInfo));
             }
         });
         upArpuRewardVideoAd.load();

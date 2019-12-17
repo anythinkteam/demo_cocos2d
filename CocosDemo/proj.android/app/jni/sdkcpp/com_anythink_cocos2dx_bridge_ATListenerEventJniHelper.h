@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onBannerClicked
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -37,7 +37,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onBannerShow
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -45,7 +45,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onBannerClose
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -53,7 +53,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onBannerAutoRefreshed
-        (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -61,7 +61,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onBannerAutoRefreshFail
-        (JNIEnv *, jclass, jstring, jstring);
+        (JNIEnv *, jclass, jstring, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -85,7 +85,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onInterstitialAdClicked
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -93,7 +93,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onInterstitialAdShow
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -101,7 +101,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onInterstitialAdClose
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 
 
@@ -151,7 +151,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onRewardedVideoAdPlayStart
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -159,7 +159,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onRewardedVideoAdPlayEnd
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -167,7 +167,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onRewardedVideoAdPlayFailed
-  (JNIEnv *, jclass, jstring, jstring);
+  (JNIEnv *, jclass, jstring, jstring, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -175,7 +175,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: (Z)V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onRewardedVideoAdClosed
-  (JNIEnv *, jclass, jstring, jboolean);
+  (JNIEnv *, jclass, jstring, jboolean, jstring);
 
 /*
  * Class:     com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper
@@ -183,7 +183,7 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onRewardedVideoAdPlayClicked
- (JNIEnv *, jclass, jstring);
+ (JNIEnv *, jclass, jstring, jstring);
 
 
 
@@ -194,10 +194,10 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
         (JNIEnv *, jclass, jstring, jstring);
 
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onNativeAdShow
-        (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jclass, jstring, jstring);
 
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onNativeAdClick
-        (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jclass, jstring, jstring);
 
 
 
@@ -210,19 +210,19 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
         (JNIEnv *, jclass, jstring, jstring);
 
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onNativeBannerAdClick
-        (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jclass, jstring, jstring);
 
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onNativeBannerAdShow
-        (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jclass, jstring, jstring);
 
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onNativeBannerAdClose
-        (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jclass, jstring, jstring);
 
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onNativeBannerAdAutoRefreshed
-        (JNIEnv *, jclass, jstring);
+        (JNIEnv *, jclass, jstring, jstring);
 
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onNativeBannerAdAutoRefreshFail
-        (JNIEnv *, jclass, jstring, jstring);
+        (JNIEnv *, jclass, jstring, jstring, jstring);
 
 
 

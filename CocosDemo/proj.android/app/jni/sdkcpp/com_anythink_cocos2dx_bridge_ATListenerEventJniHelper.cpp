@@ -54,12 +54,14 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onBannerClicked
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosBannerAdListener *bannerAdListener = ATListenerManager::getInstance()->getBannerListener(
             placementId);
     if (bannerAdListener != NULL) {
         bannerAdListener->onBannerClicked(placementId);
+        bannerAdListener->onBannerClickedWithExtra(placementId, extra);
     }
 }
 
@@ -69,12 +71,14 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onBannerShow
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosBannerAdListener *bannerAdListener = ATListenerManager::getInstance()->getBannerListener(
             placementId);
     if (bannerAdListener != NULL) {
         bannerAdListener->onBannerShow(placementId);
+        bannerAdListener->onBannerShowWithExtra(placementId, extra);
     }
 }
 
@@ -84,12 +88,14 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onBannerClose
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosBannerAdListener *bannerAdListener = ATListenerManager::getInstance()->getBannerListener(
             placementId);
     if (bannerAdListener != NULL) {
         bannerAdListener->onBannerClose(placementId);
+        bannerAdListener->onBannerCloseWithExtra(placementId, extra);
     }
 }
 
@@ -100,12 +106,14 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
 */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onBannerAutoRefreshed
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosBannerAdListener *bannerAdListener = ATListenerManager::getInstance()->getBannerListener(
             placementId);
     if (bannerAdListener != NULL) {
         bannerAdListener->onBannerAutoRefresh(placementId);
+        bannerAdListener->onBannerAutoRefreshWithExtra(placementId, extra);
     }
 }
 
@@ -116,13 +124,15 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onBannerAutoRefreshed
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onBannerAutoRefreshFail
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring errorMsg) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring errorMsg, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
     char *errorString = ATUtil::jstringTostring(pEven, errorMsg);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosBannerAdListener *bannerAdListener = ATListenerManager::getInstance()->getBannerListener(
             placementId);
     if (bannerAdListener != NULL) {
         bannerAdListener->onBannerAutoRefreshFail(placementId, errorString);
+        bannerAdListener->onBannerAutoRefreshFailWithExtra(placementId, errorString, extra);
     }
 }
 
@@ -166,12 +176,14 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdLoadF
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdClicked
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosInterstitialAdListener *interstitialAdListener = ATListenerManager::getInstance()->getInterstitialListener(
             placementId);
     if (interstitialAdListener != NULL) {
         interstitialAdListener->onInterstitalClicked(placementId);
+        interstitialAdListener->onInterstitalClickedWithExtra(placementId, extra);
     }
 }
 
@@ -182,12 +194,14 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdClick
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdShow
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosInterstitialAdListener *interstitialAdListener = ATListenerManager::getInstance()->getInterstitialListener(
             placementId);
     if (interstitialAdListener != NULL) {
         interstitialAdListener->onInterstitalShow(placementId);
+        interstitialAdListener->onInterstitalShowWithExtra(placementId, extra);
     }
 }
 
@@ -198,12 +212,14 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdShow
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdClose
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosInterstitialAdListener *interstitialAdListener = ATListenerManager::getInstance()->getInterstitialListener(
             placementId);
     if (interstitialAdListener != NULL) {
         interstitialAdListener->onInterstitalClose(placementId);
+        interstitialAdListener->onInterstitalCloseWithExtra(placementId, extra);
     }
 }
 
@@ -277,13 +293,15 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdFail
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdPlayStart
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
 
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosRewardedVideoAdListener *rewardedVideoAdListener = ATListenerManager::getInstance()->getRewardedVideoListener(
             placementId);
     if (rewardedVideoAdListener != NULL) {
         rewardedVideoAdListener->onRewardedVideoPlayStart(placementId);
+        rewardedVideoAdListener->onRewardedVideoPlayStartWithExtra(placementId, extra);
     }
 
 }
@@ -295,13 +313,15 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdPlay
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdPlayEnd
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
 
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosRewardedVideoAdListener *rewardedVideoAdListener = ATListenerManager::getInstance()->getRewardedVideoListener(
             placementId);
     if (rewardedVideoAdListener != NULL) {
         rewardedVideoAdListener->onRewardedVideoPlayEnd(placementId);
+        rewardedVideoAdListener->onRewardedVideoPlayEndWithExtra(placementId, extra);
     }
 
 }
@@ -314,13 +334,15 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdPlay
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdPlayFailed
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring errorMsg) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring errorMsg, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
     char *errorString = ATUtil::jstringTostring(pEven, errorMsg);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosRewardedVideoAdListener *rewardedVideoAdListener = ATListenerManager::getInstance()->getRewardedVideoListener(
             placementId);
     if (rewardedVideoAdListener != NULL) {
         rewardedVideoAdListener->onRewardedVideoShowFail(placementId, errorString);
+        rewardedVideoAdListener->onRewardedVideoShowFailWithExtra(placementId, errorString, extra);
     }
 }
 
@@ -331,12 +353,14 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdPlay
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdClosed
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jboolean isReward) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jboolean isReward, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosRewardedVideoAdListener *rewardedVideoAdListener = ATListenerManager::getInstance()->getRewardedVideoListener(
             placementId);
     if (rewardedVideoAdListener != NULL) {
         rewardedVideoAdListener->onRewardedVideoClose(placementId, isReward == JNI_TRUE);
+        rewardedVideoAdListener->onRewardedVideoCloseWithExtra(placementId, isReward == JNI_TRUE, extra);
     }
 }
 
@@ -347,23 +371,26 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdClos
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdPlayClicked
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosRewardedVideoAdListener *rewardedVideoAdListener = ATListenerManager::getInstance()->getRewardedVideoListener(
             placementId);
     if (rewardedVideoAdListener != NULL) {
         rewardedVideoAdListener->onRewardedVideoClicked(placementId);
+        rewardedVideoAdListener->onRewardedVideoClickedWithExtra(placementId, extra);
     }
 }
 
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onRewardedVideoAdRewarded
-(JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+(JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
 char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+char *extra = ATUtil::jstringTostring(pEven, extraJstring);
 ATCocosRewardedVideoAdListener *rewardedVideoAdListener = ATListenerManager::getInstance()->getRewardedVideoListener(
         placementId);
 if (rewardedVideoAdListener != NULL) {
-rewardedVideoAdListener->onRewardedVideoDidRewardSuccess(placementId);
+rewardedVideoAdListener->onRewardedVideoDidRewardSuccessWithExtra(placementId, extra);
 }
 }
 
@@ -404,12 +431,14 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onNativeAdShow
         (JNIEnv
          *pEven,
          jclass pJclass, jstring
-         placementIdJstring) {
+         placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosNativeAdListener *nativeAdListener = ATListenerManager::getInstance()->getNativeListener(
             placementId);
     if (nativeAdListener != NULL) {
         nativeAdListener->onNativeAdShow(placementId);
+        nativeAdListener->onNativeAdShowWithExtra(placementId, extra);
     }
 }
 
@@ -418,12 +447,14 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onNativeAdClick
         (JNIEnv
          *pEven,
          jclass pJclass, jstring
-         placementIdJstring) {
+         placementIdJstring, jstring extraJstring) {
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosNativeAdListener *nativeAdListener = ATListenerManager::getInstance()->getNativeListener(
             placementId);
     if (nativeAdListener != NULL) {
         nativeAdListener->onNativeAdClick(placementId);
+        nativeAdListener->onNativeAdClickWithExtra(placementId, extra);
     }
 }
 
@@ -461,12 +492,14 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
         (JNIEnv
          *pEven,
          jclass pJclass, jstring
-         placementIdJstring){
+         placementIdJstring, jstring extraJstring){
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosNativeBannerAdListener *nativeBannerAdListener = ATListenerManager::getInstance()->getNativeBannerAdListener(
             placementId);
     if (nativeBannerAdListener != NULL) {
         nativeBannerAdListener->onNativeBannerClicked(placementId);
+        nativeBannerAdListener->onNativeBannerClickedWithExtra(placementId, extra);
     }
 }
 
@@ -474,8 +507,9 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
         (JNIEnv
          *pEven,
          jclass pJclass, jstring
-         placementIdJstring){
+         placementIdJstring, jstring extraJstring){
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosNativeBannerAdListener *nativeBannerAdListener = ATListenerManager::getInstance()->getNativeBannerAdListener(
             placementId);
     if (nativeBannerAdListener != NULL) {
@@ -487,12 +521,14 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
         (JNIEnv
          *pEven,
          jclass pJclass, jstring
-         placementIdJstring){
+         placementIdJstring, jstring extraJstring){
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosNativeBannerAdListener *nativeBannerAdListener = ATListenerManager::getInstance()->getNativeBannerAdListener(
             placementId);
     if (nativeBannerAdListener != NULL) {
         nativeBannerAdListener->onNativeBannerClose(placementId);
+        nativeBannerAdListener->onNativeBannerCloseWithExtra(placementId, extra);
     }
 }
 
@@ -500,12 +536,14 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
         (JNIEnv
          *pEven,
          jclass pJclass, jstring
-         placementIdJstring){
+         placementIdJstring, jstring extraJstring){
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosNativeBannerAdListener *nativeBannerAdListener = ATListenerManager::getInstance()->getNativeBannerAdListener(
             placementId);
     if (nativeBannerAdListener != NULL) {
         nativeBannerAdListener->onNativeBannerAutoRefresh(placementId);
+        nativeBannerAdListener->onNativeBannerAutoRefreshWithExtra(placementId, extra);
     }
 }
 
@@ -513,13 +551,15 @@ JNIEXPORT void JNICALL Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelpe
         (JNIEnv
          *pEven,
          jclass pJclass, jstring
-         placementIdJstring, jstring errorMsg){
+         placementIdJstring, jstring errorMsg, jstring extraJstring){
     char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
     char *errorString = ATUtil::jstringTostring(pEven, errorMsg);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
     ATCocosNativeBannerAdListener *nativeBannerAdListener = ATListenerManager::getInstance()->getNativeBannerAdListener(
             placementId);
     if (nativeBannerAdListener != NULL) {
         nativeBannerAdListener->onNativeBannerAutoRefreshFail(placementId, errorString);
+        nativeBannerAdListener->onNativeBannerAutoRefreshFailWithExtra(placementId, errorString, extra);
     }
 }
 /*

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
+import com.anythink.cocos2dx.bridge.utils.ATUtils;
 import com.anythink.core.api.ATAdInfo;
 import com.anythink.nativead.banner.api.ATNaitveBannerListener;
 import com.anythink.nativead.banner.api.ATNaitveBannerSize;
@@ -47,27 +48,27 @@ public class ATNativeBannerImpl {
 
                 @Override
                 public void onAdClick(ATAdInfo adInfo) {
-                    ATListenerEventJniHelper.onNativeBannerAdClick(mUnitId);
+                    ATListenerEventJniHelper.onNativeBannerAdClick(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
                 }
 
                 @Override
                 public void onAdShow(ATAdInfo adInfo) {
-                    ATListenerEventJniHelper.onNativeBannerAdShow(mUnitId);
+                    ATListenerEventJniHelper.onNativeBannerAdShow(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
                 }
 
                 @Override
                 public void onAdClose() {
-                    ATListenerEventJniHelper.onNativeBannerAdClose(mUnitId);
+                    ATListenerEventJniHelper.onNativeBannerAdClose(mUnitId, "");
                 }
 
                 @Override
                 public void onAutoRefresh(ATAdInfo adInfo) {
-                    ATListenerEventJniHelper.onNativeBannerAdAutoRefreshed(mUnitId);
+                    ATListenerEventJniHelper.onNativeBannerAdAutoRefreshed(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
                 }
 
                 @Override
                 public void onAutoRefreshFail(String s) {
-                    ATListenerEventJniHelper.onNativeBannerAdAutoRefreshFail(mUnitId, s);
+                    ATListenerEventJniHelper.onNativeBannerAdAutoRefreshFail(mUnitId, s, "");
                 }
 
             });

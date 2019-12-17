@@ -2,6 +2,7 @@ package com.anythink.cocos2dx.bridge;
 
 import android.content.Context;
 
+import com.anythink.cocos2dx.bridge.utils.ATUtils;
 import com.anythink.core.api.AdError;
 import com.anythink.core.api.ATAdInfo;
 import com.anythink.interstitial.api.ATInterstitial;
@@ -38,21 +39,21 @@ public class ATInterstitalImpl {
             @Override
             public void onInterstitialAdClicked(ATAdInfo adInfo) {
                 LogUtils.i(TAG, "sdk onInterstitialAdClicked");
-                ATListenerEventJniHelper.onInterstitialAdClicked(mUnitId);
+                ATListenerEventJniHelper.onInterstitialAdClicked(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onInterstitialAdShow(ATAdInfo adInfo) {
                 LogUtils.i(TAG, "sdk onInterstitialAdShow");
                 mIsReady = false;
-                ATListenerEventJniHelper.onInterstitialAdShow(mUnitId);
+                ATListenerEventJniHelper.onInterstitialAdShow(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
 
             }
 
             @Override
             public void onInterstitialAdClose(ATAdInfo adInfo) {
                 LogUtils.i(TAG, "sdk onInterstitialAdClose");
-                ATListenerEventJniHelper.onInterstitialAdClose(mUnitId);
+                ATListenerEventJniHelper.onInterstitialAdClose(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
