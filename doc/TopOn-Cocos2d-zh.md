@@ -604,8 +604,9 @@ new ATSplashAd(this, container, skipView, "b5bea7bfd93f01", this);
 <h2 id='11'>11 版本更新记录说明 </h2>
 最新的SDK版本号更新如下：</br>
 
-|| SDK version | SDK Version |note|
-|---|---|---|---|
-|cocos| 5.1.0 | 支持TopOn SDK 5.1.0版本|KS需要额外引入KSThirdRelySDK.framework (这个framework是由*AFNetworking/Godzippa/MJExtension/SDWebImage* 四个第三方依赖的源码打包出来的framework，这是为了防止快手平台的广告在cocos下直接调用其第三方依赖而导致崩溃)|
+|| SDK version |note|
+|---|---|---|
+|cocos| v5.2.1 |iOS：KS需要额外引入KSThirdRelySDK.framework (这个framework是由*AFNetworking/Godzippa/MJExtension/SDWebImage* 四个第三方依赖的源码打包出来的framework，这是为了防止快手平台的广告在cocos下直接调用其第三方依赖而导致崩溃)|
+|cocos| v5.4.1 |iOS：gdt update 4.11.2,sigmob update 2.15.2,MTG update 5.8.7<br>去掉不带extra参数的回调|
 
 
