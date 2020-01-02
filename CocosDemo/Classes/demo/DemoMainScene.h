@@ -77,16 +77,6 @@ public:
     
     virtual void onRewardedVideoLoadFailed(const char * placementId, const char * errorString);
     
-    virtual void onRewardedVideoPlayStart(const char * placementId);
-    
-    virtual void onRewardedVideoPlayEnd(const char * placementId);
-    
-    virtual void onRewardedVideoShowFail(const char * placementId, const char * errorString);
-    
-    virtual void onRewardedVideoClose(const char * placementId, bool isRewarded);
-    
-    virtual void onRewardedVideoClicked(const char * placementId);
-    
     //rewardedVideo extra listener
     virtual void onRewardedVideoDidRewardSuccessWithExtra(const char * placementId, const char * extra);
     
@@ -105,11 +95,6 @@ public:
     
     virtual void onInterstitalLoadFailed(const char * placementId, const char * errorString);
     
-    virtual void onInterstitalShow(const char * placementId);
-    
-    virtual void onInterstitalClose(const char * placementId);
-    
-    virtual void onInterstitalClicked(const char * placementId);
     //interstitial extra listener
     virtual void onInterstitalShowWithExtra(const char * placementId,const char * extra);
     
@@ -122,15 +107,6 @@ public:
     
     virtual void onBannerAdLoadFailed(const char * placementId, const char * errorString);
     
-    virtual void onBannerShow(const char * placementId);
-    
-    virtual void onBannerClicked(const char * placementId);
-    
-    virtual void onBannerClose(const char * placementId);
-    
-    virtual void onBannerAutoRefresh(const char * placementId);
-    
-    virtual void onBannerAutoRefreshFail(const char * placementId, const char * errorString);
     //banner extra listener
     virtual void onBannerShowWithExtra(const char * placementId, const char * extra);
     
@@ -147,13 +123,6 @@ public:
 
     virtual void onNativeAdLoadFailed(const char * placementId, const char * errorString);
 
-    virtual void onNativeAdVideoStart(const char * placementId);
-
-    virtual void onNativeAdVideoEnd(const char * placementId);
-
-    virtual void onNativeAdShow(const char * placementId);
-
-    virtual void onNativeAdClick(const char * placementId);
     //native extra listener
     virtual void onNativeAdVideoStartWithExtra(const char * placementId, const char * extra);
     
@@ -168,15 +137,6 @@ public:
 
     virtual void onNativeBannerAdLoadFailed(const char * placementId, const char * errorString);
 
-    virtual void onNativeBannerShow(const char * placementId);
-
-    virtual void onNativeBannerClicked(const char * placementId);
-
-    virtual void onNativeBannerAutoRefreshFail(const char * placementId, const char * errorString);
-
-    virtual void onNativeBannerClose(const char * placementId);
-
-    virtual void onNativeBannerAutoRefresh(const char * placementId);
     //native banner extra listener
     virtual void onNativeBannerShowWithExtra(const char * placementId, const char * extra);
     

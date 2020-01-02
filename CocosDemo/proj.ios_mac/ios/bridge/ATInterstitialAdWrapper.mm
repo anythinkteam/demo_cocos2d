@@ -81,17 +81,6 @@
     }
 }
 
--(void) interstitialDidShowForPlacementID:(NSString*)placementID {
-
-    void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
-    
-    if (callback != NULL) {
-        ATCocosInterstitialAdListener* pDelegate = (ATCocosInterstitialAdListener*)callback;
-        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-        pDelegate->onInterstitalShow(cPlacementId);
-    }
-}
-
 -(void) interstitialFailedToShowForPlacementID:(NSString*)placementID error:(NSError*)error {
 //    error = error != nil ? error : [NSError errorWithDomain:@"com.AT.Unity3DPackage" code:100001 userInfo:@{NSLocalizedDescriptionKey:@"AT has failed to show ad", NSLocalizedFailureReasonErrorKey:@"AT has failed to show ad"}];
 //    [self invokeCallback:@"OnInterstitialAdFailedToShow" placementID:placementID error:error extra:nil];
@@ -109,29 +98,6 @@
 //    [self invokeCallback:@"OnInterstitialAdVideoPlayFailure" placementID:placementID error:error extra:nil];
 }
 
--(void) interstitialDidCloseForPlacementID:(NSString*)placementID {
-    
-    void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
-    
-    if (callback != NULL) {
-        ATCocosInterstitialAdListener* pDelegate = (ATCocosInterstitialAdListener*)callback;
-        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-        pDelegate->onInterstitalClose(cPlacementId);
-    }
-    
-}
-
--(void) interstitialDidClickForPlacementID:(NSString*)placementID  {
-    
-    void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
-    
-    if (callback != NULL) {
-        ATCocosInterstitialAdListener* pDelegate = (ATCocosInterstitialAdListener*)callback;
-        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-        pDelegate->onInterstitalClicked(cPlacementId);
-    }
-   
-}
 
 #pragma mark - delegate with networkID and adsourceID
 

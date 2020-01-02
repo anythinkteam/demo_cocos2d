@@ -16,12 +16,6 @@ public:
     
     virtual void onInterstitalLoadFailed(const char * placementId, const char * errorString) {};
     
-    virtual void onInterstitalShow(const char * placementId) {};
-    
-    virtual void onInterstitalClose(const char * placementId) {};
-    
-    virtual void onInterstitalClicked(const char * placementId) {};
-    
     //interstitial extra listener
     virtual void onInterstitalShowWithExtra(const char * placementId,const char * extra) {};
     

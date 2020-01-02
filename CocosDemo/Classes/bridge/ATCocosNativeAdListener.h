@@ -16,13 +16,6 @@ public:
     
     virtual void onNativeAdLoadFailed(const char * placementId, const char * errorString) {};
     
-    virtual void onNativeAdVideoStart(const char * placementId) {};
-    
-    virtual void onNativeAdVideoEnd(const char * placementId) {};
-    
-    virtual void onNativeAdShow(const char * placementId) {};
-    
-    virtual void onNativeAdClick(const char * placementId) {};
     //native extra listener
     virtual void onNativeAdVideoStartWithExtra(const char * placementId, const char * extra) {};
     

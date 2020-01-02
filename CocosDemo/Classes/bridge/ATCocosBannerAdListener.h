@@ -15,17 +15,7 @@ public:
     virtual void onBannerAdLoadSuccess(const char * placementId) {};
     
     virtual void onBannerAdLoadFailed(const char * placementId, const char * errorString) {};
-    
-    virtual void onBannerShow(const char * placementId) {};
-    
-    virtual void onBannerClicked(const char * placementId) {};
-    
-    virtual void onBannerClose(const char * placementId) {};
-    
-    virtual void onBannerAutoRefresh(const char * placementId) {};
-    
-    virtual void onBannerAutoRefreshFail(const char * placementId, const char * errorString) {};
-    
+      
     //banner extra listener
     virtual void onBannerShowWithExtra(const char * placementId, const char * extra) {};
     

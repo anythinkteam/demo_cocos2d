@@ -255,49 +255,6 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
     }
 }
 
--(void) didShowNativeAdInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID {
- 
-    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
-    
-    if (callback != NULL) {
-        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
-        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-        pDelegate->onNativeAdShow(cPlacementId);
-    }
-}
-    
--(void) didClickNativeAdInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID {
-    //Drop ad view
-    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
-    
-    if (callback != NULL) {
-        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
-        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-        pDelegate->onNativeAdClick(cPlacementId);
-    }
-}
-    
--(void) didStartPlayingVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID {
-    //Drop ad view
-    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
-    
-    if (callback != NULL) {
-        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
-        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-        pDelegate->onNativeAdVideoStart(cPlacementId);
-    }
-}
-    
--(void) didEndPlayingVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID {
-    //Drop ad view
-    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
-    
-    if (callback != NULL) {
-        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
-        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-        pDelegate->onNativeAdVideoEnd(cPlacementId);
-    }
-}
 
 #pragma mark - delegate with networkID and adsourceID
 -(void) didStartPlayingVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{

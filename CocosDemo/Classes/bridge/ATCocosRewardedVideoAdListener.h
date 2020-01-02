@@ -16,16 +16,6 @@ public:
 
     virtual void onRewardedVideoLoadFailed(const char * placementId, const char * errorString) {};
     
-    virtual void onRewardedVideoPlayStart(const char * placementId) {};
-    
-    virtual void onRewardedVideoPlayEnd(const char * placementId) {};
-    
-    virtual void onRewardedVideoShowFail(const char * placementId, const char * errorString) {};
-    
-    virtual void onRewardedVideoClose(const char * placementId, bool isRewarded) {};
-    
-    virtual void onRewardedVideoClicked(const char * placementId) {};
-    
     virtual void onRewardedVideoDidRewardSuccessWithExtra(const char * placementId, const char * extra) {};
     
     virtual void onRewardedVideoPlayStartWithExtra(const char * placementId, const char * extra) {};
