@@ -119,12 +119,12 @@ SDK需要的appid、appkey等参数可通过开发者后台创建app之后获取
 | --- | --- |---|
 |onRewardedVideoLoadSuccess|const char * placementId|广告加载完成|
 |onRewardedVideoLoadFailed|const char * placementId, const char * errorString|广告加载失败，errorString为加载失败的原因|
-|onRewardedVideoClicked|const char * placementId|激励视频产生点击|
-|onRewardedVideoPlayStart|const char * placementId|视频播放开始|
-|onRewardedVideoPlayEnd|const char * placementId|视频播放结束|
-|onRewardedVideoShowFail|unitId: char, errorMsg: char |视频播放失败，errorMsg为加载失败的原因|
-|onRewardedVideoClose|const char * placementId, bool isRewarded|视频关闭，isRewarded为是否产生激励，可能出现因延迟激励导致没有正常激励|
-|onRewardedVideoDidRewardSuccess|const char * placementId|是否产生激励|
+|onRewardedVideoClickedWithExtra|const char * placementId,const char * extra|激励视频产生点击|
+|onRewardedVideoPlayStartWithExtra|const char * placementId,const char * extra|视频播放开始|
+|onRewardedVideoPlayEndWithExtra|const char * placementId,const char * extra|视频播放结束|
+|onRewardedVideoShowFailWithExtra|unitId: char, errorMsg: char ,const char * extra|视频播放失败，errorMsg为加载失败的原因|
+|onRewardedVideoCloseWithExtra|const char * placementId, bool isRewarded,const char * extra|视频关闭，isRewarded为是否产生激励，可能出现因延迟激励导致没有正常激励|
+|onRewardedVideoDidRewardSuccessWithExtra|const char * placementId,const char * extra|是否产生激励|
 
 ### 4.3 调用示例
 
@@ -166,9 +166,9 @@ if(ATCocosSdk::isRewardedVideoAdReady(rvPlacementId)){
 | --- | --- |---|
 |onInterstitalLoadSuccess|const char * placementId|广告加载完成|
 |onInterstitalLoadFailed|const char * placementId, const char * errorString|广告加载失败，errorString为加载失败的原因|
-|onInterstitalClicked|const char * placementId|广告产生点击|
-|onInterstitalShow|const char * placementId|广告展示|
-|onInterstitalClose|const char * placementId|广告关闭|
+|onInterstitalClickedWithExtra|const char * placementId, const char * extra|广告产生点击|
+|onInterstitalShowWithExtra|const char * placementId,const char * extra|广告展示|
+|onInterstitalCloseWithExtra|const char * placementId,const char * extra|广告关闭|
 
 
 ### 5.3 调用示例
@@ -214,11 +214,11 @@ if(ATCocosSdk::isRewardedVideoAdReady(rvPlacementId)){
 | --- | --- |---|
 |onBannerAdLoadSuccess|const char * placementId|广告加载完成|
 |onBannerAdLoadFailed|const char * placementId, const char * errorString|广告加载失败，errorString为加载失败的原因|
-|onBannerClicked|const char * placementId|广告产生点击|
-|onBannerShow|const char * placementId|广告展示|
-|onBannerClose|const char * placementId|广告关闭|
-|onBannerAutoRefresh|const char * placementId|广告自动刷新|
-|onBannerAutoRefreshFail|const char * placementId, const char * errorString|广告自动刷新失败，errorString为失败的原因|
+|onBannerClickedWithExtra|const char * placementId, const char * extra|广告产生点击|
+|onBannerShowWithExtra|const char * placementId, const char * extra|广告展示|
+|onBannerCloseWithExtra|const char * placementId, const char * extra|广告关闭|
+|onBannerAutoRefreshWithExtra|const char * placementId, const char * extra|广告自动刷新|
+|onBannerAutoRefreshFailWithExtra|const char * placementId, const char * errorString, const char * extra|广告自动刷新失败，errorString为失败的原因|
 
 
 ### 6.3 调用示例
@@ -313,10 +313,6 @@ ATCocosSdk::setBannerAdListener(this, bannerPlacementId);
 | --- | --- |---|
 |onNativeAdLoadSuccess|const char * placementId|广告加载完成|
 |onNativeAdLoadFailed|const char * placementId, const char * errorString |广告加载失败，errorMsg为加载失败的原因|
-|onNativeAdClick|const char * placementId|广告产生点击|
-|onNativeAdShow|const char * placementId|广告展示|
-|onNativeAdVideoStart|const char * placementId|原生视频播放开始，不同network可能支持不一样|
-|onNativeAdVideoEnd|const char * placementId|原生视频播放结束，不同network可能支持不一样|
 |onNativeAdShowWithExtra|const char * placementId, const char * extra|广告位展示<br>extra包含adsourceId和networkId|
 |onNativeAdClickWithExtra|const char * placementId, const char * extra|广告位产生点击<br>extra包含adsourceId和networkId|
 |onNativeAdVideoStartWithExtra|const char * placementId, const char * extra|原生视频播放开始，不同network可能支持不一样br>extra包含adsourceId和networkId|
@@ -428,11 +424,6 @@ iOS支持的分辨率(配置指定传入宽高参数)：auto。
 | --- | --- |---|
 |onNativeBannerAdLoadSuccess| const char * placementId |广告加载完成|
 |onNativeBannerAdLoadFailed|const char * placementId, const char * errorString |广告加载失败及相关的错误信息|
-|onNativeBannerShow|const char * placementId|广告位展示|
-|onNativeBannerClicked|const char * placementId|广告位产生点击|
-|onNativeBannerAutoRefreshFail|const char * placementId, const char * errorString|广告自动刷新失败及相关的错误信息|
-|onNativeBannerClose|const char * placementId|用户点击banner关闭按钮|
-|onNativeBannerAutoRefresh|const char * placementId|广告自动刷新|
 |onNativeBannerShowWithExtra|const char * placementId, const char * extra|广告位展示<br>extra包含adsourceId和networkId|
 |onNativeBannerClickedWithExtra|const char * placementId|广告位产生点击<br>extra包含adsourceId和networkId|
 |onNativeBannerAutoRefreshFailWithExtra|const char * placementId, const char * errorString|广告自动刷新失败及相关的错误信息<br>extra包含adsourceId和networkId|
@@ -608,5 +599,32 @@ new ATSplashAd(this, container, skipView, "b5bea7bfd93f01", this);
 |---|---|---|
 |cocos| v5.2.1 |iOS：KS需要额外引入KSThirdRelySDK.framework (这个framework是由*AFNetworking/Godzippa/MJExtension/SDWebImage* 四个第三方依赖的源码打包出来的framework，这是为了防止快手平台的广告在cocos下直接调用其第三方依赖而导致崩溃)|
 |cocos| v5.4.1 |iOS：gdt update 4.11.2,sigmob update 2.15.2,MTG update 5.8.7<br>去掉不带extra参数的回调|
+iOSv5.4.1:
 
-
+| Network | SDK Version |
+|---|---|
+| Facebook | 5.5.1 |
+| Admob | 7.52.0 |
+| Inmobi | 7.3.1 |
+| Flurry | 9.0.0 |
+| Applovin | 6.10.0 |
+| Mintegral | 5.8.7 |
+| Mopub | 5.10.0 |
+| GDT | 4.11.2|
+| Yeahmobi | 3.2.0 |
+| Appnext | 1.9.3 |
+| Chartboost | 8.0.3 |
+| Ironsource | 6.10.0 |
+| Vungle | 6.4.6 |
+| Adcolony | 4.1.2.0 |
+| UnityAds | 3.4.0 |
+| TT | 2.5.1.5 |
+| Tapjoy | 12.3.4 |
+| Oneway | 2.1.0 |
+| Baidu | 4.6.7 |
+| MobPower | 1.0.0 |
+| Nend | 5.3.1 |
+| Maio | 1.5.0 |
+| ks | 2.5.1.12 |
+| sigmob | 2.15.2 |
+| Ogury | 1.0.3 |

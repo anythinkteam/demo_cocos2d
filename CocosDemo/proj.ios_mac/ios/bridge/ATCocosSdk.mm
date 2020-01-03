@@ -78,13 +78,23 @@ void ATCocosSdk::setDebugLog(bool value) {
 //iOS
 void ATCocosSdk::setGDPRLevel(int level) {
     level = level + 1;
+    if(level == 3) {
+        level = 0;
+    }
     [[ATAPI sharedInstance] setDataConsentSet:ATDataConsentSet(level) consentString:nil];
+}
+//iOS
+int ATCocosSdk::getGDPRLevel() {
+    int gdprLevel = (int)[ATAPI sharedInstance].dataConsentSet;
+    return gdprLevel;
 }
 //iOS + Android
 void ATCocosSdk::showGdprAuth() {
     
     UIViewController *rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [[ATAPI sharedInstance] presentDataConsentDialogInViewController:rootViewController];
+    [[ATAPI sharedInstance]presentDataConsentDialogInViewController:rootViewController dismissalCallback:^{
+
+    }];
     
 }
 //iOS + Android.

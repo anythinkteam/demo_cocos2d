@@ -148,6 +148,7 @@ bool DemoMainScene::init()
     
     ATCocosSdk::setCustomData(customDict);
     CCLOG("DemoMainScene::onAdLoadSuccess" + ATCocosSdk::isEUTraffic()?"YES":"NO");
+    ATCocosSdk::getGDPRLevel();
     ATCocosSdk::setGDPRLevel(0);
     
     ATCocosSdk::initSDK(appId, appKey);

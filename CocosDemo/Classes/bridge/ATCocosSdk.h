@@ -60,6 +60,8 @@ public:
     static void setDebugLog(bool value);
     //iOS
     static void setGDPRLevel(int level);
+    //iOS
+    static int getGDPRLevel();
     //iOS + Android
     static void showGdprAuth();
     //iOS + Android.

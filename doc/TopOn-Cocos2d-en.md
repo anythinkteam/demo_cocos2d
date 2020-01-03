@@ -753,30 +753,35 @@ CoreTelephony.framework</br>
 
 <h2 id='11'>11 版本更新记录说明 </h2>
 最新的SDK版本号更新如下：</br>
-iOS聚合SDK版本为4.0.4</br>
+iOS聚合SDK版本为5.4.1</br>
 
 | Network | SDK Version |
 |---|---|
-| Facebook | 5.2.0 |
-| Admob | 7.44.0 |
-| Inmobi | 7.1.1 |
+| Facebook | 5.5.1 |
+| Admob | 7.52.0 |
+| Inmobi | 7.3.1 |
 | Flurry | 9.0.0 |
-| Applovin | 6.6.1 |
-| Mintegral | 5.3.2 |
-| Mopub | 5.0.0 |
-| GDT | 4.10.3 |
+| Applovin | 6.10.0 |
+| Mintegral | 5.8.7 |
+| Mopub | 5.10.0 |
+| GDT | 4.11.2|
 | Yeahmobi | 3.2.0 |
-| Appnext | 1.9.0 |
-| Chartboost | 7.2.0 |
-| Ironsource | 6.8.4 |
-| Vungle | 6.2.0 |
-| Adcolony | 3.3.5.0 |
-| UnityAds | 3.1.0 |
-| TT | 2.0.1.4 |
-| Tapjoy | 12.0.0 |
+| Appnext | 1.9.3 |
+| Chartboost | 8.0.3 |
+| Ironsource | 6.10.0 |
+| Vungle | 6.4.6 |
+| Adcolony | 4.1.2.0 |
+| UnityAds | 3.4.0 |
+| TT | 2.5.1.5 |
+| Tapjoy | 12.3.4 |
 | Oneway | 2.1.0 |
-| Baidu | 4.6.4 |
+| Baidu | 4.6.7 |
 | MobPower | 1.0.0 |
+| Nend | 5.3.1 |
+| Maio | 1.5.0 |
+| ks | 2.5.1.12 |
+| sigmob | 2.15.2 |
+| Ogury | 1.0.3 |
 
 Android聚合SDK版本为4.1.2</br>
 
