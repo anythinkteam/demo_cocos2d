@@ -603,7 +603,7 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
         switch (tag)
         {
             case 1: //show gdpr
-                ATCocosSdk::showGdprAuth();
+                ATCocosSdk::showGdprAuthWithListener(this);
                 break;
             case 2: //load native
             {
@@ -1022,3 +1022,8 @@ void DemoMainScene::onNativeBannerAutoRefreshWithExtra(const char *placementId, 
     log("DemoMainScene::onNativeBannerAutoRefreshWithExtra %s with extra %s", placementId,extra);
 }
 
+//gdpr listener
+
+void DemoMainScene::onGDPRDataConsentSet(int dataConsent){
+    log("DemoMainScene::onGDPRDataConsentSet %d",dataConsent);
+}

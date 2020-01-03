@@ -11,6 +11,7 @@
 #include "ATCocosBannerAdListener.h"
 #include "ATCocosNativeAdListener.h"
 #include "ATCocosNativeBannerAdListener.h"
+#include "ATCocosGDPRListener.h"
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
 #include <ui/UIWidget.h>
@@ -20,11 +21,13 @@
 #include "bridge/ATCocosBannerAdListener.h"
 #include "bridge/ATCocosNativeAdListener.h"
 #include "bridge/ATCocosNativeBannerAdListener.h"
+#include "bridge/ATCocosGDPRListener.h"
+
 #endif
 
 
 
-class DemoMainScene : public cocos2d::Scene, public ATCocosRewardedVideoAdListener, public ATCocosInterstitialAdListener, public ATCocosBannerAdListener, public ATCocosNativeAdListener , public ATCocosNativeBannerAdListener{
+class DemoMainScene : public cocos2d::Scene, public ATCocosRewardedVideoAdListener, public ATCocosInterstitialAdListener, public ATCocosBannerAdListener, public ATCocosNativeAdListener , public ATCocosNativeBannerAdListener, public ATCocosGDPRListener{
 public:
     static cocos2d::Scene *createScene();
 
@@ -56,7 +59,7 @@ public:
     void initLoadNativeBannerBtn();
     void initShowNativeBannerBtn();
     void initCleanNativeBannerBtn();
-
+    
     void initLoadBannerBtn();
     void initShowBannerBtn();
     void initCleanBannerBtn();
@@ -148,6 +151,8 @@ public:
     
     virtual void onNativeBannerAutoRefreshWithExtra(const char * placementId,const char * extra);
     
+    //GDPR listener
+    virtual void onGDPRDataConsentSet(int dataConsent);
 private:
     const char* appId;
     const char* appKey;

@@ -288,6 +288,7 @@
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		9B4FD3C523BF61010073CF4B /* ATCocosGDPRListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ATCocosGDPRListener.h; sourceTree = "<group>"; };
 		9BDA882E2397C9CD00881E25 /* KSThirdRelySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KSThirdRelySDK.framework; sourceTree = "<group>"; };
 		9BDA8975239A33F500881E25 /* AnyThinkMintegralBannerAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkMintegralBannerAdapter.framework; sourceTree = "<group>"; };
 		9BDA8978239A33F600881E25 /* OMSDK_Oguryco.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OMSDK_Oguryco.framework; sourceTree = "<group>"; };
@@ -899,6 +900,7 @@
 				DC084700238D1A4C0069AA44 /* ATCocosNativeAdListener.h */,
 				DC0846FE238D1A4C0069AA44 /* ATCocosNativeBannerAdListener.h */,
 				DC084701238D1A4C0069AA44 /* ATCocosRewardedVideoAdListener.h */,
+				9B4FD3C523BF61010073CF4B /* ATCocosGDPRListener.h */,
 				DC084702238D1A4C0069AA44 /* ATCocosSdk.h */,
 			);
 			path = bridge;

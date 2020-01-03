@@ -14,6 +14,7 @@
 #include "ATCocosNativeAdListener.h"
 #include "ATCocosRewardedVideoAdListener.h"
 #include "ATCocosNativeBannerAdListener.h"
+#include "ATCocosGDPRListener.h"
 
 
 #define UPARPU_COCOS_SDK_VERSION   "1.0.0"
@@ -64,6 +65,9 @@ public:
     static int getGDPRLevel();
     //iOS + Android
     static void showGdprAuth();
+    
+    static void showGdprAuthWithListener(ATCocosGDPRListener * listener);
+
     //iOS + Android.
     static bool isEUTraffic();
     
