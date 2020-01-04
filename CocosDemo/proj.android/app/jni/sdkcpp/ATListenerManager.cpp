@@ -99,4 +99,12 @@ ATCocosRewardedVideoAdListener *ATListenerManager::getRewardedVideoListener(
     return itr->second;
 }
 
+void ATListenerManager::setGdprListener(ATCocosGDPRListener *listener) {
+    gdprListener = listener;
+}
+
+ATCocosGDPRListener *ATListenerManager::getGdprListener() {
+    return gdprListener;
+}
+
 

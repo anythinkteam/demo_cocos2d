@@ -67,6 +67,20 @@ void ATCocosSdk::showGdprAuth() {
     }
 }
 
+void ATCocosSdk::showGdprAuthWithListener(ATCocosGDPRListener * listener) {
+    ATListenerManager::getInstance()->setGdprListener(listener);
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "showGdprWidthListener", "()V");
+    if (ret) {
+        ATUtil::printLog("showGdprWidthListener");
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, listener);
+
+    } else {
+        ATUtil::printLog("showGdprWidthListener error");
+    }
+}
+
 void ATCocosSdk::setGDPRLevel(const int32_t level) {
     JniMethodInfo info;
 
@@ -78,6 +92,21 @@ void ATCocosSdk::setGDPRLevel(const int32_t level) {
 
     } else {
         ATUtil::printLog("setGDPRLevel error");
+    }
+}
+
+int ATCocosSdk::getGDPRLevel() {
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "getGDPRLevel",
+                                              "()I");
+    if (ret) {
+        ATUtil::printLog("getGDPRLevel");
+        jint result = info.env->CallStaticIntMethod(info.classID, info.methodID);
+        return result;
+    } else {
+        ATUtil::printLog("getGDPRLevel error");
+        return 2;
     }
 }
 

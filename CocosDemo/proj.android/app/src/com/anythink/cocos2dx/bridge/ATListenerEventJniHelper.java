@@ -60,4 +60,6 @@ public class ATListenerEventJniHelper {
 
     public static native void onSDKInitSuccess();
     public static native void onSDKInitFail(String errorMsg);
+
+    public static native void onGdprAuth(int gdprLevel);
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.anythink.core.api.ATGDPRAuthCallback;
 import com.anythink.core.api.ATSDK;
 import com.anythink.core.api.ATSDKInitListener;
 
@@ -92,6 +93,28 @@ public class ATSDKJniHelper {
         });
     }
 
+    public static void showGdprWidthListener() {
+        LogUtils.i(TAG, "showGDPR");
+        if (sActivity == null) {
+            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            return;
+        }
+
+
+        sActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ATSDK.showGdprAuth(sActivity, new ATGDPRAuthCallback() {
+                    @Override
+                    public void onAuthResult(int i) {
+                        LogUtils.e(TAG, "sdk onAuthResult, GDPR: [" + i + "]");
+                        ATListenerEventJniHelper.onGdprAuth(i);
+                    }
+                });
+            }
+        });
+    }
+
     public static void setGDPRLevel(int pGDPRUploadDataLevel) {
         LogUtils.i(TAG, "setGDPRLevel");
         if (sActivity == null) {
@@ -99,6 +122,15 @@ public class ATSDKJniHelper {
             return;
         }
         ATSDK.setGDPRUploadDataLevel(sActivity, pGDPRUploadDataLevel);
+    }
+
+    public static int getGDPRLevel() {
+        LogUtils.i(TAG, "getGDPRDataLevel");
+        if (sActivity == null) {
+            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            return ATSDK.UNKNOWN;
+        }
+        return ATSDK.getGDPRDataLevel(sActivity);
     }
 
     public static boolean isEUTraffic() {

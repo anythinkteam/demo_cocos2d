@@ -11,6 +11,7 @@
 #include "bridge/ATCocosNativeAdListener.h"
 #include "bridge/ATCocosRewardedVideoAdListener.h"
 #include "bridge/ATCocosNativeBannerAdListener.h"
+#include "bridge/ATCocosGDPRListener.h"
 
 using namespace std;
 
@@ -55,6 +56,11 @@ public:
      */
     void addNativeBannerAdListener(const char *placementId, ATCocosNativeBannerAdListener *listener);
 
+    /***
+    * 获取 GDPR 的listener
+    * @param pat
+    */
+    void setGdprListener(ATCocosGDPRListener *listener);
 
     /**--------------------------------------get-------------------------------------------**/
     /**
@@ -87,6 +93,12 @@ public:
      */
     ATCocosNativeBannerAdListener *getNativeBannerAdListener(const char *placementId);
 
+    /***
+    * 获取 GDPR 的listener
+    * @param pat
+    */
+    ATCocosGDPRListener *getGdprListener();
+
 private:
     static ATListenerManager *sIntance;
 
@@ -99,6 +111,8 @@ private:
     map<string, ATCocosNativeAdListener *> *nativeDic;
     map<string, ATCocosRewardedVideoAdListener *> *rewardedVideoDic;
     map<string, ATCocosNativeBannerAdListener *> *nativeBannerDic;
+
+    ATCocosGDPRListener *gdprListener;
 };
 
 

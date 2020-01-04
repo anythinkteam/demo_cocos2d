@@ -147,8 +147,8 @@ bool DemoMainScene::init()
     customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
     
     ATCocosSdk::setCustomData(customDict);
-    CCLOG("DemoMainScene::onAdLoadSuccess" + ATCocosSdk::isEUTraffic()?"YES":"NO");
-    ATCocosSdk::getGDPRLevel();
+    CCLOG("DemoMainScene::isEUTraffic " + ATCocosSdk::isEUTraffic()?"YES":"NO");
+    CCLOG("DemoMainScene::getGDPRLevel " + ATCocosSdk::getGDPRLevel());
     ATCocosSdk::setGDPRLevel(0);
     
     ATCocosSdk::initSDK(appId, appKey);
