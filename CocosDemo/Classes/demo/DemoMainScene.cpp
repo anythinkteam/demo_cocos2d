@@ -147,11 +147,11 @@ bool DemoMainScene::init()
     customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
     
     ATCocosSdk::setCustomData(customDict);
-    CCLOG("DemoMainScene::isEUTraffic " + ATCocosSdk::isEUTraffic()?"YES":"NO");
+    CCLOG("DemoMainScene::isEUTraffic %s", ATCocosSdk::isEUTraffic()?"YES":"NO");
     CCLOG("DemoMainScene::getGDPRLevel %d", ATCocosSdk::getGDPRLevel());
-    ATCocosSdk::setGDPRLevel(0);
+//    ATCocosSdk::setGDPRLevel(0);
     ATCocosSdk::initSDK(appId, appKey);
-    int gdprLevel = ATCocosSdk::getGDPRLevel();
+//    int gdprLevel = ATCocosSdk::getGDPRLevel();
 
     return true;
 }

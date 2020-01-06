@@ -109,8 +109,8 @@ static AppDelegate s_sharedApplication;
     customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
     
     ATCocosSdk::setCustomData(customDict);
-    CCLOG("ATDemoMainScene::onAdLoadSuccess" + ATCocosSdk::isEUTraffic()?"YES":"NO");
-    ATCocosSdk::setGDPRLevel(0);
+//    CCLOG("ATDemoMainScene::onAdLoadSuccess" + ATCocosSdk::isEUTraffic()?"YES":"NO");
+//    ATCocosSdk::setGDPRLevel(0);
     
     const char* appId = "a5b0e8491845b3";
     const char* appKey = "7eae0567827cfe2b22874061763f30c9";
@@ -118,7 +118,7 @@ static AppDelegate s_sharedApplication;
     ATCocosSdk::initSDK(appId, appKey);
     
 //    [self.window makeKeyAndVisible];
-    [[ATAdManager sharedManager] loadADWithPlacementID:@"b5c1b048c498b9" extra:@{kATSplashExtraTolerateTimeoutKey:@5.0} customData:nil delegate:self window:window containerView:nil];
+//    [[ATAdManager sharedManager] loadADWithPlacementID:@"b5c1b048c498b9" extra:@{kATSplashExtraTolerateTimeoutKey:@5.0} customData:nil delegate:self window:window containerView:nil];
     
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
