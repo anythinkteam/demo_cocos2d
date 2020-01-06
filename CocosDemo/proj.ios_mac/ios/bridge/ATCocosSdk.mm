@@ -103,7 +103,7 @@ void ATCocosSdk::showGdprAuthWithListener(ATCocosGDPRListener * listener) {
     
     UIViewController *rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     [[ATAPI sharedInstance]presentDataConsentDialogInViewController:rootViewController dismissalCallback:^{
-        listener -> onGDPRDataConsentSet((int)[ATAPI sharedInstance].dataConsentSet);
+        listener -> onGDPRDataConsentSet(ATCocosSdk::getGDPRLevel());
     }];
 }
 //iOS + Android.
