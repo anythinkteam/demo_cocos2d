@@ -21,6 +21,7 @@
 		294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D631D0D56D500F7F5D4 /* CoreText.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
+		45E3DE5423C335F30056A022 /* TraminiSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E3DE5223C335F30056A022 /* TraminiSDK.framework */; };
 		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
 		46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
 		46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7719C43A67006E1F66 /* CloseSelected.png */; };
@@ -269,6 +270,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		294D0D631D0D56D500F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
+		45E3DE5223C335F30056A022 /* TraminiSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TraminiSDK.framework; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 				DC55E04C238EBC2F00235D03 /* VideoToolbox.framework in Frameworks */,
 				DC55E04A238EBBAA00235D03 /* libresolv.9.tbd in Frameworks */,
 				DC55E048238EBB9C00235D03 /* libz.tbd in Frameworks */,
+				45E3DE5423C335F30056A022 /* TraminiSDK.framework in Frameworks */,
 				DC55E046238EBB8D00235D03 /* CoreMedia.framework in Frameworks */,
 				DC55E044238EBB7500235D03 /* libsqlite3.tbd in Frameworks */,
 				DC55E042238EBAB400235D03 /* libxml2.tbd in Frameworks */,
@@ -934,6 +937,7 @@
 		DC55DDBB238EB00300235D03 /* sdk */ = {
 			isa = PBXGroup;
 			children = (
+				45E3DE5223C335F30056A022 /* TraminiSDK.framework */,
 				9BDA8981239A3DE500881E25 /* AnyThinkOguryInterstitialAdapter.framework */,
 				9BDA8982239A3DE600881E25 /* AnyThinkOguryRewardedVideoAdapter.framework */,
 				9BDA8975239A33F500881E25 /* AnyThinkMintegralBannerAdapter.framework */,

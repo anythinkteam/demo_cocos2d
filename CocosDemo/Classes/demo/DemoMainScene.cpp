@@ -121,11 +121,11 @@ bool DemoMainScene::init()
     appKey = "7eae0567827cfe2b22874061763f30c9";
     
     
-    rvPlacementId = "b5b44a02bf08c0";
-    interPlacementId = "b5bacad6860972";
-    bannerPlacementId = "b5bacacef17717";
-    nativePlacementId = "b5b0f55228375a";
-    nativebannerPlacementId = "b5c2c6d50e7f44";
+    rvPlacementId = "b5d13341598199";
+    interPlacementId = "b5d13340a1dd21";
+    bannerPlacementId = "b5d146f9483215";
+    nativePlacementId = "b5d1333d023691";
+    nativebannerPlacementId = "b5d1333d023691";
     
     
     
