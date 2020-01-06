@@ -79,18 +79,16 @@ void ATCocosSdk::setDebugLog(bool value) {
 //iOS
 void ATCocosSdk::setGDPRLevel(int level) {
     level = level + 1;
-    if (level == 3) {
-        level = 0;
-    }
+    if (level == 3) {level = 0;}
+    if (level > 2 || level < 0) { level = 0;}
     [[ATAPI sharedInstance] setDataConsentSet:ATDataConsentSet(level) consentString:nil];
 }
 //iOS
 int ATCocosSdk::getGDPRLevel() {
     int gdprLevel = (int)[ATAPI sharedInstance].dataConsentSet;
-    gdprLevel = gdprLevel + 1;
-    if (gdprLevel == 3) {
-        gdprLevel = 0;
-    }
+    gdprLevel = gdprLevel - 1;
+    if (gdprLevel == -1) { gdprLevel = 2;}
+    if (gdprLevel < -1 || gdprLevel > 1) { gdprLevel = 2;}
     return gdprLevel;
 }
 void ATCocosSdk::showGdprAuth() {

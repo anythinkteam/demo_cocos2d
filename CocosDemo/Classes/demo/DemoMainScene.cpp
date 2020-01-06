@@ -150,9 +150,9 @@ bool DemoMainScene::init()
     CCLOG("DemoMainScene::isEUTraffic " + ATCocosSdk::isEUTraffic()?"YES":"NO");
     CCLOG("DemoMainScene::getGDPRLevel " + ATCocosSdk::getGDPRLevel());
     ATCocosSdk::setGDPRLevel(0);
-    
     ATCocosSdk::initSDK(appId, appKey);
-    
+    int gdprLevel = ATCocosSdk::getGDPRLevel();
+
     return true;
 }
 
