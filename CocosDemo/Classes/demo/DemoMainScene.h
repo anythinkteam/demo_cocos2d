@@ -6,12 +6,12 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
 #include <ui/UIWidget.h>
 #include "cocos2d.h"
-//#include "ATCocosRewardedVideoAdListener.h"
-//#include "ATCocosInterstitialAdListener.h"
-//#include "ATCocosBannerAdListener.h"
-//#include "ATCocosNativeAdListener.h"
-//#include "ATCocosNativeBannerAdListener.h"
-//#include "ATCocosGDPRListener.h"
+#include "ATCocosRewardedVideoAdListener.h"
+#include "ATCocosInterstitialAdListener.h"
+#include "ATCocosBannerAdListener.h"
+#include "ATCocosNativeAdListener.h"
+#include "ATCocosNativeBannerAdListener.h"
+#include "ATCocosGDPRListener.h"
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
 #include <ui/UIWidget.h>
