@@ -1,1 +1,4 @@
 CocosDemo/proj.android/app/.cxx
+CocosDemo/cocos2d/cocos/platform/android/libcocos2dx/build
+CocosDemo/proj.android/.idea
+libcocos2dx.iml
