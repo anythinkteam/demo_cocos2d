@@ -27,6 +27,10 @@ public class ATNativeBannerImpl {
     }
 
     public void loadAd(final Activity activity) {
+        loadAd(activity, null);
+    }
+
+    public void loadAd(final Activity activity, Map<String, Object> localMap) {
         synchronized (ATNativeBannerImpl.this) {
 
 
@@ -72,6 +76,9 @@ public class ATNativeBannerImpl {
                 }
 
             });
+            if(localMap != null) {
+                mNativeBannerView.setLocalExtra(localMap);
+            }
             mNativeBannerView.loadAd(null);
         }
     }

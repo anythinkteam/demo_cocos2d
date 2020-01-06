@@ -470,7 +470,7 @@ public class ATSDKJniHelper {
      **/
     private static Map<String, ATNativeBannerImpl> mNativeBannerHashMap = new HashMap();
 
-    public static void loadNativeBannerAd(final String pUnitid, final Map<String, String> localMap) {
+    public static void loadNativeBannerAd(final String pUnitid, final Map<String, Object> localMap) {
         LogUtils.i(TAG, "loadNativeBannerAd-->" + pUnitid);
         if (sActivity == null) {
             LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
@@ -490,7 +490,7 @@ public class ATSDKJniHelper {
         sActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                finalATNativeBannerImpl.loadAd(sActivity);
+                finalATNativeBannerImpl.loadAd(sActivity, localMap);
             }
         });
 

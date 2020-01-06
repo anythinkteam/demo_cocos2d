@@ -51,21 +51,29 @@ public class ATNativeRender implements ATNativeAdRenderer<CustomNativeAd> {
         FrameLayout iconArea = (FrameLayout) view.findViewById(R.id.native_ad_image);
         final RecycleImageView iconView = new RecycleImageView(mActivity);
         iconView.setImageDrawable(null);
+
         if (adiconView == null) {
             iconArea.addView(iconView);
-            CommonImageLoader.getInstance().startLoadImage(ad.getIconImageUrl(), 0, new CommonImageLoader.ImageCallback() {
-                @Override
-                public void onSuccess(Bitmap bitmap, String url) {
-                    iconView.setImageBitmap(bitmap);
-                }
 
-                @Override
-                public void onFail() {
+            if (!TextUtils.isEmpty(ad.getIconImageUrl())) {
+                CommonImageLoader.getInstance().startLoadImage(ad.getIconImageUrl(), 0, new CommonImageLoader.ImageCallback() {
+                    @Override
+                    public void onSuccess(Bitmap bitmap, String url) {
+                        iconView.setImageBitmap(bitmap);
+                    }
 
-                }
-            });
+                    @Override
+                    public void onFail() {
+
+                    }
+                });
+                iconArea.setVisibility(View.VISIBLE);
+            } else {
+                iconArea.setVisibility(View.GONE);
+            }
         } else {
             iconArea.addView(adiconView);
+            iconArea.setVisibility(View.VISIBLE);
         }
 
 
@@ -114,9 +122,27 @@ public class ATNativeRender implements ATNativeAdRenderer<CustomNativeAd> {
 
         }
 
-        titleView.setText(ad.getTitle());
-        descView.setText(ad.getDescriptionText());
-        ctaView.setText(ad.getCallToActionText());
+        if (!TextUtils.isEmpty(ad.getTitle())) {
+            titleView.setText(ad.getTitle());
+            titleView.setVisibility(View.VISIBLE);
+        } else {
+            titleView.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(ad.getDescriptionText())) {
+            descView.setText(ad.getDescriptionText());
+            descView.setVisibility(View.VISIBLE);
+        } else {
+            descView.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(ad.getCallToActionText())) {
+            ctaView.setText(ad.getCallToActionText());
+            ctaView.setVisibility(View.VISIBLE);
+        } else {
+            ctaView.setVisibility(View.GONE);
+        }
+
         if (!TextUtils.isEmpty(ad.getAdFrom())) {
             adFromView.setText(ad.getAdFrom() != null ? ad.getAdFrom() : "");
             adFromView.setVisibility(View.VISIBLE);

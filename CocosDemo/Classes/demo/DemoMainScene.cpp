@@ -148,7 +148,7 @@ bool DemoMainScene::init()
     
     ATCocosSdk::setCustomData(customDict);
     CCLOG("DemoMainScene::isEUTraffic " + ATCocosSdk::isEUTraffic()?"YES":"NO");
-    CCLOG("DemoMainScene::getGDPRLevel " + ATCocosSdk::getGDPRLevel());
+    CCLOG("DemoMainScene::getGDPRLevel %d", ATCocosSdk::getGDPRLevel());
     ATCocosSdk::setGDPRLevel(0);
     ATCocosSdk::initSDK(appId, appKey);
     int gdprLevel = ATCocosSdk::getGDPRLevel();
@@ -608,7 +608,28 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
             case 2: //load native
             {
                 ATCocosSdk::setNativeAdListener(this, nativePlacementId);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
                 ATCocosSdk::loadNativeAd(nativePlacementId, NULL);
+#endif
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
+
+                //for toutiao native express
+                auto glView = Director::getInstance()->getOpenGLView();
+                auto frameSize = glView->getFrameSize();
+                int width = frameSize.width;
+                int height = frameSize.height;
+
+                cocos2d::CCDictionary *localDict = cocos2d::CCDictionary::create();
+                std::string widthStr = StringUtils::format("%d", width);
+                std::string heightStr = StringUtils::format("%d", width *2/ 3);
+                localDict->setObject(cocos2d::CCString::create(widthStr), "tt_image_width");
+                localDict->setObject(cocos2d::CCString::create(heightStr), "tt_image_height");
+                //for toutiao native express
+
+                ATCocosSdk::loadNativeAd(nativePlacementId, localDict);
+#endif
+
             }
               
                 break;
