@@ -1,13 +1,14 @@
 # TopOn Cocos2d
 
-<h3>TopOn Cocos2d SDK Integration Document<br>
-  (TopOn Cocos2d SDK的集成指引)</h3>
+<h3>TopOn Cocos2d SDK的集成指引</h3>
 
-[Topon Cocos2d SDK的集成文档（中文版）](doc/TopOn-Cocos2d-zh.md)<br>
+<a href="https://docs.toponad.com/#/zh-cn/cocos/cocos_doc/cocos_access_doc" target="_blank">Topon Cocos2d SDK的集成文档（中文版）</a>
 
-[TopOn Cocos2d Integration (English)](doc/TopOn-Cocos2d-en.md)<br>
+<a href="https://docs.toponad.com/#/en-us/cocos/cocos_doc/cocos_access_doc" target="_blank">TopOn-Cocos2d-Integration (English)</a>
 
-You can also integrate the sdk by iOS or Android SDK. See the guide below.<br>
-(你也可以直接集成SDK通过Android/iOS版SDK集成说明)<br>
-[iOS Integration Guide(iOS版本集成说明)](https://github.com/anythinkteam/demo_ios)<br>
-[Android Integration Guide(Android版本集成说明)](https://github.com/anythinkteam/demo_android)<br>
+TopOn Cocos2d SDK下载地址：
+
+<a href="https://docs.toponad.com/#/zh-cn/cocos/cocos_doc/release_note" target="_blank">TopOn Cocos2d SDK(中文）</a>
+
+<a href="https://docs.toponad.com/#/en-us/cocos/cocos_doc/release_note" target="_blank">TopOn Cocos2d  SDK(English）</a>
+
