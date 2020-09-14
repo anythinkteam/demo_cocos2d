@@ -2,19 +2,19 @@ package com.anythink.cocos2dx.bridge;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.anythink.cocos2dx.bridge.utils.image.CommonImageLoader;
+import com.anythink.cocos2dx.bridge.utils.CommonUtil;
 import com.anythink.nativead.api.ATNativeAdRenderer;
+import com.anythink.nativead.api.ATNativeImageView;
 import com.anythink.nativead.unitgroup.api.CustomNativeAd;
-
-import org.cocos2dx.demo_cocos2d.R;
 
 
 /**
@@ -24,132 +24,186 @@ import org.cocos2dx.demo_cocos2d.R;
  */
 public class ATNativeRender implements ATNativeAdRenderer<CustomNativeAd> {
 
+    private static final String TAG = ATNativeRender.class.getSimpleName();
     Activity mActivity;
+    ViewInfo mViewInfo;
+    FrameLayout mFrameLayout;
 
-    public ATNativeRender(Activity pActivity) {
+    public ATNativeRender(Activity pActivity, ViewInfo pViewInfo) {
         mActivity = pActivity;
+        mViewInfo = pViewInfo;
     }
 
+    int mNetworkType;
 
     @Override
     public View createView(Context context, int networkType) {
-        return LayoutInflater.from(context).inflate(R.layout.demo_cocos2d_native_ad_item, null);
+
+        mNetworkType = networkType;
+        mFrameLayout = new FrameLayout(context);
+        return mFrameLayout;
     }
 
     @Override
     public void renderAdView(View view, CustomNativeAd ad) {
 
-        TextView titleView = (TextView) view.findViewById(R.id.native_ad_title);
-        TextView descView = (TextView) view.findViewById(R.id.native_ad_desc);
-        TextView ctaView = (TextView) view.findViewById(R.id.native_ad_install_btn);
-        TextView adFromView = (TextView) view.findViewById(R.id.native_ad_from);
+        TextView titleView = new TextView(mActivity);
+        TextView descView = new TextView(mActivity);
+        TextView ctaView = new TextView(mActivity);
 
-        FrameLayout contentArea = (FrameLayout) view.findViewById(R.id.native_ad_content_image_area);
-        View mediaView = ad.getAdMediaView(contentArea, contentArea.getWidth());
-        View adiconView = ad.getAdIconView();
+        final View mediaView = ad.getAdMediaView(mFrameLayout, view.getWidth());
+        if (mediaView != null && ad.isNativeExpress()) { // 个性化模板View
+            if (mViewInfo.imgMainView != null && mViewInfo.rootView != null) {
+                mViewInfo.imgMainView.mX = 0;
+                mViewInfo.imgMainView.mY = 0;
+                mViewInfo.imgMainView.mWidth = mViewInfo.rootView.mWidth;
+                mViewInfo.imgMainView.mHeight = mViewInfo.rootView.mHeight;
 
-        FrameLayout iconArea = (FrameLayout) view.findViewById(R.id.native_ad_image);
-        final RecycleImageView iconView = new RecycleImageView(mActivity);
-        iconView.setImageDrawable(null);
+                LogUtils.e(TAG, "ExpressNative, NetworkType ----> " + mNetworkType);
+                ViewInfo.add2ParentView(mFrameLayout, mediaView, mViewInfo.imgMainView, -1);
+                return;
+            }
+        }
 
-        if (adiconView == null) {
-            iconArea.addView(iconView);
 
-            if (!TextUtils.isEmpty(ad.getIconImageUrl())) {
-                CommonImageLoader.getInstance().startLoadImage(ad.getIconImageUrl(), 0, new CommonImageLoader.ImageCallback() {
-                    @Override
-                    public void onSuccess(Bitmap bitmap, String url) {
-                        iconView.setImageBitmap(bitmap);
-                    }
+        if (mViewInfo.titleView != null) {
 
-                    @Override
-                    public void onFail() {
+            if (!TextUtils.isEmpty(mViewInfo.titleView.textcolor)) {
+                titleView.setTextColor(Color.parseColor(mViewInfo.titleView.textcolor));
+            }
 
-                    }
-                });
-                iconArea.setVisibility(View.VISIBLE);
+            if (mViewInfo.titleView.textSize > 0) {
+                titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mViewInfo.titleView.textSize);
+            }
+            LogUtils.e(TAG, "title---->" + ad.getTitle());
+            titleView.setText(ad.getTitle());
+
+            titleView.setSingleLine();
+            titleView.setMaxEms(15);
+            titleView.setEllipsize(TextUtils.TruncateAt.END);
+
+
+            ViewInfo.add2ParentView(mFrameLayout, titleView, mViewInfo.titleView, -1);
+
+        }
+
+
+        if (mViewInfo.ctaView != null) {
+
+            if (!TextUtils.isEmpty(mViewInfo.ctaView.textcolor)) {
+                ctaView.setTextColor(Color.parseColor(mViewInfo.ctaView.textcolor));
+            }
+
+            if (mViewInfo.ctaView.textSize > 0) {
+                ctaView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mViewInfo.ctaView.textSize);
+            }
+
+
+            ctaView.setGravity(Gravity.CENTER);
+            ctaView.setSingleLine();
+            ctaView.setMaxEms(15);
+            ctaView.setEllipsize(TextUtils.TruncateAt.END);
+
+            LogUtils.e(TAG, "cat---->" + ad.getCallToActionText());
+            ctaView.setText(ad.getCallToActionText());
+            ViewInfo.add2ParentView(mFrameLayout, ctaView, mViewInfo.ctaView, -1);
+        }
+
+
+        if (mViewInfo.descView != null && descView != null) {
+
+            if (!TextUtils.isEmpty(mViewInfo.descView.textcolor)) {
+                descView.setTextColor(Color.parseColor(mViewInfo.descView.textcolor));
+
+            }
+            if (mViewInfo.descView.textSize > 0) {
+                descView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mViewInfo.descView.textSize);
+            }
+            LogUtils.e(TAG, "desc---->" + ad.getDescriptionText());
+            descView.setText(ad.getDescriptionText());
+
+
+            descView.setMaxLines(3);
+            descView.setMaxEms(15);
+            descView.setEllipsize(TextUtils.TruncateAt.END);
+
+            ViewInfo.add2ParentView(mFrameLayout, descView, mViewInfo.descView, -1);
+        }
+
+        if (mViewInfo.IconView != null) {
+
+            FrameLayout iconArea = new FrameLayout(mActivity);
+
+
+            if (ad.getAdIconView() == null) {
+                final ATNativeImageView iconView = new ATNativeImageView(mActivity);
+                iconArea.addView(iconView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                iconView.setImage(ad.getIconImageUrl());
             } else {
-                iconArea.setVisibility(View.GONE);
+                iconArea.addView(ad.getAdIconView(), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+            }
+
+            // 加载图片
+            ViewInfo.add2ParentView(mFrameLayout, iconArea, mViewInfo.IconView, -1);
+        }
+
+
+        if (mViewInfo.adLogoView != null) {
+            // 加载图片
+            final ATNativeImageView logoView = new ATNativeImageView(mActivity);
+            ViewInfo.add2ParentView(mFrameLayout, logoView, mViewInfo.adLogoView, -1);
+            logoView.setImage(ad.getAdChoiceIconUrl());
+        }
+
+        if (mediaView != null) {
+//            mediaView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            LogUtils.e(TAG, "mediaView ---> 视屏播放 " + ad.getVideoUrl());
+            if (mViewInfo.imgMainView != null) {
+                ViewInfo.add2ParentView(mFrameLayout, mediaView, mViewInfo.imgMainView, -1);
             }
         } else {
-            iconArea.addView(adiconView);
-            iconArea.setVisibility(View.VISIBLE);
+            //加载大图
+            LogUtils.e(TAG, "mediaView ---> 大图播放");
+            if (mViewInfo.imgMainView != null) {
+                final ATNativeImageView mainImageView = new ATNativeImageView(mActivity);
+                ViewInfo.add2ParentView(mFrameLayout, mainImageView, mViewInfo.imgMainView, -1);
+                mainImageView.setImage(ad.getMainImageUrl());
+            }
         }
 
 
-        final RecycleImageView logoView = (RecycleImageView) view.findViewById(R.id.native_ad_logo);
-        if (!TextUtils.isEmpty(ad.getAdChoiceIconUrl())) {
-            logoView.setVisibility(View.VISIBLE);
-            CommonImageLoader.getInstance().startLoadImage(ad.getAdChoiceIconUrl(), 0, new CommonImageLoader.ImageCallback() {
-                @Override
-                public void onSuccess(Bitmap bitmap, String url) {
-                    logoView.setImageBitmap(bitmap);
-                }
+        if (!TextUtils.isEmpty(ad.getAdFrom()) && mNetworkType == 23) {
+            FrameLayout.LayoutParams adFromParam = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            adFromParam.leftMargin = CommonUtil.dip2px(mActivity, 3);
+            adFromParam.bottomMargin = CommonUtil.dip2px(mActivity, 3);
+            adFromParam.gravity = Gravity.BOTTOM;
+            TextView adFromTextView = new TextView(mActivity);
+            adFromTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 6);
+            adFromTextView.setPadding(CommonUtil.dip2px(mActivity, 5), CommonUtil.dip2px(mActivity, 2), CommonUtil.dip2px(mActivity, 5), CommonUtil.dip2px(mActivity, 2));
+            adFromTextView.setBackgroundColor(0xff888888);
+            adFromTextView.setTextColor(0xffffffff);
+            adFromTextView.setText(ad.getAdFrom());
 
-                @Override
-                public void onFail() {
-
-                }
-            });
-        } else {
-            logoView.setVisibility(View.GONE);
+            mFrameLayout.addView(adFromTextView, adFromParam);
         }
 
+        if (mNetworkType == 2) {
+            LogUtils.e(TAG, "start to add admob ad textview ");
+            TextView adLogoView = new TextView(mActivity);
+            adLogoView.setTextColor(Color.WHITE);
+            adLogoView.setText("AD");
+            adLogoView.setTextSize(11);
+            adLogoView.setPadding(CommonUtil.dip2px(mActivity, 3), 0, CommonUtil.dip2px(mActivity, 3), 0);
+            adLogoView.setBackgroundColor(Color.parseColor("#66000000"));
+            if (mFrameLayout != null) {
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.leftMargin = CommonUtil.dip2px(mActivity, 3);
+                layoutParams.topMargin = CommonUtil.dip2px(mActivity, 3);
+                mFrameLayout.addView(adLogoView, layoutParams);
 
-        contentArea.removeAllViews();
-        if (mediaView != null) {
-            contentArea.addView(mediaView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-
-        } else {
-
-            final RecycleImageView imageView = new RecycleImageView(mActivity);
-
-            CommonImageLoader.getInstance().startLoadImage(ad.getMainImageUrl(), 0, new CommonImageLoader.ImageCallback() {
-                @Override
-                public void onSuccess(Bitmap bitmap, String url) {
-                    imageView.setImageBitmap(bitmap);
-                }
-
-                @Override
-                public void onFail() {
-
-                }
-            });
-
-            ViewGroup.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            imageView.setLayoutParams(params);
-            contentArea.addView(imageView, params);
-
+                LogUtils.e(TAG, "add admob ad textview 2 activity");
+            }
         }
-
-        if (!TextUtils.isEmpty(ad.getTitle())) {
-            titleView.setText(ad.getTitle());
-            titleView.setVisibility(View.VISIBLE);
-        } else {
-            titleView.setVisibility(View.GONE);
-        }
-
-        if (!TextUtils.isEmpty(ad.getDescriptionText())) {
-            descView.setText(ad.getDescriptionText());
-            descView.setVisibility(View.VISIBLE);
-        } else {
-            descView.setVisibility(View.GONE);
-        }
-
-        if (!TextUtils.isEmpty(ad.getCallToActionText())) {
-            ctaView.setText(ad.getCallToActionText());
-            ctaView.setVisibility(View.VISIBLE);
-        } else {
-            ctaView.setVisibility(View.GONE);
-        }
-
-        if (!TextUtils.isEmpty(ad.getAdFrom())) {
-            adFromView.setText(ad.getAdFrom() != null ? ad.getAdFrom() : "");
-            adFromView.setVisibility(View.VISIBLE);
-        } else {
-            adFromView.setVisibility(View.GONE);
-        }
-
 
     }
 }

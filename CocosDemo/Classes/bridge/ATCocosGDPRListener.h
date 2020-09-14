@@ -11,6 +11,7 @@ class ATCocosGDPRListener {
 public:
     
     virtual void onGDPRDataConsentSet(int dataConsent) {};
+    virtual void onPageLoadFail() {};
 };
 
 #endif /* ATCocosGDPRListener_h */

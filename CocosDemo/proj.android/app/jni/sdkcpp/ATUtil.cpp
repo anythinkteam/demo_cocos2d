@@ -57,6 +57,6 @@ char*  ATUtil::jstringTostring(JNIEnv *env, jstring jstr)
  */
 void  ATUtil::printLog(const char * pat)
 {
-   log("cocos2dx native----(uparpuSDKLog): %s",pat);
+   log("cocos2dx native----(anythinkSDKLog): %s",pat);
 
 }

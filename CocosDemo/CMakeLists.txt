@@ -51,11 +51,17 @@ list(APPEND GAME_SOURCE
         Classes/AppDelegate.cpp
         Classes/HelloWorldScene.cpp
         Classes/demo/DemoMainScene.cpp
+        Classes/bridge/ATNativeItemProperty.cpp
+        Classes/bridge/ATNativeProperty.cpp
+		Classes/bridge/CCSerialization.cpp
         )
 list(APPEND GAME_HEADER
         Classes/AppDelegate.h
         Classes/HelloWorldScene.h
         Classes/demo/DemoMainScene.h
+		Classes/bridge/ATNativeItemProperty.h
+		Classes/bridge/ATNativeProperty.h
+		Classes/bridge/CCSerialization.h
         )
 
 

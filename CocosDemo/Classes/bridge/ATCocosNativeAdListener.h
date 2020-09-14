@@ -24,7 +24,9 @@ public:
     virtual void onNativeAdShowWithExtra(const char * placementId, const char * extra) {};
     
     virtual void onNativeAdClickWithExtra(const char * placementId, const char *extra) {};
-    
+
+    virtual void onNativeAdCloseButtonTappedWithExtra(const char * placementId, const char *extra) {};
+
 };
 
 

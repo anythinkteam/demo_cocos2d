@@ -31,24 +31,26 @@ static AVAudioSessionCategory AudioSessionCategory;
     return self;
 }
 
-
--(void) loadRewardedVideoWithPlacementID:(NSString*)placementID  userId:(NSString*)userId  customData:(NSDictionary*)customData {
-//    [self setCallBack:callback forKey:placementID];
-    if(userId != nil){
-        [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:@{kATAdLoadingExtraUserIDKey:userId} customData:customData delegate:self];
-    }else{
-        [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:nil customData:customData delegate:self];
-    }
-    
+-(void) loadRewardedVideoWithPlacementID:(NSString*)placementID  extra:(NSDictionary*)customData  {
+    NSLog(@"ATRewardedVideoWrapper::loadRewardedVideoWithPlacementID:%@ extra:%@", placementID, customData);
+    [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:customData delegate:self];
 }
 
 -(BOOL) rewardedVideoReadyForPlacementID:(NSString*)placementID {
+    NSLog(@"ATRewardedVideoWrapper::rewardedVideoReadyForPlacementID:%@", placementID);
     return [[ATAdManager sharedManager] rewardedVideoReadyForPlacementID:placementID];
 }
 
 -(void) showRewardedVideoWithPlacementID:(NSString*)placementID {
+    NSLog(@"ATRewardedVideoWrapper::showRewardedVideoWithPlacementID:%@", placementID);
     AudioSessionCategory = [AVAudioSession sharedInstance].category;
     [[ATAdManager sharedManager] showRewardedVideoWithPlacementID:placementID inViewController:[UIApplication sharedApplication].delegate.window.rootViewController delegate:self];
+}
+
+-(void) showRewardedVideoWithPlacementID:(NSString*)placementID scene:(NSString*)scene {
+    NSLog(@"ATRewardedVideoWrapper::showRewardedVideoWithPlacementID:%@ scene:%@", placementID, scene);
+    AudioSessionCategory = [AVAudioSession sharedInstance].category;
+    [[ATAdManager sharedManager] showRewardedVideoWithPlacementID:placementID scene:scene inViewController:[UIApplication sharedApplication].delegate.window.rootViewController delegate:self];
 }
 
 -(void) clearCache {
@@ -62,10 +64,9 @@ static AVAudioSessionCategory AudioSessionCategory;
     }
 }
 
-
 #pragma mark - delegate
 -(void) didFinishLoadingADWithPlacementID:(NSString *)placementID {
-    
+    NSLog(@"ATRewardedVideoWrapper::didFinishLoadingADWithPlacementID:%@", placementID);
     ATCocosRewardedVideoAdListener* callback = (ATCocosRewardedVideoAdListener*)[[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -75,12 +76,13 @@ static AVAudioSessionCategory AudioSessionCategory;
 }
 
 -(void) didFailToLoadADWithPlacementID:(NSString*)placementID error:(NSError*)error {
+    NSLog(@"ATRewardedVideoWrapper::didFailToLoadADWithPlacementID:%@ error:%@", placementID, error);
     ATCocosRewardedVideoAdListener* callback = (ATCocosRewardedVideoAdListener*)[[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != nil) {
         const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
         
-        NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld", error.code] forKey:@"code"];
+        NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld", (long)error.code] forKey:@"code"];
         if ([error.userInfo[NSLocalizedDescriptionKey] length] > 0) {
             errorDict[@"desc"] = error.userInfo[NSLocalizedDescriptionKey];
         } else {
@@ -93,24 +95,25 @@ static AVAudioSessionCategory AudioSessionCategory;
         }
         callback->onRewardedVideoLoadFailed(cPlacementId, errorDict.jsonString.UTF8String);
     }
-   
 }
 
 #pragma mark - showing delegate
 -(void) rewardedVideoDidRewardSuccessForPlacemenID:(NSString *)placementID extra:(NSDictionary *)extra{
-      void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
-      
-      if (callback != NULL) {
-          ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
-          const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
-          const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
-          pDelegate->onRewardedVideoDidRewardSuccessWithExtra(cPlacementId, cExtra);
-      }
+    NSLog(@"ATRewardedVideoWrapper::rewardedVideoDidRewardSuccessForPlacemenID:%@ extra:%@", placementID, extra);
+    void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
+
+    if (callback != NULL) {
+      ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
+      const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+      const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+      pDelegate->onRewardedVideoDidRewardSuccessWithExtra(cPlacementId, cExtra);
+    }
 }
 
 
 #pragma mark - delegate with adsourceID and networkID
 -(void) rewardedVideoDidStartPlayingForPlacementID:(NSString *)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATRewardedVideoWrapper::rewardedVideoDidStartPlayingForPlacementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -120,7 +123,9 @@ static AVAudioSessionCategory AudioSessionCategory;
         pDelegate->onRewardedVideoPlayStartWithExtra(cPlacementId, cExtra);
     }
 }
+
 -(void) rewardedVideoDidEndPlayingForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATRewardedVideoWrapper::rewardedVideoDidEndPlayingForPlacementID:%@ extra:%@", placementID, extra);
     [[AVAudioSession sharedInstance] setCategory:AudioSessionCategory error:nil];
     void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
     
@@ -131,14 +136,16 @@ static AVAudioSessionCategory AudioSessionCategory;
         pDelegate->onRewardedVideoPlayEndWithExtra(cPlacementId, cExtra);
     }
 }
+
 -(void) rewardedVideoDidFailToPlayForPlacementID:(NSString*)placementID error:(NSError*)error extra:(NSDictionary *)extra {
+    NSLog(@"ATRewardedVideoWrapper::rewardedVideoDidFailToPlayForPlacementID:%@ error:%@ extra:%@", placementID, error, extra);
     void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
         ATCocosRewardedVideoAdListener* pDelegate = (ATCocosRewardedVideoAdListener*)callback;
         const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
         
-        NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld", error.code] forKey:@"code"];
+        NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithObject:[NSString stringWithFormat:@"%ld", (long)error.code] forKey:@"code"];
         if ([error.userInfo[NSLocalizedDescriptionKey] length] > 0) {
             errorDict[@"desc"] = error.userInfo[NSLocalizedDescriptionKey];
         } else {
@@ -153,7 +160,9 @@ static AVAudioSessionCategory AudioSessionCategory;
         pDelegate->onRewardedVideoShowFailWithExtra(cPlacementId, errorDict.jsonString.UTF8String, cExtra);
     }
 }
+
 -(void) rewardedVideoDidCloseForPlacementID:(NSString*)placementID rewarded:(BOOL)rewarded extra:(NSDictionary *)extra {
+    NSLog(@"ATRewardedVideoWrapper::rewardedVideoDidCloseForPlacementID:%@ rewarded:%@ extra:%@", placementID, rewarded ? @"1" : @"0", extra);
     void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -163,7 +172,9 @@ static AVAudioSessionCategory AudioSessionCategory;
         pDelegate->onRewardedVideoCloseWithExtra(cPlacementId, rewarded, cExtra);
     }
 }
+
 -(void) rewardedVideoDidClickForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATRewardedVideoWrapper::rewardedVideoDidClickForPlacementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATRewardedVideoWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -173,4 +184,5 @@ static AVAudioSessionCategory AudioSessionCategory;
         pDelegate->onRewardedVideoClickedWithExtra(cPlacementId, cExtra);
     }
 }
+
 @end

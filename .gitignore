@@ -2,3 +2,9 @@ CocosDemo/proj.android/app/.cxx
 CocosDemo/cocos2d/cocos/platform/android/libcocos2dx/build
 CocosDemo/proj.android/.idea
 libcocos2dx.iml
+CocosDemo/proj.android/app/build
+CocosDemo/proj.android/topon_libs_non_china/build
+CocosDemo/proj.android/topon_libs_china/build
+CocosDemo/proj.android/app/.externalNativeBuild
+CocosDemo/cocos2d/build
+CocosDemo/proj.android/.gradle

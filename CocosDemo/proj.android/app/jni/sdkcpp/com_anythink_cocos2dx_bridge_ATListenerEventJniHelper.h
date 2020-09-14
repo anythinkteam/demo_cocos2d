@@ -235,6 +235,12 @@ JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHel
 JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onGdprAuth
         (JNIEnv *, jclass, jint);
 
+JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onPageLoadFail
+        (JNIEnv *, jclass);
+
+JNIEXPORT void JNICALL Java_com_uparpu_cocos2dx_bridge_UpArpuListenerEventJniHelper_onUserLocation
+        (JNIEnv *, jclass, jint);
+
 #ifdef __cplusplus
 }
 #endif

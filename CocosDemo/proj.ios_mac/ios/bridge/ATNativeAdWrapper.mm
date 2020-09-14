@@ -14,7 +14,7 @@
 #import <AnyThinkNative/ATNativeAdConfiguration.h>
 #import <AnyThinkNative/ATNativeADView.h>
 #import "MTAutolayoutCategories.h"
-
+#include "ATCocosSdk.h"
 #include "ATCocosNativeAdListener.h"
 
 
@@ -33,21 +33,32 @@ static NSString *const kNativeAssetMainImage = @"main_image";
 static NSString *const kNativeAssetSponsorImage = @"sponsor_image";
 static NSString *const kNativeAssetMedia = @"media";
 
-NSDictionary* parseUnityProperties(NSDictionary *properties) {
+NSDictionary* parseCocosProperties(NSDictionary *properties) {
     NSMutableDictionary *result = NSMutableDictionary.dictionary;
-    result[kParsedPropertiesFrameKey] = [NSString stringWithFormat:@"{{%@, %@}, {%@, %@}}", properties[@"x"], properties[@"y"], properties[@"width"], properties[@"height"]];
-    result[kParsedPropertiesBackgroundColorKey] = properties[@"backgroundColor"];
-    result[kParsedPropertiesTextColorKey] = properties[@"textColor"];
-    result[kParsedPropertiesTextSizeKey] = properties[@"textSize"];
+    result[kParsedPropertiesFrameKey] = [NSString stringWithFormat:@"{{%@, %@}, {%@, %@}}", properties[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_POS_X]], properties[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_POS_Y]], properties[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_WIDTH]], properties[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_HEIGHT]]];
+    result[kParsedPropertiesBackgroundColorKey] = properties[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_BACKGROUND_COLOR]];
+    result[kParsedPropertiesTextColorKey] = properties[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_TEXT_COLOR]];
+    result[kParsedPropertiesTextSizeKey] = properties[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_TEXT_SIZE]];
 
     return result;
 }
 
-NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
+NSDictionary* parseCocosMetrics(NSDictionary* metrics) {
     NSMutableDictionary *result = NSMutableDictionary.dictionary;
-    NSDictionary *keysMap = @{@"appIcon":kNativeAssetIcon, @"mainImage":kNativeAssetMainImage, @"title":kNativeAssetTitle, @"desc":kNativeAssetText, @"adLogo":kNativeAssetSponsorImage, @"cta":kNativeAssetCta};
-    [keysMap enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) { result[keysMap[key]] = parseUnityProperties(metrics[key]); }];
+    NSDictionary *keysMap = @{[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_ICON]:kNativeAssetIcon, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_MAIN_IMAGE]:kNativeAssetMainImage, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_TITLE]:kNativeAssetTitle, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_DESC]:kNativeAssetText, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_AD_LOGO]:kNativeAssetSponsorImage, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_CTA]:kNativeAssetCta};
+    [keysMap enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) { result[keysMap[key]] = parseCocosProperties(metrics[key]); }];
     return result;
+}
+
+NSDictionary *parseNativeExtraJsonStr(NSString* jsonStr) {
+    NSDictionary *extra = nil;
+    if (jsonStr != nil) {
+        NSDictionary *sizeDict = [NSJSONSerialization JSONObjectWithString:jsonStr options:NSJSONReadingAllowFragments error:nil];
+        if ([sizeDict isKindOfClass:[NSDictionary class]]) {
+            extra = @{kExtraInfoNativeAdSizeKey:[NSValue valueWithCGSize:CGSizeMake([sizeDict[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_WIDTH]] doubleValue], [sizeDict[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_HEIGHT]] doubleValue])]};
+        }
+    }
+    return extra;
 }
 
 @interface ATCocosNativeAdView:ATNativeADView
@@ -65,34 +76,34 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
 @implementation ATCocosNativeAdView
 -(void) initSubviews {
     [super initSubviews];
-    _advertiserLabel = [UILabel autolayoutLabelFont:[UIFont boldSystemFontOfSize:15.0f] textColor:[UIColor blackColor] textAlignment:NSTextAlignmentLeft];
+    _advertiserLabel = [UILabel new];
     [self addSubview:_advertiserLabel];
     
-    _titleLabel = [UILabel autolayoutLabelFont:[UIFont boldSystemFontOfSize:18.0f] textColor:[UIColor blackColor] textAlignment:NSTextAlignmentLeft];
+    _titleLabel = [UILabel new];
     [self addSubview:_titleLabel];
     
-    _textLabel = [UILabel autolayoutLabelFont:[UIFont systemFontOfSize:12.0f] textColor:[UIColor blackColor]];
+    _textLabel = [UILabel new];
     _textLabel.numberOfLines = 2;
     [self addSubview:_textLabel];
     
-    _ctaLabel = [UILabel autolayoutLabelFont:[UIFont systemFontOfSize:15.0f] textColor:[UIColor blackColor]];
+    _ctaLabel = [UILabel new];
     _ctaLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_ctaLabel];
     
-    _ratingLabel = [UILabel autolayoutLabelFont:[UIFont systemFontOfSize:15.0f] textColor:[UIColor blackColor]];
+    _ratingLabel = [UILabel new];
     [self addSubview:_ratingLabel];
     
-    _iconImageView = [UIImageView autolayoutView];
+    _iconImageView = [UIImageView new];
     _iconImageView.layer.cornerRadius = 4.0f;
     _iconImageView.layer.masksToBounds = YES;
     _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_iconImageView];
     
-    _mainImageView = [UIImageView autolayoutView];
+    _mainImageView = [UIImageView new];
     _mainImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_mainImageView];
     
-    _sponsorImageView = [UIImageView autolayoutView];
+    _sponsorImageView = [UIImageView new];
     _sponsorImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_sponsorImageView];
     self.backgroundColor = [UIColor whiteColor];
@@ -104,44 +115,37 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
     return clickableViews;
 }
 
--(void) layoutMediaView {
-    self.mediaView.frame = CGRectMake(0, 120.0f, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - 120.0f);
+-(void) configureMetrics:(NSDictionary*)metrics {
+    NSDictionary<NSString*, UILabel*> *viewsDict = @{[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_TITLE]:_titleLabel, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_CTA]:_ctaLabel, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_DESC]:_textLabel, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_ICON]:_iconImageView, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_MAIN_IMAGE]:_mainImageView, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_PARENT]:self, [ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_RATING]:_ratingLabel};
+    [viewsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UILabel * _Nonnull obj, BOOL * _Nonnull stop) {
+        NSDictionary *metric = metrics[key];
+        if ([key isEqualToString:[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_PARENT]]) {
+            obj.frame = CGRectMake(0, 0, [metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_WIDTH]] doubleValue], [metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_HEIGHT]] doubleValue]);
+        }else {
+            obj.frame = CGRectMake([metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_POS_X]] doubleValue], [metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_POS_Y]] doubleValue], [metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_WIDTH]] doubleValue], [metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_HEIGHT]] doubleValue]);
+        }
+        NSString *bgColorStr = metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_BACKGROUND_COLOR]];
+        if ([bgColorStr isKindOfClass:[NSString class]]) {
+            if ([bgColorStr isEqualToString:@"clearColor"]) {
+                obj.backgroundColor = [UIColor clearColor];
+            } else {
+                obj.backgroundColor = [UIColor colorWithHexString:bgColorStr];
+            }
+        }
+        if ([obj respondsToSelector:@selector(setTextColor:)]) {
+            NSString *textColor = metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_TEXT_COLOR]];
+            if ([textColor isEqualToString:@"clearColor"]) {
+                obj.textColor = [UIColor clearColor];
+            } else {
+                obj.textColor = [UIColor colorWithHexString:textColor];
+            }
+        }
+        
+        if ([obj respondsToSelector:@selector(setFont:)]) { obj.font = [UIFont systemFontOfSize:[metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_TEXT_SIZE]] doubleValue]]; }
+    }];
+    self.mediaView.frame = self.mainImageView.frame;
 }
 
--(void) makeConstraintsForSubviews {
-    [super makeConstraintsForSubviews];
-    NSDictionary *viewsDict = nil;
-    if (self.mediaView != nil) {
-        viewsDict = @{@"titleLabel":self.titleLabel, @"textLabel":self.textLabel, @"ctaLabel":self.ctaLabel, @"ratingLabel":self.ratingLabel, @"iconImageView":self.iconImageView, @"mainImageView":self.mainImageView, @"mediaView":self.mediaView, @"advertiserLabel":self.advertiserLabel, @"sponsorImageView":self.sponsorImageView};
-    } else {
-        viewsDict = @{@"titleLabel":self.titleLabel, @"textLabel":self.textLabel, @"ctaLabel":self.ctaLabel, @"ratingLabel":self.ratingLabel, @"iconImageView":self.iconImageView, @"mainImageView":self.mainImageView, @"advertiserLabel":self.advertiserLabel, @"sponsorImageView":self.sponsorImageView};
-    }
-    [self addConstraintsWithVisualFormat:@"|[mainImageView]|" options:0 metrics:nil views:viewsDict];
-    [self addConstraintsWithVisualFormat:@"V:[iconImageView]-20-[mainImageView]|" options:0 metrics:nil views:viewsDict];
-    
-    [self addConstraintWithItem:self.iconImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.iconImageView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:.0f];
-    
-    [self.titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    [self addConstraintsWithVisualFormat:@"|-15-[iconImageView(90)]-8-[titleLabel]-8-[sponsorImageView]-15-|" options:NSLayoutFormatAlignAllTop metrics:nil views:viewsDict];
-    [self addConstraintsWithVisualFormat:@"V:|-15-[titleLabel]-8-[textLabel]-8-[ctaLabel]-8-[ratingLabel]-8-[advertiserLabel]" options:NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing metrics:nil views:viewsDict];
-}
-
--(void) makeConstraintsDrawVideoAssets {
-    NSMutableDictionary<NSString*, UIView*> *viewsDict = [NSMutableDictionary<NSString*, UIView*> dictionary];
-    if (self.dislikeButton != nil) { viewsDict[@"dislikeButton"] = self.dislikeButton; }
-    if (self.adLabel != nil) { viewsDict[@"adLabel"] = self.adLabel; }
-    if (self.logoImageView != nil) { viewsDict[@"logoImageView"] = self.logoImageView; }
-    if (self.logoADImageView != nil) { viewsDict[@"logoAdImageView"] = self.logoADImageView; }
-    if (self.videoAdView != nil) { viewsDict[@"videoView"] = self.videoAdView; }
-    
-    if ([viewsDict count] == 5) {
-        self.dislikeButton.translatesAutoresizingMaskIntoConstraints = self.adLabel.translatesAutoresizingMaskIntoConstraints = self.logoImageView.translatesAutoresizingMaskIntoConstraints = self.logoADImageView.translatesAutoresizingMaskIntoConstraints = self.videoAdView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self addConstraintsWithVisualFormat:@"V:[logoAdImageView]-15-|" options:0 metrics:nil views:viewsDict];
-        [self addConstraintsWithVisualFormat:@"|-15-[dislikeButton]-5-[adLabel]-5-[logoImageView]-5-[logoAdImageView]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:viewsDict];
-        [self addConstraintsWithVisualFormat:@"|[videoView]|" options:0 metrics:nil views:viewsDict];
-        [self addConstraintsWithVisualFormat:@"V:[videoView(height)]|" options:0 metrics:@{@"height":@(CGRectGetHeight(self.bounds) - 120.0f)} views:viewsDict];
-    }
-}
 @end
 
 #define CS_ATNativeAdWrapper "ATNativeAdWrapper"
@@ -164,46 +168,93 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
     return self;
 }
 
--(void) loadNativeAdWithPlacementID:(NSString*)placementID customData:(NSDictionary*)customData {
-    [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:@{kExtraInfoNativeAdTypeKey:@(ATGDTNativeAdTypeSelfRendering), kATExtraNativeImageSizeKey:kATExtraNativeImageSize690_388} customData:customData delegate:self];
+-(void) loadNativeAdWithPlacementID:(NSString*)placementID extra:(NSString*)extraJsonStr {
+    NSLog(@"ATNativeAdWrapper::loadNativeAdWithPlacementID:%@ extra:%@", placementID, extraJsonStr);
+    NSDictionary *extra = parseNativeExtraJsonStr(extraJsonStr);
+    [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:[extra isKindOfClass:[NSDictionary class]] ? extra : nil delegate:self];
 }
 
 -(BOOL) isNativeAdReadyForPlacementID:(NSString*)placementID {
+    NSLog(@"ATNativeAdWrapper::isNativeAdReadyForPlacementID:%@", placementID);
     return [[ATAdManager sharedManager] nativeAdReadyForPlacementID:placementID];
 }
 
--(void) showNativeAdWithPlacementID:(NSString*)placementID rectDict:(NSDictionary*)rectDict {
+-(void) showNativeAdWithPlacementID:(NSString*)placementID metrics:(NSString*)metricsJSONString {
+    NSLog(@"ATNativeAdWrapper::showNativeAdWithPlacementID:%@ metrics:%@", placementID, metricsJSONString);
     if ([self isNativeAdReadyForPlacementID:placementID]) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button addTarget:self action:@selector(noop) forControlEvents:UIControlEventTouchUpInside];
-        button.frame = CGRectMake([rectDict[@"x"] doubleValue], [rectDict[@"y"] doubleValue], [rectDict[@"w"] doubleValue], [rectDict[@"h"] doubleValue]);
-        _viewsStorage[placementID] = button;
-        
-        ATNativeADConfiguration *config = [[ATNativeADConfiguration alloc] init];
-        config.ADFrame = button.bounds;
-        config.mediaViewFrame = CGRectMake(0, 120.0f, CGRectGetWidth(button.bounds), 300.0f - 120.0f);
-        config.delegate = self;
-        config.renderingViewClass = [ATCocosNativeAdView class];
-        config.rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-        
-        ATCocosNativeAdView *adview = [[ATAdManager sharedManager] retriveAdViewWithPlacementID:placementID configuration:config];
-        adview.ctaLabel.hidden = [adview.nativeAd.ctaText length] == 0;
-        if (adview != nil) {
-//            if ([adview respondsToSelector:@selector(configureMetrics:)]) {
-////                [adview configureMetrics:parsedMetrics];
-//                adview.backgroundColor = [UIColor whiteColor];
-//            } else {
-//                [adview.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//                    if ([obj isKindOfClass:[ATCocosNativeAdView class]]) {
-////                        [(ATCocosNativeAdView*)obj configureMetrics:parsedMetrics];
-//                        *stop = YES;
-//                    }
-//                }];
-//            }
-            [button addSubview:adview];
-            [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:button];
-        }
-       
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *metrics = [NSJSONSerialization JSONObjectWithString:metricsJSONString options:NSJSONReadingAllowFragments error:nil];
+            
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button addTarget:self action:@selector(noop) forControlEvents:UIControlEventTouchUpInside];
+            button.frame = CGRectFromString(parseCocosProperties(metrics[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_PARENT]])[kParsedPropertiesFrameKey]);
+            _viewsStorage[placementID] = button;
+            
+            ATNativeADConfiguration *config = [[ATNativeADConfiguration alloc] init];
+            config.ADFrame = button.bounds;
+            config.delegate = self;
+            config.renderingViewClass = [ATCocosNativeAdView class];
+            config.rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+            ATCocosNativeAdView *adView = [[ATAdManager sharedManager] retriveAdViewWithPlacementID:placementID configuration:config];
+            adView.ctaLabel.hidden = [adView.nativeAd.ctaText length] == 0;
+            NSLog(@"=====title：%@",adView.nativeAd.title);
+            if (adView != nil) {
+                [button addSubview:adView];
+                [adView configureMetrics:metrics];
+                [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:button];
+                
+                @try {
+                    NSDictionary *metric = metrics[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_MAIN_IMAGE]];
+                    CGRect mainImageFrame = CGRectMake([metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_POS_X]] doubleValue], [metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_POS_Y]] doubleValue], [metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_WIDTH]] doubleValue], [metric[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_HEIGHT]] doubleValue]);
+                    
+                    NSObject *dataObject = [adView valueForKeyPath:@"currentOffer.customObject"];
+                    if ([dataObject isKindOfClass:NSClassFromString(@"GDTUnifiedNativeAdDataObject")] && [[dataObject valueForKeyPath:@"isVideoAd"] boolValue]) {
+                        //视频广告
+                        for (UIView *view in adView.subviews)
+                        {
+                            if ([NSStringFromClass([view class]) isEqualToString:@"GDTUnifiedNativeAdView"]) {
+                                view.frame = mainImageFrame;
+                                [adView bringSubviewToFront:view];
+                            }
+                        }
+                    } else if ([dataObject isKindOfClass:NSClassFromString(@"BUNativeExpressAdView")]) {
+                        for (UIView *view in adView.subviews)
+                        {
+                            if ([NSStringFromClass([view class]) isEqualToString:@"BUNativeExpressAdView"]) {
+                                view.frame = adView.bounds;
+                                [adView bringSubviewToFront:view];
+                            }
+                        }
+                    } else if ([dataObject isKindOfClass:NSClassFromString(@"BUNativeExpressFeedVideoAdView")]) {
+                        for (UIView *view in adView.subviews)
+                        {
+                            if ([NSStringFromClass([view class]) isEqualToString:@"BUNativeExpressFeedVideoAdView"]) {
+                                view.frame = adView.bounds;
+                                [adView bringSubviewToFront:view];
+                            }
+                        }
+                    } else if ([dataObject isKindOfClass:NSClassFromString(@"GDTNativeExpressAdView")]) {
+                        for (UIView *view in adView.subviews)
+                        {
+                            if ([NSStringFromClass([view class]) isEqualToString:@"UIView"]) {
+                                for (UIView *childView in view.subviews)
+                                {
+                                    if ([NSStringFromClass([childView class]) isEqualToString:@"GDTNativeExpressAdView"]) {
+                                        view.frame = adView.bounds;
+                                        childView.frame = view.bounds;
+                                        [adView bringSubviewToFront:view];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } @catch (NSException *exception) {
+                    //
+                } @finally {
+                    //
+                }
+            }
+        });
     }
 }
 
@@ -212,7 +263,7 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
 }
 
 -(void) removeNativeAdViewWithPlacementID:(NSString*)placementID {
-    
+    NSLog(@"ATNativeAdWrapper::removeNativeAdViewWithPlacementID:%@", placementID);
     [_viewsStorage[placementID] removeFromSuperview];
 }
 
@@ -222,7 +273,7 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
 
 #pragma mark - delegate
 -(void) didFinishLoadingADWithPlacementID:(NSString *)placementID {
-    
+    NSLog(@"ATNativeAdWrapper::didFinishLoadingADWithPlacementID:%@", placementID);
     void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -233,7 +284,7 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
 }
 
 -(void) didFailToLoadADWithPlacementID:(NSString*)placementID error:(NSError*)error {
-
+    NSLog(@"ATNativeAdWrapper::didFailToLoadADWithPlacementID:%@ error:%@", placementID, error);
     void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -255,9 +306,9 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
     }
 }
 
-
 #pragma mark - delegate with networkID and adsourceID
--(void) didStartPlayingVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+-(void) didStartPlayingVideoInAdView:(ATNativeADView *)adView placementID:(NSString *)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATNativeAdWrapper::didStartPlayingVideoInAdView: placementID:%@ extra:%@", placementID, extra);
     //Drop ad view
     void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
     
@@ -267,10 +318,10 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
         const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onNativeAdVideoStartWithExtra(cPlacementId, cExtra);
     }
-    
 }
 
--(void) didEndPlayingVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+-(void) didEndPlayingVideoInAdView:(ATNativeADView *)adView placementID:(NSString *)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATNativeAdWrapper::didEndPlayingVideoInAdView: placementID:%@ extra:%@", placementID, extra);
     //Drop ad view
     void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
     
@@ -280,10 +331,10 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
         const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onNativeAdVideoEndWithExtra(cPlacementId, cExtra);
     }
-    
 }
 
--(void) didClickNativeAdInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+-(void) didClickNativeAdInAdView:(ATNativeADView *)adView placementID:(NSString *)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATNativeAdWrapper::didClickNativeAdInAdView: placementID:%@ extra:%@", placementID, extra);
     //Drop ad view
     void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
     
@@ -293,10 +344,10 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
         const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onNativeAdClickWithExtra(cPlacementId, cExtra);
     }
-    
 }
 
 -(void) didShowNativeAdInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATNativeAdWrapper::didShowNativeAdInAdView: placementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -305,11 +356,22 @@ NSDictionary* parseUnityMetrics(NSDictionary* metrics) {
         const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onNativeAdShowWithExtra(cPlacementId, cExtra);
     }
+}
+
+-(void) didTapCloseButtonInAdView:(ATNativeADView *)adView placementID:(NSString *)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATNativeAdWrapper::didTapCloseButtonInAdView: placementID:%@ extra:%@", placementID, extra);
+    void* callback = [[ATNativeAdWrapper sharedInstance] callbackForKey:placementID];
     
+    if (callback != NULL) {
+        ATCocosNativeAdListener* pDelegate = (ATCocosNativeAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onNativeAdCloseButtonTappedWithExtra(cPlacementId, cExtra);
+    }
 }
 
 -(void) didEnterFullScreenVideoInAdView:(ATNativeADView*)adView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
-    NSLog(@"ATNativeViewController:: didEnterFullScreenVideoInAdView:placementID:%@", placementID);
+    NSLog(@"ATNativeViewController:: didEnterFullScreenVideoInAdView:placementID:%@ extra:%@", placementID, extra);
 }
 
 

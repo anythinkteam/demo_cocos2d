@@ -10,11 +10,19 @@
 #import "ATCocosUtils.h"
 #import <AnyThinkBanner/AnyThinkBanner.h>
 #import "ATCocosBannerAdListener.h"
+#include "ATCocosSdk.h"
+//5.6.6版本以上支持 admob 自适应banner （用到时再import该头文件）
+//#import <GoogleMobileAds/GoogleMobileAds.h>
 
 @interface ATBannerAdWrapper()<ATBannerDelegate>
 @property(nonatomic, readonly) NSMutableDictionary<NSString*, ATBannerView*> *bannerViewStorage;
 @property(nonatomic, readonly) BOOL interstitialOrRVBeingShown;
 @end
+
+UIEdgeInsets SafeAreaInsets_ATCocosCreatorBanner() {
+    return ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(safeAreaInsets)] ? [UIApplication sharedApplication].keyWindow.safeAreaInsets : UIEdgeInsetsZero);
+}
+
 @implementation ATBannerAdWrapper
 +(instancetype)sharedInstance {
     static ATBannerAdWrapper *sharedInstance = nil;
@@ -34,30 +42,59 @@
     return self;
 }
 
--(void) loadBannerAdWithPlacementID:(NSString*)placementID  customData:(NSDictionary*)customData {
-
-    NSDictionary *extra = nil;
+-(void) loadBannerAdWithPlacementID:(NSString*)placementID  extra:(NSDictionary*)customData {
+    NSLog(@"ATBannerAdWrapper::loadBannerWithPlacementID:%@ extra:%@", placementID, customData);
+    NSMutableDictionary *extra = [NSMutableDictionary dictionary];
     if ([customData isKindOfClass:[NSDictionary class]]  && customData != nil) {
-        
-       if ([customData[@"w"] isKindOfClass:[NSString class]] && [customData[@"h"] isKindOfClass:[NSString class]]) {
-            extra = @{kATAdLoadingExtraBannerAdSizeKey:[NSValue valueWithCGSize:CGSizeMake([customData[@"w"] doubleValue], [customData[@"h"] doubleValue])]};
+        if ([customData[@"w"] isKindOfClass:[NSString class]] && [customData[@"h"] isKindOfClass:[NSString class]]) {
+            extra[kATAdLoadingExtraBannerAdSizeKey] = [NSValue valueWithCGSize:CGSizeMake([customData[@"w"] doubleValue], [customData[@"h"] doubleValue])];
         }
+//        // admob 自适应banner，5.6.6版本以上支持
+//        if (customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_INLINE_ADAPTIVE_WIDTH]] != nil && customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION]] != nil) {
+//            //GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth 自适应
+//            //GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth 竖屏
+//            //GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth 横屏
+//            CGFloat admobBannerWidth = [customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_INLINE_ADAPTIVE_WIDTH]] doubleValue];
+//            GADAdSize admobSize;
+//            if ([customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION]] integerValue] == 1) {
+//                admobSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(admobBannerWidth);
+//            } else if ([customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION]] integerValue] == 2) {
+//                admobSize = GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(admobBannerWidth);
+//            } else {
+//                admobSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(admobBannerWidth);
+//            }
+//            extra[kATAdLoadingExtraAdmobBannerSizeKey] = [NSValue valueWithCGSize:admobSize.size];
+//            extra[kATAdLoadingExtraAdmobAdSizeFlagsKey] = @(admobSize.flags);
+//        }
     }
     
-    if (extra == nil) {
-        extra = @{kATAdLoadingExtraBannerAdSizeKey:[NSValue valueWithCGSize:CGSizeMake(320.0f, 50.0f)]};
+    if (extra[kATAdLoadingExtraBannerAdSizeKey] == nil) {
+        extra[kATAdLoadingExtraBannerAdSizeKey] = [NSValue valueWithCGSize:CGSizeMake(320.0f, 50.0f)];
     }
     
-    [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:extra customData:customData delegate:self];
+    [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:extra delegate:self];
 }
 
 -(bool) bannerAdReadyForPlacementID:(NSString*)placementID {
-    
+    NSLog(@"ATBannerAdWrapper::bannerReadyForPlacementID:%@", placementID);
     return [[ATAdManager sharedManager] bannerAdReadyForPlacementID:placementID];
 }
 
+-(void) showBannerWithPlacementID:(NSString*)placementID position:(NSString*)position {
+    NSLog(@"ATBannerAdWrapper::showBannerWithPlacementID:%@ position:%@", placementID, position);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        ATBannerView *bannerView = [[ATAdManager sharedManager] retrieveBannerViewForPlacementID:placementID];
+        if (bannerView != nil) {
+            self->_bannerViewStorage[placementID] = bannerView;
+            bannerView.delegate = self;
+            bannerView.frame = CGRectMake((CGRectGetWidth(UIScreen.mainScreen.bounds) - CGRectGetWidth(bannerView.bounds)) / 2.0f, [@{@"top":@(SafeAreaInsets_ATCocosCreatorBanner().top), @"bottom":@(CGRectGetHeight(UIScreen.mainScreen.bounds) - SafeAreaInsets_ATCocosCreatorBanner().bottom - CGRectGetHeight(bannerView.bounds))}[position] doubleValue] , CGRectGetWidth(bannerView.bounds), CGRectGetHeight(bannerView.bounds));
+            [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:bannerView];
+        }
+    });
+}
 
 -(void) showBannerAdWithPlacementID:(NSString*)placementID rect:(NSDictionary *)rectDict {
+    NSLog(@"ATBannerAdWrapper::showBannerWithPlacementID:%@ rect:%@", placementID, rectDict);
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([rectDict isKindOfClass:[NSDictionary class]] && rectDict != nil) {
             NSLog(@"dict:%@", rectDict);
@@ -77,16 +114,17 @@
 }
 
 -(void) removeBannerAdWithPlacementID:(NSString*)placementID {
+    NSLog(@"ATBannerAdWrapper::removeBannerAdWithPlacementID:%@", placementID);
     dispatch_async(dispatch_get_main_queue(), ^{
         if(self->_bannerViewStorage[placementID] != nil){
             [self->_bannerViewStorage[placementID] removeFromSuperview];
             [self->_bannerViewStorage removeObjectForKey:placementID];
         }
-       
     });
 }
 
 -(void) showBannerAdWithPlacementID:(NSString*)placementID {
+    NSLog(@"ATBannerAdWrapper::showBannerAdWithPlacementID:%@", placementID);
     dispatch_async(dispatch_get_main_queue(), ^{
         ATBannerView *bannerView = self->_bannerViewStorage[placementID];
         if (bannerView.superview != nil) { bannerView.hidden = NO; }
@@ -94,6 +132,7 @@
 }
 
 -(void) hideBannerAdWithPlacementID:(NSString*)placementID {
+    NSLog(@"ATBannerAdWrapper::hideBannerAdWithPlacementID:%@", placementID);
     dispatch_async(dispatch_get_main_queue(), ^{
         ATBannerView *bannerView = self->_bannerViewStorage[placementID];
         if (bannerView.superview != nil) { bannerView.hidden = YES; }
@@ -104,9 +143,12 @@
     [[ATAdManager sharedManager] clearCache];
 }
 
+-(void) noop {
+}
+
 #pragma mark - banner delegate method(s)
 -(void) didFinishLoadingADWithPlacementID:(NSString *)placementID {
-
+    NSLog(@"ATBannerAdWrapper::didFinishLoadingADWithPlacementID:%@", placementID);
     void* callback = [[ATBannerAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -117,7 +159,7 @@
 }
 
 -(void) didFailToLoadADWithPlacementID:(NSString*)placementID error:(NSError*)error {
-  
+    NSLog(@"ATBannerAdWrapper::didFailToLoadADWithPlacementID:%@ error:%@", placementID, error);
     void* callback = [[ATBannerAdWrapper sharedInstance] callbackForKey:placementID];
 
     if (callback != NULL) {
@@ -137,11 +179,11 @@
         }
         pDelegate->onBannerAdLoadFailed(cPlacementId, errorDict.jsonString.UTF8String);
     }
-    
 }
 
 #pragma - mark delegate with adsourceID and networkID
 -(void) bannerView:(ATBannerView*)bannerView didShowAdWithPlacementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATBannerAdWrapper::bannerView:didShowAdWithPlacementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATBannerAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -151,7 +193,9 @@
         pDelegate->onBannerShowWithExtra(cPlacementId, cExtra);
     }
 }
+
 -(void) bannerView:(ATBannerView*)bannerView didClickWithPlacementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATBannerAdWrapper::bannerView:didClickWithPlacementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATBannerAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -161,7 +205,9 @@
         pDelegate->onBannerClickedWithExtra(cPlacementId, cExtra);
     }
 }
+
 -(void) bannerView:(ATBannerView*)bannerView didCloseWithPlacementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATBannerAdWrapper::bannerView:didCloseWithPlacementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATBannerAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -171,7 +217,21 @@
         pDelegate->onBannerCloseWithExtra(cPlacementId, cExtra);
     }
 }
+
+-(void) bannerView:(ATBannerView*)bannerView didTapCloseButtonWithPlacementID:(NSString*)placementID extra:(NSDictionary*)extra {
+    NSLog(@"ATBannerAdWrapper::bannerView:didTapCloseButtonWithPlacementID:%@ extra: %@", placementID,extra);
+    void* callback = [[ATBannerAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosBannerAdListener* pDelegate = (ATCocosBannerAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onBannerCloseWithExtra(cPlacementId, cExtra);
+    }
+}
+
 -(void) bannerView:(ATBannerView*)bannerView didAutoRefreshWithPlacement:(NSString*)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATBannerAdWrapper::bannerView:didAutoRefreshWithPlacement:%@ extra:%@", placementID, extra);
     void* callback = [[ATBannerAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -181,7 +241,9 @@
         pDelegate->onBannerAutoRefreshWithExtra(cPlacementId, cExtra);
     }
 }
+
 -(void) bannerView:(ATBannerView*)bannerView failedToAutoRefreshWithPlacementID:(NSString*)placementID  extra:(NSDictionary *)extra error:(NSError*)error {
+    NSLog(@"ATBannerAdWrapper::bannerView:failedToAutoRefreshWithPlacementID:%@ error:%@", placementID, error);
     void* callback = [[ATBannerAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {

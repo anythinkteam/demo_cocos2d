@@ -9,20 +9,24 @@
 #define ATCocosInterstitialAdListener_h
 
 class ATCocosInterstitialAdListener {
-    
+
 public:
-    
+
     virtual void onInterstitalLoadSuccess(const char * placementId) {};
-    
+
     virtual void onInterstitalLoadFailed(const char * placementId, const char * errorString) {};
-    
+
     //interstitial extra listener
     virtual void onInterstitalShowWithExtra(const char * placementId,const char * extra) {};
-    
+
     virtual void onInterstitalCloseWithExtra(const char * placementId,const char * extra) {};
-    
+
     virtual void onInterstitalClickedWithExtra(const char * placementId,const char * extra) {};
-    
+
+    virtual void onInterstitalPlayStartWithExtra(const char * placementId,const char * extra) {};
+
+    virtual void onInterstitalPlayEndWithExtra(const char * placementId,const char * extra) {};
+
 };
 
 #endif /* ATCocosInterstitialAdListener_h */

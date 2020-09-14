@@ -1,79 +1,102 @@
 package com.anythink.cocos2dx.bridge;
 
+import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.anythink.cocos2dx.bridge.utils.ATUtils;
-import com.anythink.core.api.AdError;
 import com.anythink.core.api.ATAdInfo;
+import com.anythink.core.api.AdError;
 import com.anythink.interstitial.api.ATInterstitial;
 import com.anythink.interstitial.api.ATInterstitialListener;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class ATInterstitalImpl {
     final String TAG = "ATInterstitalImpl";
-    String mUnitId;
+    String mPlacementId;
     ATInterstitial demoInterstitial;
 
     boolean mIsReady = false;
 
-    public ATInterstitalImpl(String unitId) {
-        mUnitId = unitId;
+    public ATInterstitalImpl(String placementId) {
+        mPlacementId = placementId;
     }
 
-    public void loadAd(Context context) {
-        demoInterstitial = new ATInterstitial(context, mUnitId);
+    public void loadAd(Context context, String extra) {
+        demoInterstitial = new ATInterstitial(context, mPlacementId);
 
         demoInterstitial.setAdListener(new ATInterstitialListener() {
             @Override
             public void onInterstitialAdLoaded() {
                 LogUtils.i(TAG, "sdk onInterstitialAdLoaded");
                 mIsReady = true;
-                ATListenerEventJniHelper.onInterstitialAdLoaded(mUnitId);
+                ATListenerEventJniHelper.onInterstitialAdLoaded(mPlacementId);
             }
 
             @Override
             public void onInterstitialAdLoadFail(AdError pAdError) {
                 LogUtils.i(TAG, "sdk onInterstitialAdLoadFail");
-                ATListenerEventJniHelper.onInterstitialAdLoadFail(mUnitId, pAdError.printStackTrace());
+                ATListenerEventJniHelper.onInterstitialAdLoadFail(mPlacementId, pAdError.printStackTrace());
             }
 
             @Override
             public void onInterstitialAdClicked(ATAdInfo adInfo) {
                 LogUtils.i(TAG, "sdk onInterstitialAdClicked");
-                ATListenerEventJniHelper.onInterstitialAdClicked(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
+                ATListenerEventJniHelper.onInterstitialAdClicked(mPlacementId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onInterstitialAdShow(ATAdInfo adInfo) {
                 LogUtils.i(TAG, "sdk onInterstitialAdShow");
                 mIsReady = false;
-                ATListenerEventJniHelper.onInterstitialAdShow(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
+                ATListenerEventJniHelper.onInterstitialAdShow(mPlacementId, ATUtils.adInfoToJsonstring(adInfo));
 
             }
 
             @Override
             public void onInterstitialAdClose(ATAdInfo adInfo) {
                 LogUtils.i(TAG, "sdk onInterstitialAdClose");
-                ATListenerEventJniHelper.onInterstitialAdClose(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
+                ATListenerEventJniHelper.onInterstitialAdClose(mPlacementId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
-            public void onInterstitialAdVideoStart() {
+            public void onInterstitialAdVideoStart(ATAdInfo adInfo) {
                 LogUtils.i(TAG, "sdk onInterstitialAdVideoStart");
-                ATListenerEventJniHelper.onInterstitialAdVideoStart(mUnitId);
+                ATListenerEventJniHelper.onInterstitialAdVideoStart(mPlacementId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
-            public void onInterstitialAdVideoEnd() {
+            public void onInterstitialAdVideoEnd(ATAdInfo adInfo) {
                 LogUtils.i(TAG, "sdk onInterstitialAdVideoEnd");
-                ATListenerEventJniHelper.onInterstitialAdVideoEnd(mUnitId);
+                ATListenerEventJniHelper.onInterstitialAdVideoEnd(mPlacementId, ATUtils.adInfoToJsonstring(adInfo));
             }
 
             @Override
             public void onInterstitialAdVideoError(AdError pAdError) {
                 LogUtils.i(TAG, "sdk onInterstitialAdVideoError");
-                ATListenerEventJniHelper.onInterstitialAdVideoError(mUnitId, pAdError.printStackTrace());
+                ATListenerEventJniHelper.onInterstitialAdVideoError(mPlacementId, pAdError.printStackTrace());
             }
         });
+
+        if (!TextUtils.isEmpty(extra)) {
+            try {
+                JSONObject jsonObject = new JSONObject(extra);
+                Map<String, Object> localExtra = new HashMap<>();
+                if (jsonObject.has("UseRewardedVideoAsInterstitial")) {
+                    boolean useRewardedVideoAsInterstitial = (Boolean) jsonObject.get("UseRewardedVideoAsInterstitial");
+                    LogUtils.i(TAG, "is_use_rewarded_video_as_interstitial: " + useRewardedVideoAsInterstitial);
+                    localExtra.put("is_use_rewarded_video_as_interstitial", useRewardedVideoAsInterstitial);
+                }
+                demoInterstitial.setLocalExtra(localExtra);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+
         demoInterstitial.load();
     }
 
@@ -88,9 +111,9 @@ public class ATInterstitalImpl {
         return mIsReady;
     }
 
-    public void show() {
+    public void show(Activity activity, String scenario) {
         if (demoInterstitial != null) {
-            demoInterstitial.show();
+            demoInterstitial.show(activity, scenario);
         }
     }
 

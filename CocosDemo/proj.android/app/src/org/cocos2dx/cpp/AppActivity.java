@@ -41,7 +41,7 @@ public class AppActivity extends Cocos2dxActivity {
         super.setEnableVirtualButton(false);
         super.onCreate(savedInstanceState);
 //        UpArpuSDKJniHelper.setLogDebug(true);
-        ATSDK.init(getApplicationContext(), "a5c4ad280995c9", "7b4e37f819dbee652ef79c4506e14288");
+//        ATSDK.init(getApplicationContext(), "a5aa1f9deda26d", "4f7b9ac17decb9babec83aac078742c7");
         ATSDKJniHelper.init(this);
         // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
         if (!isTaskRoot()) {

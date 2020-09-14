@@ -9,8 +9,8 @@ import android.widget.FrameLayout;
 
 import com.anythink.cocos2dx.bridge.utils.ATUtils;
 import com.anythink.core.api.ATAdInfo;
-import com.anythink.nativead.banner.api.ATNativeBannerListener;
 import com.anythink.nativead.banner.api.ATNativeBannerConfig;
+import com.anythink.nativead.banner.api.ATNativeBannerListener;
 import com.anythink.nativead.banner.api.ATNativeBannerSize;
 import com.anythink.nativead.banner.api.ATNativeBannerView;
 
@@ -18,12 +18,12 @@ import java.util.Map;
 
 public class ATNativeBannerImpl {
     ATNativeBannerView mNativeBannerView;
-    String mUnitId;
+    String mPlacementId;
 
     boolean mIsAdReady;
 
-    public ATNativeBannerImpl(String unitId) {
-        mUnitId = unitId;
+    public ATNativeBannerImpl(String placementId) {
+        mPlacementId = placementId;
     }
 
     public void loadAd(final Activity activity) {
@@ -37,46 +37,46 @@ public class ATNativeBannerImpl {
             if (mNativeBannerView == null) {
                 mNativeBannerView = new ATNativeBannerView(activity);
             }
-            mNativeBannerView.setUnitId(mUnitId);
+            mNativeBannerView.setUnitId(mPlacementId);
             mNativeBannerView.setAdListener(new ATNativeBannerListener() {
                 @Override
                 public void onAdLoaded() {
                     mIsAdReady = true;
-                    ATListenerEventJniHelper.onNativeBannerAdLoaded(mUnitId);
+                    ATListenerEventJniHelper.onNativeBannerAdLoaded(mPlacementId);
                 }
 
                 @Override
                 public void onAdError(String adError) {
-                    ATListenerEventJniHelper.onNativeBannerAdLoadFail(mUnitId, adError);
+                    ATListenerEventJniHelper.onNativeBannerAdLoadFail(mPlacementId, adError);
                 }
 
                 @Override
                 public void onAdClick(ATAdInfo adInfo) {
-                    ATListenerEventJniHelper.onNativeBannerAdClick(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
+                    ATListenerEventJniHelper.onNativeBannerAdClick(mPlacementId, ATUtils.adInfoToJsonstring(adInfo));
                 }
 
                 @Override
                 public void onAdShow(ATAdInfo adInfo) {
-                    ATListenerEventJniHelper.onNativeBannerAdShow(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
+                    ATListenerEventJniHelper.onNativeBannerAdShow(mPlacementId, ATUtils.adInfoToJsonstring(adInfo));
                 }
 
                 @Override
                 public void onAdClose() {
-                    ATListenerEventJniHelper.onNativeBannerAdClose(mUnitId, "");
+                    ATListenerEventJniHelper.onNativeBannerAdClose(mPlacementId, "");
                 }
 
                 @Override
                 public void onAutoRefresh(ATAdInfo adInfo) {
-                    ATListenerEventJniHelper.onNativeBannerAdAutoRefreshed(mUnitId, ATUtils.adInfoToJsonstring(adInfo));
+                    ATListenerEventJniHelper.onNativeBannerAdAutoRefreshed(mPlacementId, ATUtils.adInfoToJsonstring(adInfo));
                 }
 
                 @Override
                 public void onAutoRefreshFail(String s) {
-                    ATListenerEventJniHelper.onNativeBannerAdAutoRefreshFail(mUnitId, s, "");
+                    ATListenerEventJniHelper.onNativeBannerAdAutoRefreshFail(mPlacementId, s, "");
                 }
 
             });
-            if(localMap != null) {
+            if (localMap != null) {
                 mNativeBannerView.setLocalExtra(localMap);
             }
             mNativeBannerView.loadAd(null);
@@ -87,7 +87,7 @@ public class ATNativeBannerImpl {
         return mIsAdReady;
     }
 
-    public void showAd(Activity activity, Map<String, String> configMap, Map<String,String> extraMap) {
+    public void showAd(Activity activity, Map<String, String> configMap, Map<String, String> extraMap) {
         synchronized (ATNativeBannerImpl.this) {
 
             ATNativeBannerConfig config = new ATNativeBannerConfig();
@@ -95,18 +95,18 @@ public class ATNativeBannerImpl {
             try {
                 String bgColor = extraMap.get("key_main_bg_color");
                 if (!TextUtils.isEmpty(bgColor)) {
-                    if(mNativeBannerView != null){
+                    if (mNativeBannerView != null) {
                         mNativeBannerView.setBackgroundColor(Color.parseColor(bgColor));
                     }
                 }
 
                 String isShowCloseStr = configMap.get("key_button_close_status");
-                if(!TextUtils.isEmpty(isShowCloseStr)){
+                if (!TextUtils.isEmpty(isShowCloseStr)) {
                     config.isCloseBtnShow = Boolean.parseBoolean(isShowCloseStr);
                 }
 
                 String ctaBgColorStr = extraMap.get("key_button_cta_bg");
-                if(!TextUtils.isEmpty(ctaBgColorStr)){
+                if (!TextUtils.isEmpty(ctaBgColorStr)) {
                     config.ctaBgColor = Color.parseColor(ctaBgColorStr);
                 }
 
@@ -116,12 +116,12 @@ public class ATNativeBannerImpl {
                 }
 
                 String adTitleColor = extraMap.get("key_title_color");
-                if(!TextUtils.isEmpty(adTitleColor)){
+                if (!TextUtils.isEmpty(adTitleColor)) {
                     config.titleColor = Color.parseColor(adTitleColor);
                 }
 
                 String adDescColor = extraMap.get("key_text_color");
-                if(!TextUtils.isEmpty(adDescColor)){
+                if (!TextUtils.isEmpty(adDescColor)) {
                     config.descColor = Color.parseColor(adDescColor);
                 }
 
@@ -156,8 +156,8 @@ public class ATNativeBannerImpl {
             try {
                 int x = Integer.parseInt(configMap.get("x"));
                 int y = Integer.parseInt(configMap.get("y"));
-                int w = Integer.parseInt(configMap.get("w"));
-                int h = Integer.parseInt(configMap.get("h"));
+                int w = Integer.parseInt(configMap.get("width"));
+                int h = Integer.parseInt(configMap.get("height"));
 
 
                 if (mNativeBannerView != null) {

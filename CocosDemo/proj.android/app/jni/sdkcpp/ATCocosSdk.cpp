@@ -3,6 +3,7 @@
 //
 
 #include "bridge/ATCocosSdk.h"
+#include "bridge/CCSerialization.h"
 #include "ATUtil.h"
 #include <jni.h>
 #include <json/writer.h>
@@ -18,10 +19,24 @@ USING_NS_CC;
 #define UPARPUSDKHELPER   "com/anythink/cocos2dx/bridge/ATSDKJniHelper"
 #endif
 
-const char* ATCocosSdk::KEY_WIDTH = "w";
-const char* ATCocosSdk::KEY_HEIGHT = "h";
+const char* ATCocosSdk::KEY_WIDTH = "width";
+const char* ATCocosSdk::KEY_HEIGHT = "height";
 const char* ATCocosSdk::KEY_POS_X = "x";
 const char* ATCocosSdk::KEY_POS_Y = "y";
+
+const char* ATCocosSdk::KEY_BACKGROUND_COLOR = "key_background_color";
+const char* ATCocosSdk::KEY_TEXT_SIZE = "key_text_size";
+
+const char* ATCocosSdk::KEY_PARENT = "parent";
+const char* ATCocosSdk::KEY_ICON = "icon";
+const char* ATCocosSdk::KEY_MAIN_IMAGE = "mainImage";
+const char* ATCocosSdk::KEY_TITLE = "title";
+const char* ATCocosSdk::KEY_DESC = "desc";
+const char* ATCocosSdk::KEY_AD_LOGO = "adLogo";
+const char* ATCocosSdk::KEY_CTA = "cta";
+const char* ATCocosSdk::KEY_RATING = "rating";
+
+
 const char* ATCocosSdk::KEY_MAIN_BG_COLOR = "key_main_bg_color";
 const char* ATCocosSdk::KEY_REFRESH_INTERVEL = "key_refresh_intervel";
 const char* ATCocosSdk::KEY_BUTTON_CLOSE_STATUS = "key_button_close_status";
@@ -37,6 +52,27 @@ const char* ATCocosSdk::KEY_ADVERTISER_TEXT_COLOR = "key_advertiser_text_color";
 const char* ATCocosSdk::KEY_BANNER_SIZE_TYPE = "key_banner_size_type";
 const char* ATCocosSdk::KEY_IS_SHOW_CTA = "key_is_show_cta";
 
+const char* ATCocosSdk::KEY_USER_ID = "key_user_id";
+const char* ATCocosSdk::KEY_MEDIA_EXT = "key_media_ext";
+
+const int ATCocosSdk::USER_LOCATION_UNKNOWN = 0;
+const int ATCocosSdk::USER_LOCATION_IN_EU = 1;
+const int ATCocosSdk::USER_LOCATION_OUT_OF_EU = 2;
+
+const int ATCocosSdk::GDPR_PERSONALIZED = 0;
+const int ATCocosSdk::GDPR_NONPERSONALIZED = 1;
+const int ATCocosSdk::GDPR_UNKNOWN= 2;
+
+const char* ATCocosSdk::KEY_TOP = "top";
+const char* ATCocosSdk::KEY_BOTTOM = "bottom";
+
+const char* ATCocosSdk::KEY_INLINE_ADAPTIVE_WIDTH = "inline_adaptive_width";
+const char* ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION = "inline_adaptive_orientation";
+const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_CURRENT = 0;
+const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_PORTRAIT = 1;
+const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_LANDSCAPE = 2;
+
+const char* ATCocosSdk::KEY_USE_REWARDED_VIDEO_AS_INTERSTITIAL = "UseRewardedVideoAsInterstitial";
 
 bool ATCocosSdk::initSDK(const char *appid, const char *appkey) {
     JniMethodInfo info;
@@ -124,6 +160,32 @@ bool ATCocosSdk::isEUTraffic() {
     }
 }
 
+void ATCocosSdk::getUserLocation(ATCocosUserLocationListener * listener) {
+    ATListenerManager::getInstance()->setUserLocationListener(listener);
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "getUserLocation", "()V");
+    if (ret) {
+        ATUtil::printLog("getUserLocation");
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, listener);
+
+    } else {
+        ATUtil::printLog("getUserLocation error");
+    }
+}
+
+void ATCocosSdk::integrationChecking() {
+    JniMethodInfo info;
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "integrationChecking", "()V");
+    if (ret) {
+        ATUtil::printLog("integrationChecking");
+        info.env->CallStaticVoidMethod(info.classID, info.methodID);
+    } else {
+        ATUtil::printLog("integrationChecking error");
+    }
+}
+
+
 void ATCocosSdk::setDebugLog(bool value) {
     JniMethodInfo info;
     bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "setDebugLog", "(Z)V");
@@ -152,7 +214,26 @@ void ATCocosSdk::setChannel(const char *channel) {
     }
 }
 
-void ATCocosSdk::setCustomData(cocos2d::CCDictionary *customData) {
+void ATCocosSdk::setSubChannel(const char *subChannel) {
+    JniMethodInfo info;
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "setSubChannel",
+                                              "(Ljava/lang/String;)V");
+    if (ret) {
+        ATUtil::printLog("setSubChannel");
+        jstring channelString = ATUtil::charTojstring(info.env, subChannel);
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, channelString);
+    } else {
+        ATUtil::printLog("setSubChannel error");
+    }
+}
+
+void ATCocosSdk::setCustomData(cocos2d::ValueMap customData) {
+
+    if(customData.bucket_count() == 0) {
+        ATUtil::printLog("setCustomData size = 0");
+        return;
+    }
+
     /*C语言版本，下同*/
     //获取java的HashMap类
     jclass class_hashmap = JniHelper::getEnv()->FindClass("java/util/HashMap");
@@ -164,15 +245,13 @@ void ATCocosSdk::setCustomData(cocos2d::CCDictionary *customData) {
     jmethodID HashMap_put = JniHelper::getEnv()->GetMethodID(class_hashmap, "put",
                                                              "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-    DictElement *pElement;
-
-    CCDICT_FOREACH(customData, pElement) {
-            const char *key = pElement->getStrKey();
-            const char *value = ((CCString *) pElement->getObject())->getCString();
-            JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
-                                                  JniHelper::getEnv()->NewStringUTF(key),
-                                                  JniHelper::getEnv()->NewStringUTF(value));
-        }
+    for(auto iter : customData) {
+        auto key = iter.first;
+        auto value = iter.second;
+        JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
+                                              JniHelper::getEnv()->NewStringUTF(key.c_str()),
+                                              JniHelper::getEnv()->NewStringUTF(value.asString().c_str()));
+    }
 
     JniMethodInfo info;
     bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "initCustomMap",
@@ -185,16 +264,59 @@ void ATCocosSdk::setCustomData(cocos2d::CCDictionary *customData) {
     }
 }
 
+void ATCocosSdk::setPlacementCustomData(const char *placementId, cocos2d::ValueMap customData) {
+
+    if(customData.bucket_count() == 0) {
+        ATUtil::printLog("setPlacementCustomData or size = 0");
+        return;
+    }
+
+    /*C语言版本，下同*/
+    //获取java的HashMap类
+    jclass class_hashmap = JniHelper::getEnv()->FindClass("java/util/HashMap");
+    //获取类似于java 的new HashMap();
+    jmethodID hashmap_init = JniHelper::getEnv()->GetMethodID(class_hashmap, "<init>", "()V");
+    //初始化。类似于hashMap=new HashMap();
+    jobject HashMap = JniHelper::getEnv()->NewObject(class_hashmap, hashmap_init, "");
+    //获取hashMap.put()的ID
+    jmethodID HashMap_put = JniHelper::getEnv()->GetMethodID(class_hashmap, "put",
+                                                             "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+
+    for(auto iter : customData) {
+        auto key = iter.first;
+        auto value = iter.second;
+        JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
+                                              JniHelper::getEnv()->NewStringUTF(key.c_str()),
+                                              JniHelper::getEnv()->NewStringUTF(value.asString().c_str()));
+    }
+
+    JniMethodInfo info;
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "initPlacementCustomMap",
+                                              "(Ljava/lang/String;Ljava/util/Map;)V");
+    if (ret) {
+        ATUtil::printLog("setPlacementCustomMap");
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, HashMap);
+    } else {
+        ATUtil::printLog("setPlacementCustomMap error");
+    }
+}
+
 /**------------------------------------------- Banner -------------------------------------------------------------**/
-void ATCocosSdk::loadBannerAd(const char *placementId, cocos2d::CCDictionary *parameters) {
+void ATCocosSdk::loadBannerAd(const char *placementId, cocos2d::ValueMap parameters) {
     JniMethodInfo info;
 
     bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "loadBannerAd",
-                                              "(Ljava/lang/String;)V");
+                                              "(Ljava/lang/String;Ljava/lang/String;)V");
+
     if (ret) {
         ATUtil::printLog("loadBannerAd");
         jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
-        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr);
+        jstring str = 0;
+        if(parameters.bucket_count() > 0) {
+            str = ATUtil::charTojstring(info.env, cocos2d::StringUtils::getStringFromValueMap(parameters).c_str());
+        }
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, str);
 
     } else {
         ATUtil::printLog("loadBannerAd error");
@@ -219,7 +341,7 @@ bool ATCocosSdk::isBannerAdReady(const char *placementId) {
 }
 
 
-void ATCocosSdk::showBannerAd(const char *placementId, cocos2d::CCDictionary  * parameters) {
+void ATCocosSdk::showBannerAd(const char *placementId, cocos2d::ValueMap parameters) {
         JniMethodInfo info;
 
     /*C语言版本，下同*/
@@ -233,16 +355,13 @@ void ATCocosSdk::showBannerAd(const char *placementId, cocos2d::CCDictionary  * 
     jmethodID HashMap_put = JniHelper::getEnv()->GetMethodID(class_hashmap, "put",
                                                              "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-    DictElement *pElement;
-
-    CCDICT_FOREACH(parameters, pElement) {
-            const char *key = pElement->getStrKey();
-            const char *value = ((CCString *) pElement->getObject())->getCString();
-            JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
-                                                  JniHelper::getEnv()->NewStringUTF(key),
-                                                  JniHelper::getEnv()->NewStringUTF(value));
-        }
-
+    for(auto iter : parameters) {
+        auto key = iter.first;
+        auto value = iter.second;
+        JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
+                                              JniHelper::getEnv()->NewStringUTF(key.c_str()),
+                                              JniHelper::getEnv()->NewStringUTF(value.asString().c_str()));
+    }
 
     bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "showBannerAd",
                                               "(Ljava/lang/String;Ljava/util/Map;)V");
@@ -256,6 +375,24 @@ void ATCocosSdk::showBannerAd(const char *placementId, cocos2d::CCDictionary  * 
     }
 
 }
+
+void ATCocosSdk::showBannerAdInPostion(const char * placementId, std::string postion) {
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "showBannerAdInPosition",
+                                              "(Ljava/lang/String;Ljava/lang/String;)V");
+    if (ret) {
+        ATUtil::printLog("showBannerAdInPostion");
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
+        jstring positionstr = ATUtil::charTojstring(info.env, postion.c_str());
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, positionstr);
+
+    } else {
+        ATUtil::printLog("showBannerAdInPostion error");
+    }
+}
+
+
 
 void ATCocosSdk::removeBannerAd(const char *placementId) {
     JniMethodInfo info;
@@ -279,15 +416,19 @@ void ATCocosSdk::setBannerAdListener(ATCocosBannerAdListener *listener, const ch
 /**------------------------------------------- Interstitial -------------------------------------------------------------**/
 
 
-void ATCocosSdk::loadInterstitialAd(const char *placementId, cocos2d::CCDictionary  * parameters) {
+void ATCocosSdk::loadInterstitialAd(const char *placementId, cocos2d::ValueMap parameters) {
     JniMethodInfo info;
 
     bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "loadInterstitialAd",
-                                              "(Ljava/lang/String;)V");
+                                              "(Ljava/lang/String;Ljava/lang/String;)V");
     if (ret) {
         ATUtil::printLog("loadInterstitialAd");
         jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
-        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr);
+        jstring str = 0;
+        if(parameters.bucket_count() > 0) {
+            str = ATUtil::charTojstring(info.env, cocos2d::StringUtils::getStringFromValueMap(parameters).c_str());
+        }
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, str);
 
     } else {
         ATUtil::printLog("loadInterstitialAd error");
@@ -327,6 +468,22 @@ void ATCocosSdk::showInterstitialAd(const char *placementId) {
     }
 }
 
+void ATCocosSdk::showInterstitialAdInScenario(const char *placementId, const char *scenario) {
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "showInterstitialAd",
+                                              "(Ljava/lang/String;Ljava/lang/String;)V");
+    if (ret) {
+        ATUtil::printLog("showInterstitialAd");
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
+        jstring scenariostr = ATUtil::charTojstring(info.env, scenario);
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, scenariostr);
+
+    } else {
+        ATUtil::printLog("showInterstitialAd error");
+    }
+}
+
 void ATCocosSdk::setInterstitialAdListener(ATCocosInterstitialAdListener *listener, const char * placementId) {
     ATListenerManager::getInstance()->addInterstitialListener(placementId, listener);
 }
@@ -334,14 +491,14 @@ void ATCocosSdk::setInterstitialAdListener(ATCocosInterstitialAdListener *listen
 /**------------------------------------------- RewardedVideo -------------------------------------------------------------**/
 
 
-bool ATCocosSdk::isRewardedVideoAdReady(const char *unitid) {
+bool ATCocosSdk::isRewardedVideoAdReady(const char *placementId) {
     JniMethodInfo info;
 
     bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "isRewardedVideoAdReady",
                                               "(Ljava/lang/String;)Z");
     if (ret) {
         ATUtil::printLog("isRewardedVideoAdReady");
-        jstring unitidstr = ATUtil::charTojstring(info.env, unitid);
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
         jboolean result = info.env->CallStaticBooleanMethod(info.classID, info.methodID, unitidstr);
         return result == JNI_TRUE;
     } else {
@@ -351,48 +508,12 @@ bool ATCocosSdk::isRewardedVideoAdReady(const char *unitid) {
 }
 
 
-void ATCocosSdk::loadRewardedVideoAd(const char *placementId, const char *userId,
-                                         cocos2d::CCDictionary *parameters) {
+void ATCocosSdk::loadRewardedVideoAd(const char *placementId, cocos2d::ValueMap parameters) {
     JniMethodInfo info;
 
     bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "loadRewardedVideoAd",
-                                              "(Ljava/lang/String;Ljava/lang/String;)V");
-    if (ret) {
-        ATUtil::printLog("loadRewardedVideoAd");
-        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
-        if (userId == NULL) {
-            userId = "";
-        }
-        jstring userIdStr = ATUtil::charTojstring(info.env, userId);
-        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, userIdStr);
+                                              "(Ljava/lang/String;Ljava/util/Map;)V");
 
-    } else {
-        ATUtil::printLog("loadRewardedVideoAd error");
-    }
-}
-
-void ATCocosSdk::showRewardedVideoAd(const char *unitid) {
-    JniMethodInfo info;
-
-    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "showRewardedVideoAd",
-                                              "(Ljava/lang/String;)V");
-    if (ret) {
-        ATUtil::printLog("showRewardedVideoAd");
-        jstring unitidstr = ATUtil::charTojstring(info.env, unitid);
-        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr);
-
-    } else {
-        ATUtil::printLog("showRewardedVideoAd error");
-    }
-}
-
-void ATCocosSdk::setRewardedVideoAdListener(ATCocosRewardedVideoAdListener *listener, const char * placementId) {
-    ATListenerManager::getInstance()->addRewardedVideoListener(placementId, listener);
-}
-
-/**------------------------------------------- NativeAd -------------------------------------------------------------**/
-
-void ATCocosSdk::loadNativeAd(const char *placementId, cocos2d::CCDictionary *parameters) {
     /*C语言版本，下同*/
     //获取java的HashMap类
     jclass class_hashmap = JniHelper::getEnv()->FindClass("java/util/HashMap");
@@ -404,18 +525,81 @@ void ATCocosSdk::loadNativeAd(const char *placementId, cocos2d::CCDictionary *pa
     jmethodID HashMap_put = JniHelper::getEnv()->GetMethodID(class_hashmap, "put",
                                                              "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-    DictElement *pElement;
-
-    if (parameters != NULL) {
-        CCDICT_FOREACH(parameters, pElement) {
-                const char *key = pElement->getStrKey();
-                const char *value = ((CCString *) pElement->getObject())->getCString();
-                JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
-                                                      JniHelper::getEnv()->NewStringUTF(key),
-                                                      JniHelper::getEnv()->NewStringUTF(value));
-            }
+    for(auto iter : parameters) {
+        auto key = iter.first;
+        auto value = iter.second;
+        JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
+                                              JniHelper::getEnv()->NewStringUTF(key.c_str()),
+                                              JniHelper::getEnv()->NewStringUTF(value.asString().c_str()));
     }
 
+
+    if (ret) {
+        ATUtil::printLog("loadRewardedVideoAd");
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, HashMap);
+
+    } else {
+        ATUtil::printLog("loadRewardedVideoAd error");
+    }
+}
+
+void ATCocosSdk::showRewardedVideoAd(const char *placementId) {
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "showRewardedVideoAd",
+                                              "(Ljava/lang/String;)V");
+    if (ret) {
+        ATUtil::printLog("showRewardedVideoAd");
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr);
+
+    } else {
+        ATUtil::printLog("showRewardedVideoAd error");
+    }
+}
+
+void ATCocosSdk::showRewardedVideoAdInScenario(const char *placementId, const char *scenario) {
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "showRewardedVideoAd",
+                                              "(Ljava/lang/String;Ljava/lang/String;)V");
+    if (ret) {
+        ATUtil::printLog("showRewardedVideoAdInScenario");
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
+        jstring scenariostr = ATUtil::charTojstring(info.env, scenario);
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, scenariostr);
+
+    } else {
+        ATUtil::printLog("showRewardedVideoAdInScenario error");
+    }
+}
+
+void ATCocosSdk::setRewardedVideoAdListener(ATCocosRewardedVideoAdListener *listener, const char * placementId) {
+    ATListenerManager::getInstance()->addRewardedVideoListener(placementId, listener);
+}
+
+/**------------------------------------------- NativeAd -------------------------------------------------------------**/
+
+void ATCocosSdk::loadNativeAd(const char *placementId, cocos2d::ValueMap parameters) {
+    /*C语言版本，下同*/
+    //获取java的HashMap类
+    jclass class_hashmap = JniHelper::getEnv()->FindClass("java/util/HashMap");
+    //获取类似于java 的new HashMap();
+    jmethodID hashmap_init = JniHelper::getEnv()->GetMethodID(class_hashmap, "<init>", "()V");
+    //初始化。类似于hashMap=new HashMap();
+    jobject HashMap = JniHelper::getEnv()->NewObject(class_hashmap, hashmap_init, "");
+    //获取hashMap.put()的ID
+    jmethodID HashMap_put = JniHelper::getEnv()->GetMethodID(class_hashmap, "put",
+                                                             "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+
+    for(auto iter : parameters) {
+        auto key = iter.first;
+        auto value = iter.second;
+        JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
+                                              JniHelper::getEnv()->NewStringUTF(key.c_str()),
+                                              JniHelper::getEnv()->NewStringUTF(value.asString().c_str()));
+    }
 
 
     JniMethodInfo info;
@@ -432,7 +616,7 @@ void ATCocosSdk::loadNativeAd(const char *placementId, cocos2d::CCDictionary *pa
     }
 }
 
-void ATCocosSdk::showNativeAd(const char *placementId, cocos2d::CCDictionary  * parameters) {
+void ATCocosSdk::showNativeAd(const char *placementId, std::string parameters) {
     /*C语言版本，下同*/
     //获取java的HashMap类
     jclass class_hashmap = JniHelper::getEnv()->FindClass("java/util/HashMap");
@@ -444,25 +628,15 @@ void ATCocosSdk::showNativeAd(const char *placementId, cocos2d::CCDictionary  * 
     jmethodID HashMap_put = JniHelper::getEnv()->GetMethodID(class_hashmap, "put",
                                                              "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-    DictElement *pElement;
-    if (parameters != NULL) {
-        CCDICT_FOREACH(parameters, pElement) {
-                const char *key = pElement->getStrKey();
-                const char *value = ((CCString *) pElement->getObject())->getCString();
-                JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
-                                                      JniHelper::getEnv()->NewStringUTF(key),
-                                                      JniHelper::getEnv()->NewStringUTF(value));
-            }
-    }
-
     JniMethodInfo info;
 
     bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "showNativeAd",
-                                              "(Ljava/lang/String;Ljava/util/Map;)V");
+                                              "(Ljava/lang/String;Ljava/lang/String;)V");
     if (ret) {
         ATUtil::printLog("showNativeAd");
         jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
-        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, HashMap);
+        jstring configstr = ATUtil::charTojstring(info.env, parameters.c_str());
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, unitidstr, configstr);
 
     } else {
         ATUtil::printLog("showNativeAd error");
@@ -507,7 +681,7 @@ void ATCocosSdk::setNativeAdListener(ATCocosNativeAdListener *listener, const ch
 
 /**------------------------------------------- Native BannerAd -------------------------------------------------------------**/
 void ATCocosSdk::loadNativeBannerAd(const char *placementId,
-                                        cocos2d::CCDictionary *parameters) {
+                                        cocos2d::ValueMap parameters) {
     /*C语言版本，下同*/
     //获取java的HashMap类
     jclass class_hashmap = JniHelper::getEnv()->FindClass("java/util/HashMap");
@@ -519,19 +693,13 @@ void ATCocosSdk::loadNativeBannerAd(const char *placementId,
     jmethodID HashMap_put = JniHelper::getEnv()->GetMethodID(class_hashmap, "put",
                                                              "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-    DictElement *pElement;
-
-    if (parameters != NULL) {
-        CCDICT_FOREACH(parameters, pElement) {
-                const char *key = pElement->getStrKey();
-                const char *value = ((CCString *) pElement->getObject())->getCString();
-                JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
-                                                      JniHelper::getEnv()->NewStringUTF(key),
-                                                      JniHelper::getEnv()->NewStringUTF(value));
-            }
+    for(auto iter : parameters) {
+        auto key = iter.first;
+        auto value = iter.second;
+        JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
+                                              JniHelper::getEnv()->NewStringUTF(key.c_str()),
+                                              JniHelper::getEnv()->NewStringUTF(value.asString().c_str()));
     }
-
-
 
     JniMethodInfo info;
 
@@ -549,7 +717,7 @@ void ATCocosSdk::loadNativeBannerAd(const char *placementId,
 }
 
 void ATCocosSdk::showNativeBannerAd(const char *placementId,
-                                        cocos2d::CCDictionary *parameters, cocos2d::CCDictionary  * extra) {
+                                        cocos2d::ValueMap parameters, cocos2d::ValueMap  extra) {
 
     /*C语言版本，下同*/
     //获取java的HashMap类
@@ -562,18 +730,13 @@ void ATCocosSdk::showNativeBannerAd(const char *placementId,
     jmethodID HashMap_put = JniHelper::getEnv()->GetMethodID(class_hashmap, "put",
                                                              "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-    DictElement *pElement;
-
-    if (parameters != NULL) {
-        CCDICT_FOREACH(parameters, pElement) {
-                const char *key = pElement->getStrKey();
-                const char *value = ((CCString *) pElement->getObject())->getCString();
-                JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
-                                                      JniHelper::getEnv()->NewStringUTF(key),
-                                                      JniHelper::getEnv()->NewStringUTF(value));
-            }
+    for(auto iter : parameters) {
+        auto key = iter.first;
+        auto value = iter.second;
+        JniHelper::getEnv()->CallObjectMethod(HashMap, HashMap_put,
+                                              JniHelper::getEnv()->NewStringUTF(key.c_str()),
+                                              JniHelper::getEnv()->NewStringUTF(value.asString().c_str()));
     }
-
 
     /*C语言版本，下同*/
     //获取java的HashMap类
@@ -586,18 +749,13 @@ void ATCocosSdk::showNativeBannerAd(const char *placementId,
     jmethodID HashMap_put_extra = JniHelper::getEnv()->GetMethodID(class_hashmap_extra, "put",
                                                              "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
-    DictElement *extraElement;
-
-    if (extra != NULL) {
-        CCDICT_FOREACH(extra, extraElement) {
-                const char *key = extraElement->getStrKey();
-                const char *value = ((CCString *) extraElement->getObject())->getCString();
-                JniHelper::getEnv()->CallObjectMethod(extraHashMap, HashMap_put_extra,
-                                                      JniHelper::getEnv()->NewStringUTF(key),
-                                                      JniHelper::getEnv()->NewStringUTF(value));
-            }
+    for(auto iter : extra) {
+        auto key = iter.first;
+        auto value = iter.second;
+        JniHelper::getEnv()->CallObjectMethod(extraHashMap, HashMap_put_extra,
+                                              JniHelper::getEnv()->NewStringUTF(key.c_str()),
+                                              JniHelper::getEnv()->NewStringUTF(value.asString().c_str()));
     }
-
 
     JniMethodInfo info;
 

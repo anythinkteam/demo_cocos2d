@@ -15,6 +15,8 @@
 + (NSString *)nsstringFromCString:(const char *)cstring;
 + (const char *)cstringFromNSString:(NSString *)nsstring;
 + (NSDictionary *)nsDictionaryFromCCDictionary:(cocos2d::CCDictionary *)ccDictionary;
++ (NSDictionary *)nsDictionaryFromValueMap:(cocos2d::ValueMap)valueMap ;
++ (NSString *)nsStringFromValueMap:(cocos2d::ValueMap)valueMap ;
 + (const char *)cstringFromExtraNSDictionary:(NSDictionary *)dic;
 
 @end
@@ -33,5 +35,10 @@
 + (UIColor *) colorWithHexString: (NSString *)color;
 
 @end
+
+@interface NSJSONSerialization(AnyThink)
++(id)JSONObjectWithString:(NSString *)string options:(NSJSONReadingOptions)opt error:(NSError *__autoreleasing *)error;
+@end
+
 
 #endif /* ATXUtils_hpp */

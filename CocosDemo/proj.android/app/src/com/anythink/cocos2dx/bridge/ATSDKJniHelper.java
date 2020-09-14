@@ -8,6 +8,7 @@ import android.util.Log;
 import com.anythink.core.api.ATGDPRAuthCallback;
 import com.anythink.core.api.ATSDK;
 import com.anythink.core.api.ATSDKInitListener;
+import com.anythink.core.api.NetTrafficeCallback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,27 +43,46 @@ public class ATSDKJniHelper {
         ATSDK.setChannel(channel);
     }
 
-    public static void initCustomMap(Map<String, String> customMap) {
+    public static void setSubChannel(String subChannel) {
+        LogUtils.i(TAG, "setSubChannel: " + subChannel);
+        ATSDK.setSubChannel(subChannel);
+    }
+
+    public static void initCustomMap(Map<String, Object> customMap) {
         ATSDK.initCustomMap(customMap);
         for (Object key : customMap.keySet()) {
-            Log.i(TAG, "key:" + key + "--value:" + customMap.get(key));
+            Log.i(TAG, "key:" + key + " -- value:" + customMap.get(key));
         }
     }
 
+    public static void initPlacementCustomMap(String placementId, Map<String, Object> customMap) {
+        ATSDK.initPlacementCustomMap(placementId, customMap);
+        for (Object key : customMap.keySet()) {
+            Log.i(TAG, "placementId: " + placementId + ",  key:" + key + " -- value:" + customMap.get(key));
+        }
+    }
 
-    public static void initSDK(final String appid, final String appKey) {
-        LogUtils.i(TAG, "initSDK,appid [" + appid + "]");
-        if (TextUtils.isEmpty(appid) || TextUtils.isEmpty(appKey)) {
+    public static void integrationChecking() {
+        if (sActivity == null) {
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
+            return;
+        }
+        ATSDK.integrationChecking(sApplicationContext);
+    }
+
+    public static void initSDK(final String appId, final String appKey) {
+        LogUtils.i(TAG, "initSDK,appid [" + appId + "]");
+        if (TextUtils.isEmpty(appId) || TextUtils.isEmpty(appKey)) {
             ATListenerEventJniHelper.onSDKInitFail("appid or appkey isEmpty... init failed");
             return;
         }
 
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
 
-        ATSDK.init(sApplicationContext, appid, appKey, new ATSDKInitListener() {
+        ATSDK.init(sApplicationContext, appId, appKey, new ATSDKInitListener() {
             @Override
             public void onSuccess() {
                 Log.i(TAG, "sdk onSDKInitSuccess");
@@ -80,7 +100,7 @@ public class ATSDKJniHelper {
     public static void showGDPR() {
         LogUtils.i(TAG, "showGDPR");
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
 
@@ -96,7 +116,7 @@ public class ATSDKJniHelper {
     public static void showGdprWidthListener() {
         LogUtils.i(TAG, "showGDPR");
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
 
@@ -110,6 +130,12 @@ public class ATSDKJniHelper {
                         LogUtils.e(TAG, "sdk onAuthResult, GDPR: [" + i + "]");
                         ATListenerEventJniHelper.onGdprAuth(i);
                     }
+
+                    @Override
+                    public void onPageLoadFail() {
+                        LogUtils.e(TAG, "sdk onPageLoadFail");
+                        ATListenerEventJniHelper.onPageLoadFail();
+                    }
                 });
             }
         });
@@ -118,7 +144,7 @@ public class ATSDKJniHelper {
     public static void setGDPRLevel(int pGDPRUploadDataLevel) {
         LogUtils.i(TAG, "setGDPRLevel");
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
         ATSDK.setGDPRUploadDataLevel(sActivity, pGDPRUploadDataLevel);
@@ -127,7 +153,7 @@ public class ATSDKJniHelper {
     public static int getGDPRLevel() {
         LogUtils.i(TAG, "getGDPRDataLevel");
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return ATSDK.UNKNOWN;
         }
         return ATSDK.getGDPRDataLevel(sActivity);
@@ -136,10 +162,33 @@ public class ATSDKJniHelper {
     public static boolean isEUTraffic() {
         LogUtils.i(TAG, "isEUTraffic");
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return false;
         }
         return ATSDK.isEUTraffic(sActivity);
+    }
+
+    public static void getUserLocation() {
+        LogUtils.i(TAG, "getUserLocation");
+        if (sActivity == null) {
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
+            return;
+        }
+        ATSDK.checkIsEuTraffic(sApplicationContext, new NetTrafficeCallback() {
+            @Override
+            public void onResultCallback(boolean b) {
+                final int result = b ? 1 : 2;
+
+                LogUtils.i(TAG, "sdk getUserLocation: [" + result + "]");
+                ATListenerEventJniHelper.onUserLocation(result);
+            }
+
+            @Override
+            public void onErrorCallback(String s) {
+                LogUtils.e(TAG, "sdk getUserLocation error: " + s);
+                ATListenerEventJniHelper.onUserLocation(0);
+            }
+        });
     }
 
     /**
@@ -150,28 +199,28 @@ public class ATSDKJniHelper {
     /**
      * 插屏广告加载
      *
-     * @param unitid
+     * @param placementId
      */
-    public synchronized static void loadInterstitialAd(final String unitid) {
-        LogUtils.i(TAG, "loadInterstitial,unitid [" + unitid + "]");
+    public synchronized static void loadInterstitialAd(final String placementId, String extra) {
+        LogUtils.i(TAG, "loadInterstitial,placementId [" + placementId + "], extra: " + extra);
 
-        if (TextUtils.isEmpty(unitid)) {
-            LogUtils.e(TAG, "unitid isEmpty... call failed");
+        if (TextUtils.isEmpty(placementId)) {
+            LogUtils.e(TAG, "placementId isEmpty... call failed");
             return;
         }
 
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
 
         ATInterstitalImpl demoInterstitial = null;
-        if (mATInterstitialMap.containsKey(unitid)) {
-            demoInterstitial = mATInterstitialMap.get(unitid);
+        if (mATInterstitialMap.containsKey(placementId)) {
+            demoInterstitial = mATInterstitialMap.get(placementId);
         }
         if (demoInterstitial == null) {
-            demoInterstitial = new ATInterstitalImpl(unitid);
-            mATInterstitialMap.put(unitid, demoInterstitial);
+            demoInterstitial = new ATInterstitalImpl(placementId);
+            mATInterstitialMap.put(placementId, demoInterstitial);
         }
 
         final ATInterstitalImpl finalInterstital = demoInterstitial;
@@ -179,7 +228,7 @@ public class ATSDKJniHelper {
         sActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                finalInterstital.loadAd(sActivity);
+                finalInterstital.loadAd(sActivity, extra);
             }
         });
     }
@@ -188,22 +237,22 @@ public class ATSDKJniHelper {
     /**
      * 插屏广告是否Ready
      *
-     * @param pUnitid
+     * @param placementId
      * @return
      */
-    public static boolean isInterstitialAdReady(final String pUnitid) {
-        LogUtils.i(TAG, "isInterstitalReady,pUnitid [" + pUnitid + "]");
-        if (TextUtils.isEmpty(pUnitid)) {
-            LogUtils.e(TAG, "unitid isEmpty... call failed");
+    public static boolean isInterstitialAdReady(final String placementId) {
+        LogUtils.i(TAG, "isInterstitalReady,placementId [" + placementId + "]");
+        if (TextUtils.isEmpty(placementId)) {
+            LogUtils.e(TAG, "placementId isEmpty... call failed");
             return false;
         }
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return false;
         }
         ATInterstitalImpl demoInterstitial = null;
-        if (mATInterstitialMap.containsKey(pUnitid)) {
-            demoInterstitial = mATInterstitialMap.get(pUnitid);
+        if (mATInterstitialMap.containsKey(placementId)) {
+            demoInterstitial = mATInterstitialMap.get(placementId);
         }
         if (demoInterstitial == null) {
             return false;
@@ -216,22 +265,22 @@ public class ATSDKJniHelper {
     /**
      * 展示插屏广告
      *
-     * @param pUnitid
+     * @param placementId
      */
-    public static void showInterstitialAd(final String pUnitid) {
+    public static void showInterstitialAd(final String placementId, final String scenario) {
 
-        LogUtils.i(TAG, "showInterstitial,pUnitid [" + pUnitid + "]");
-        if (TextUtils.isEmpty(pUnitid)) {
-            LogUtils.e(TAG, "unitid isEmpty... call failed");
+        LogUtils.i(TAG, "showInterstitial,placementId [" + placementId + "], scenario [" + scenario + "]");
+        if (TextUtils.isEmpty(placementId)) {
+            LogUtils.e(TAG, "placementId isEmpty... call failed");
             return;
         }
         if (sActivity == null) {
-            LogUtils.e(TAG, "must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
         ATInterstitalImpl demoInterstitial = null;
-        if (mATInterstitialMap.containsKey(pUnitid)) {
-            demoInterstitial = mATInterstitialMap.get(pUnitid);
+        if (mATInterstitialMap.containsKey(placementId)) {
+            demoInterstitial = mATInterstitialMap.get(placementId);
         }
         if (demoInterstitial == null) {
             return;
@@ -240,7 +289,7 @@ public class ATSDKJniHelper {
         sActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                finalATInterstitial.show();
+                finalATInterstitial.show(sActivity, scenario);
             }
         });
     }
@@ -251,63 +300,72 @@ public class ATSDKJniHelper {
      **/
     static Map<String, ATRewardedVideoImpl> mATRewardVideoMap = new HashMap<>();
 
-    public static void loadRewardedVideoAd(final String unitid, final String userid) {
-        LogUtils.i(TAG, "loadRewardVideo,unitid [" + unitid + "]");
-        if (TextUtils.isEmpty(unitid)) {
-            LogUtils.e(TAG, "unitid isEmpty... call failed");
+    public static void loadRewardedVideoAd(final String placementId, final Map<String, String> extra) {
+        LogUtils.i(TAG, "loadRewardVideo,placementId [" + placementId + "]");
+        if (TextUtils.isEmpty(placementId)) {
+            LogUtils.e(TAG, "placementId isEmpty... call failed");
             return;
         }
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
         ATRewardedVideoImpl demoRewardVideoAd = null;
-        if (mATRewardVideoMap.containsKey(unitid)) {
-            demoRewardVideoAd = mATRewardVideoMap.get(unitid);
+        if (mATRewardVideoMap.containsKey(placementId)) {
+            demoRewardVideoAd = mATRewardVideoMap.get(placementId);
+        }
+
+        final String[] extraArray = new String[2];
+        if (extra != null) {
+            extraArray[0] = extra.get("key_user_id");
+            extraArray[1] = extra.get("key_media_ext");
+
+            LogUtils.i(TAG, "loadRewardVideo, userId [" + extraArray[0] + "]");
+            LogUtils.i(TAG, "loadRewardVideo, userData [" + extraArray[1] + "]");
         }
 
         if (demoRewardVideoAd == null) {
-            demoRewardVideoAd = new ATRewardedVideoImpl(unitid);
-            demoRewardVideoAd.setUserInfo(userid, "");
-            mATRewardVideoMap.put(unitid, demoRewardVideoAd);
+            demoRewardVideoAd = new ATRewardedVideoImpl(placementId);
+            mATRewardVideoMap.put(placementId, demoRewardVideoAd);
         }
 
         final ATRewardedVideoImpl finalATRewardVideo = demoRewardVideoAd;
         sActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                finalATRewardVideo.setUserInfo(extraArray[0], extraArray[1]);
                 finalATRewardVideo.loadAd(sActivity);
             }
         });
     }
 
 
-    public static void showRewardedVideoAd(final String unitid) {
-        LogUtils.i(TAG, "showRewardVideo,unitid [" + unitid + "]");
-        if (TextUtils.isEmpty(unitid)) {
-            LogUtils.e(TAG, "unitid isEmpty... call failed");
+    public static void showRewardedVideoAd(final String placementId, final String scenario) {
+        LogUtils.i(TAG, "showRewardVideo,placementId [" + placementId + "], scenario [" + scenario + "]");
+        if (TextUtils.isEmpty(placementId)) {
+            LogUtils.e(TAG, "placementId isEmpty... call failed");
             return;
         }
-        final ATRewardedVideoImpl finalATRewardVideo = mATRewardVideoMap.get(unitid);
+        final ATRewardedVideoImpl finalATRewardVideo = mATRewardVideoMap.get(placementId);
         if (finalATRewardVideo == null) {
             return;
         }
         sActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                finalATRewardVideo.show();
+                finalATRewardVideo.show(sActivity, scenario);
             }
         });
     }
 
 
-    public static boolean isRewardedVideoAdReady(final String unitid) {
-        LogUtils.i(TAG, "isRewardedVideoReady,unitid [" + unitid + "]");
-        if (TextUtils.isEmpty(unitid)) {
-            LogUtils.e(TAG, "unitid isEmpty... call failed");
+    public static boolean isRewardedVideoAdReady(final String placementId) {
+        LogUtils.i(TAG, "isRewardedVideoReady,placementId [" + placementId + "]");
+        if (TextUtils.isEmpty(placementId)) {
+            LogUtils.e(TAG, "placementId isEmpty... call failed");
             return false;
         }
-        ATRewardedVideoImpl finalATRewardVideo = mATRewardVideoMap.get(unitid);
+        ATRewardedVideoImpl finalATRewardVideo = mATRewardVideoMap.get(placementId);
         if (finalATRewardVideo == null) {
             return false;
         }
@@ -321,43 +379,43 @@ public class ATSDKJniHelper {
 
     private static Map<String, ATBannerImpl> mBannerHashMap = new HashMap();
 
-    public static void loadBannerAd(final String pUnitid) {
-        LogUtils.i(TAG, "initBanner-->" + pUnitid);
+    public static void loadBannerAd(final String placementId, final String extra) {
+        LogUtils.i(TAG, "initBanner-->" + placementId + ", extra--> " + extra);
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
         ATBannerImpl demoBannerImpl = null;
 
-        if (mBannerHashMap.containsKey(pUnitid)) {
-            demoBannerImpl = mBannerHashMap.get(pUnitid);
+        if (mBannerHashMap.containsKey(placementId)) {
+            demoBannerImpl = mBannerHashMap.get(placementId);
         }
         if (demoBannerImpl == null) {
-            demoBannerImpl = new ATBannerImpl(pUnitid);
-            mBannerHashMap.put(pUnitid, demoBannerImpl);
+            demoBannerImpl = new ATBannerImpl(placementId);
+            mBannerHashMap.put(placementId, demoBannerImpl);
         }
 
         final ATBannerImpl finalATBannerImpl = demoBannerImpl;
         sActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                finalATBannerImpl.loadAd(sActivity);
+                finalATBannerImpl.loadAd(sActivity, extra);
             }
         });
 
 
     }
 
-    public static boolean isBannerAdReady(final String pUnitid) {
-        final ATBannerImpl uparpuBannerImpl = mBannerHashMap.get(pUnitid);
+    public static boolean isBannerAdReady(final String placementId) {
+        final ATBannerImpl uparpuBannerImpl = mBannerHashMap.get(placementId);
         if (uparpuBannerImpl == null) {
             return false;
         }
         return uparpuBannerImpl.isAdReady();
     }
 
-    public static void showBannerAd(final String pUnitid, final Map<String, String> rectMap) {
-        final ATBannerImpl uparpuBannerImpl = mBannerHashMap.get(pUnitid);
+    public static void showBannerAd(final String placementId, final Map<String, String> rectMap) {
+        final ATBannerImpl uparpuBannerImpl = mBannerHashMap.get(placementId);
         if (uparpuBannerImpl == null) {
             return;
         }
@@ -374,13 +432,27 @@ public class ATSDKJniHelper {
 
     }
 
-
-    public static void removeBannerAd(final String pUnitid) {
-        final ATBannerImpl uparpuBannerImpl = mBannerHashMap.get(pUnitid);
+    public static void showBannerAdInPosition(final String placementId, final String position) {
+        final ATBannerImpl uparpuBannerImpl = mBannerHashMap.get(placementId);
         if (uparpuBannerImpl == null) {
             return;
         }
-        if (!mBannerHashMap.containsKey(pUnitid)) {
+        sActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                uparpuBannerImpl.showAd(sActivity, position);
+            }
+        });
+
+    }
+
+
+    public static void removeBannerAd(final String placementId) {
+        final ATBannerImpl uparpuBannerImpl = mBannerHashMap.get(placementId);
+        if (uparpuBannerImpl == null) {
+            return;
+        }
+        if (!mBannerHashMap.containsKey(placementId)) {
             return;
         }
 
@@ -398,20 +470,20 @@ public class ATSDKJniHelper {
      **/
     static Map<String, ATNativeAdImpl> mATNativeImplMap = new HashMap<>();
 
-    public static void loadNativeAd(String unitId, final Map<String, Object> localMap) {
-        LogUtils.i(TAG, "loadNativeAd-->" + unitId);
+    public static void loadNativeAd(String placementId, final Map<String, Object> localMap) {
+        LogUtils.i(TAG, "loadNativeAd-->" + placementId);
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
         ATNativeAdImpl demoNativeImpl = null;
 
-        if (mATNativeImplMap.containsKey(unitId)) {
-            demoNativeImpl = mATNativeImplMap.get(unitId);
+        if (mATNativeImplMap.containsKey(placementId)) {
+            demoNativeImpl = mATNativeImplMap.get(placementId);
         }
         if (demoNativeImpl == null) {
-            demoNativeImpl = new ATNativeAdImpl(unitId);
-            mATNativeImplMap.put(unitId, demoNativeImpl);
+            demoNativeImpl = new ATNativeAdImpl(placementId);
+            mATNativeImplMap.put(placementId, demoNativeImpl);
         }
 
         final ATNativeAdImpl finalATBannerImpl = demoNativeImpl;
@@ -423,37 +495,33 @@ public class ATSDKJniHelper {
         });
     }
 
-    public static boolean isNativeAdReady(String unitId) {
-        final ATNativeAdImpl uparpuNativeadImpl = mATNativeImplMap.get(unitId);
+    public static boolean isNativeAdReady(String placementId) {
+        final ATNativeAdImpl uparpuNativeadImpl = mATNativeImplMap.get(placementId);
         if (uparpuNativeadImpl == null) {
             return false;
         }
         return uparpuNativeadImpl.isAdReady();
     }
 
-    public static void showNativeAd(String unitId, final Map<String, String> rectMap) {
-        final ATNativeAdImpl uparpuNativeImpl = mATNativeImplMap.get(unitId);
+    public static void showNativeAd(String placementId, final String json) {
+        final ATNativeAdImpl uparpuNativeImpl = mATNativeImplMap.get(placementId);
         if (uparpuNativeImpl == null) {
             return;
         }
         sActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                int left = Integer.parseInt(rectMap.get("x"));
-                int top = Integer.parseInt(rectMap.get("y"));
-                int width = Integer.parseInt(rectMap.get("w"));
-                int height = Integer.parseInt(rectMap.get("h"));
-                uparpuNativeImpl.showAd(sActivity, left, top, width, height);
+                uparpuNativeImpl.showAd(sActivity, json);
             }
         });
     }
 
-    public static void removeNativeAd(String unitId) {
-        final ATNativeAdImpl uparpuNativeImpl = mATNativeImplMap.get(unitId);
+    public static void removeNativeAd(String placementId) {
+        final ATNativeAdImpl uparpuNativeImpl = mATNativeImplMap.get(placementId);
         if (uparpuNativeImpl == null) {
             return;
         }
-        if (!mATNativeImplMap.containsKey(unitId)) {
+        if (!mATNativeImplMap.containsKey(placementId)) {
             return;
         }
 
@@ -470,20 +538,20 @@ public class ATSDKJniHelper {
      **/
     private static Map<String, ATNativeBannerImpl> mNativeBannerHashMap = new HashMap();
 
-    public static void loadNativeBannerAd(final String pUnitid, final Map<String, Object> localMap) {
-        LogUtils.i(TAG, "loadNativeBannerAd-->" + pUnitid);
+    public static void loadNativeBannerAd(final String placementId, final Map<String, Object> localMap) {
+        LogUtils.i(TAG, "loadNativeBannerAd-->" + placementId);
         if (sActivity == null) {
-            LogUtils.e(TAG, "JNIHelper must inited ,call methon UparpuSDKJniHelper.init() frist in activity..");
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
             return;
         }
         ATNativeBannerImpl demoBannerImpl = null;
 
-        if (mNativeBannerHashMap.containsKey(pUnitid)) {
-            demoBannerImpl = mNativeBannerHashMap.get(pUnitid);
+        if (mNativeBannerHashMap.containsKey(placementId)) {
+            demoBannerImpl = mNativeBannerHashMap.get(placementId);
         }
         if (demoBannerImpl == null) {
-            demoBannerImpl = new ATNativeBannerImpl(pUnitid);
-            mNativeBannerHashMap.put(pUnitid, demoBannerImpl);
+            demoBannerImpl = new ATNativeBannerImpl(placementId);
+            mNativeBannerHashMap.put(placementId, demoBannerImpl);
         }
 
         final ATNativeBannerImpl finalATNativeBannerImpl = demoBannerImpl;
@@ -497,16 +565,16 @@ public class ATSDKJniHelper {
 
     }
 
-    public static boolean isNativeBannerAdReady(final String pUnitid) {
-        final ATNativeBannerImpl uparpuNativeBannerImpl = mNativeBannerHashMap.get(pUnitid);
+    public static boolean isNativeBannerAdReady(final String placementId) {
+        final ATNativeBannerImpl uparpuNativeBannerImpl = mNativeBannerHashMap.get(placementId);
         if (uparpuNativeBannerImpl == null) {
             return false;
         }
         return uparpuNativeBannerImpl.isAdReady();
     }
 
-    public static void showNativeBannerAd(final String pUnitid, final Map<String, String> rectMap, final Map<String,String> extraMap) {
-        final ATNativeBannerImpl uparpuNativeBannerImpl = mNativeBannerHashMap.get(pUnitid);
+    public static void showNativeBannerAd(final String placementId, final Map<String, String> rectMap, final Map<String, String> extraMap) {
+        final ATNativeBannerImpl uparpuNativeBannerImpl = mNativeBannerHashMap.get(placementId);
         if (uparpuNativeBannerImpl == null) {
             return;
         }
@@ -520,12 +588,12 @@ public class ATSDKJniHelper {
     }
 
 
-    public static void removeNativeBannerAd(final String pUnitid) {
-        final ATNativeBannerImpl uparpuNativeBannerImpl = mNativeBannerHashMap.get(pUnitid);
+    public static void removeNativeBannerAd(final String placementId) {
+        final ATNativeBannerImpl uparpuNativeBannerImpl = mNativeBannerHashMap.get(placementId);
         if (uparpuNativeBannerImpl == null) {
             return;
         }
-        if (!mNativeBannerHashMap.containsKey(pUnitid)) {
+        if (!mNativeBannerHashMap.containsKey(placementId)) {
             return;
         }
 

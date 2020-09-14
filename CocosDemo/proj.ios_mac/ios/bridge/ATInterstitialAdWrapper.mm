@@ -9,7 +9,6 @@
 #import "ATInterstitialAdWrapper.h"
 #import "ATCocosUtils.h"
 #import <AnyThinkInterstitial/AnyThinkInterstitial.h>
-
 #import "ATCocosInterstitialAdListener.h"
 
 @implementation ATInterstitialAdWrapper
@@ -27,18 +26,26 @@
     return self;
 }
 
--(void) loadInterstitialAdWithPlacementID:(NSString*)placementID  customData:(NSDictionary*)customData {
+-(void) loadInterstitialAdWithPlacementID:(NSString*)placementID extra:(NSDictionary*)customData {
+    NSLog(@"ATInterstitialAdWrapper::loadInterstitialWithPlacementID:%@", placementID);
     //    [self setCallBack:callback forKey:placementID];
-    [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:nil customData:customData delegate:self];
+    NSLog(@"loadInterstitialExtra = %@", customData);
+    [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:customData delegate:self];
 }
 
-
 -(BOOL) interstitialAdReadyForPlacementID:(NSString*)placementID {
+    NSLog(@"ATInterstitialAdWrapper::interstitialReadyForPlacementID:%@", placementID);
     return [[ATAdManager sharedManager] interstitialReadyForPlacementID:placementID];
 }
 
 -(void) showInterstitialAdWithPlacementID:(NSString*)placementID {
+    NSLog(@"ATInterstitialAdWrapper::showInterstitialWithPlacementID:%@", placementID);
     [[ATAdManager sharedManager] showInterstitialWithPlacementID:placementID inViewController:[UIApplication sharedApplication].delegate.window.rootViewController delegate:self];
+}
+
+-(void) showInterstitialAdWithPlacementID:(NSString*)placementID scene:(NSString*)scene{
+    NSLog(@"ATInterstitialAdWrapper::showInterstitialWithPlacementID:%@ scene:%@", placementID, scene);
+    [[ATAdManager sharedManager] showInterstitialWithPlacementID:placementID scene:scene inViewController:[UIApplication sharedApplication].delegate.window.rootViewController delegate:self];
 }
 
 -(void) clearCache {
@@ -47,7 +54,8 @@
 
 #pragma mark - delegate method(s)
 -(void) didFinishLoadingADWithPlacementID:(NSString *)placementID {
-
+    NSLog(@"ATInterstitialAdWrapper::didFinishLoadingADWithPlacementID:%@", placementID);
+    
     void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -55,10 +63,10 @@
         const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
         pDelegate->onInterstitalLoadSuccess(cPlacementId);
     }
-    
 }
 
 -(void) didFailToLoadADWithPlacementID:(NSString*)placementID error:(NSError*)error {
+    NSLog(@"ATInterstitialAdWrapper::didFailToLoadADWithPlacementID:%@ error:%@", placementID, error);
     
     void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
     
@@ -81,27 +89,10 @@
     }
 }
 
--(void) interstitialFailedToShowForPlacementID:(NSString*)placementID error:(NSError*)error {
-//    error = error != nil ? error : [NSError errorWithDomain:@"com.AT.Unity3DPackage" code:100001 userInfo:@{NSLocalizedDescriptionKey:@"AT has failed to show ad", NSLocalizedFailureReasonErrorKey:@"AT has failed to show ad"}];
-//    [self invokeCallback:@"OnInterstitialAdFailedToShow" placementID:placementID error:error extra:nil];
-}
-
--(void) interstitialDidStartPlayingVideoForPlacementID:(NSString*)placementID {
-  
-}
-
--(void) interstitialDidEndPlayingVideoForPlacementID:(NSString*)placementID {
-
-}
-
--(void) interstitialDidFailToPlayVideoForPlacementID:(NSString*)placementID error:(NSError*)error {
-//    [self invokeCallback:@"OnInterstitialAdVideoPlayFailure" placementID:placementID error:error extra:nil];
-}
-
-
 #pragma mark - delegate with networkID and adsourceID
-
 -(void) interstitialDidShowForPlacementID:(NSString *)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATInterstitialAdWrapper::interstitialDidShowForPlacementID:%@ extra:%@", placementID, extra);
+    
     void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -109,21 +100,43 @@
         const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
         const char *cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onInterstitalShowWithExtra(cPlacementId, cExtra);
-    }}
+    }
+}
 
 -(void) interstitialFailedToShowForPlacementID:(NSString*)placementID error:(NSError*)error extra:(NSDictionary *)extra {
+    NSLog(@"ATInterstitialAdWrapper::interstitialFailedToShowForPlacementID:%@ error:%@ extra:%@", placementID, error, extra);
 }
 
 -(void) interstitialDidFailToPlayVideoForPlacementID:(NSString*)placementID error:(NSError*)error extra:(NSDictionary*)extra {
+    NSLog(@"ATInterstitialAdWrapper::interstitialDidFailToPlayVideoForPlacementID:%@ error:%@ extra:%@", placementID, error, extra);
 }
 
 -(void) interstitialDidStartPlayingVideoForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATInterstitialAdWrapper::interstitialDidStartPlayingVideoForPlacementID:%@ extra:%@", placementID, extra);
+    void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosInterstitialAdListener* pDelegate = (ATCocosInterstitialAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char *cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onInterstitalPlayStartWithExtra(cPlacementId, cExtra);
+    }
 }
 
 -(void) interstitialDidEndPlayingVideoForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATInterstitialAdWrapper::interstitialDidEndPlayingVideoForPlacementID:%@ extra:%@", placementID, extra);
+    void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
+    
+    if (callback != NULL) {
+        ATCocosInterstitialAdListener* pDelegate = (ATCocosInterstitialAdListener*)callback;
+        const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
+        const char *cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
+        pDelegate->onInterstitalPlayEndWithExtra(cPlacementId, cExtra);
+    }
 }
 
 -(void) interstitialDidCloseForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATInterstitialAdWrapper::interstitialDidCloseForPlacementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -131,9 +144,11 @@
         const char* cPlacementId = [ATCocosUtils cstringFromNSString:placementID];
         const char *cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onInterstitalCloseWithExtra(cPlacementId, cExtra);
-    }}
+    }
+}
 
 -(void) interstitialDidClickForPlacementID:(NSString*)placementID extra:(NSDictionary *)extra {
+    NSLog(@"ATInterstitialAdWrapper::interstitialDidClickForPlacementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATInterstitialAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -142,6 +157,6 @@
         const char *cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onInterstitalClickedWithExtra(cPlacementId, cExtra);
     }
-    
 }
+
 @end

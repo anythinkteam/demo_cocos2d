@@ -223,7 +223,14 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdClose
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdVideoStart
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
+    char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
+    ATCocosInterstitialAdListener *interstitialAdListener = ATListenerManager::getInstance()->getInterstitialListener(
+            placementId);
+    if (interstitialAdListener != NULL) {
+        interstitialAdListener->onInterstitalPlayStartWithExtra(placementId, extra);
+    }
 }
 
 /*
@@ -233,7 +240,14 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdVideo
  */
 JNIEXPORT void JNICALL
 Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onInterstitialAdVideoEnd
-        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring) {
+        (JNIEnv *pEven, jclass pJclass, jstring placementIdJstring, jstring extraJstring) {
+    char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
+    ATCocosInterstitialAdListener *interstitialAdListener = ATListenerManager::getInstance()->getInterstitialListener(
+            placementId);
+    if (interstitialAdListener != NULL) {
+        interstitialAdListener->onInterstitalPlayEndWithExtra(placementId, extra);
+    }
 }
 
 /*
@@ -447,6 +461,21 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onNativeAdClick
     }
 }
 
+JNIEXPORT void JNICALL
+Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onNativeAdCloseButtonTapped
+        (JNIEnv
+         *pEven,
+         jclass pJclass, jstring
+         placementIdJstring, jstring extraJstring) {
+    char *placementId = ATUtil::jstringTostring(pEven, placementIdJstring);
+    char *extra = ATUtil::jstringTostring(pEven, extraJstring);
+    ATCocosNativeAdListener *nativeAdListener = ATListenerManager::getInstance()->getNativeListener(
+            placementId);
+    if (nativeAdListener != NULL) {
+        nativeAdListener->onNativeAdCloseButtonTappedWithExtra(placementId, extra);
+    }
+}
+
 
 /**---------------------------------------------------Native Banner----------------------------------------------------------------------**/
 
@@ -594,6 +623,36 @@ Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onGdprAuth
         gdprListener->onGDPRDataConsentSet(pJint);
     }
 }
+
+/*
+ * Class:     com_anythink_cocos2dx_bridge_ATListenerEventJniHelper
+ * Method:    onPageLoadFail
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL
+Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onPageLoadFail
+        (JNIEnv *pEven, jclass pJclass) {
+    ATCocosGDPRListener *gdprListener = ATListenerManager::getInstance()->getGdprListener();
+    if (gdprListener != NULL) {
+        gdprListener->onPageLoadFail();
+    }
+}
+
+/*
+ * Class:     com_anythink_cocos2dx_bridge_ATListenerEventJniHelper
+ * Method:    onUserLocation
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL
+Java_com_anythink_cocos2dx_bridge_ATListenerEventJniHelper_onUserLocation
+        (JNIEnv *pEven, jclass pJclass, jint pJint) {
+    ATCocosUserLocationListener *userLocationListener = ATListenerManager::getInstance()->getUserLocationListener();
+    if (userLocationListener != NULL) {
+        userLocationListener->onUserLocation(pJint);
+    }
+}
+
+
 
 #ifdef __cplusplus
 }

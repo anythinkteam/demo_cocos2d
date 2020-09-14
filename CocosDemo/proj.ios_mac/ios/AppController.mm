@@ -101,14 +101,14 @@ static AppDelegate s_sharedApplication;
     [[UIApplication sharedApplication] setStatusBarHidden:true];
 
     
-   
-    ATCocosSdk::setDebugLog(true);
-    ATCocosSdk::setChannel("test_cocos");
-    cocos2d::CCDictionary * customDict = cocos2d::CCDictionary::create();
-    
-    customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
-    
-    ATCocosSdk::setCustomData(customDict);
+//
+//    ATCocosSdk::setDebugLog(true);
+//    ATCocosSdk::setChannel("test_cocos");
+//    cocos2d::CCDictionary * customDict = cocos2d::CCDictionary::create();
+//
+//    customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
+//
+//    ATCocosSdk::setCustomData(customDict);
 //    CCLOG("ATDemoMainScene::onAdLoadSuccess" + ATCocosSdk::isEUTraffic()?"YES":"NO");
 //    ATCocosSdk::setGDPRLevel(0);
     

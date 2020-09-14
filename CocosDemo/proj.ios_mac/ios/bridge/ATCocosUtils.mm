@@ -6,7 +6,7 @@
 //
 
 #include "ATCocosUtils.h"
-
+#include "CCSerialization.h"
 #include "cocos2d.h"
 
 @implementation ATCocosUtils
@@ -84,6 +84,21 @@
     return nsDict;
 }
 
++ (NSDictionary *)nsDictionaryFromValueMap:(cocos2d::ValueMap)valueMap {
+    if (valueMap.bucket_count() <= 0) {
+        return NULL;
+    }
+    std::string jsonString = cocos2d::StringUtils::getStringFromValueMap(valueMap);
+    return [NSJSONSerialization JSONObjectWithString:[NSString stringWithCString:jsonString.c_str()encoding:[NSString defaultCStringEncoding]] options:NSJSONReadingAllowFragments error:nil];
+}
+
++ (NSString *)nsStringFromValueMap:(cocos2d::ValueMap)valueMap {
+    if (valueMap.bucket_count() <= 0) {
+        return NULL;
+    }
+    std::string jsonString = cocos2d::StringUtils::getStringFromValueMap(valueMap);
+    return [NSString stringWithCString:jsonString.c_str()encoding:[NSString defaultCStringEncoding]];
+}
 
 @end
 
@@ -161,4 +176,8 @@
     
     return [UIColor colorWithRed:((float) r / 255.0f) green:((float) g / 255.0f) blue:((float) b / 255.0f) alpha:1.0f];
 }
+@end
+
+@implementation NSJSONSerialization(AnyThink)
++(id)JSONObjectWithString:(NSString *)string options:(NSJSONReadingOptions)opt error:(NSError *__autoreleasing *)error { return [self JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding] options:opt error:error]; }
 @end

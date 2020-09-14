@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../cocos2d/cocos/platform/android/libcocos2dx/libcocos2dx.iml" filepath="$PROJECT_DIR$/../cocos2d/cocos/platform/android/libcocos2dx/libcocos2dx.iml" />
-      <module fileurl="file://$PROJECT_DIR$/proj.android.iml" filepath="$PROJECT_DIR$/proj.android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="proj.android/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-838123949/libcocos2dx.iml" filepath="$PROJECT_DIR$/.idea/modules/-838123949/libcocos2dx.iml" group="proj.android/libcocos2dx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/proj.android.iml" filepath="$PROJECT_DIR$/.idea/modules/proj.android.iml" group="proj.android" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/topon_libs_china/topon_libs_china.iml" filepath="$PROJECT_DIR$/.idea/modules/topon_libs_china/topon_libs_china.iml" group="proj.android/topon_libs_china" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/topon_libs_non_china/topon_libs_non_china.iml" filepath="$PROJECT_DIR$/.idea/modules/topon_libs_non_china/topon_libs_non_china.iml" group="proj.android/topon_libs_non_china" />
     </modules>
   </component>
 </project>

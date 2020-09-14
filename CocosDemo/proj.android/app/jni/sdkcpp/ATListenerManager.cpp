@@ -107,4 +107,12 @@ ATCocosGDPRListener *ATListenerManager::getGdprListener() {
     return gdprListener;
 }
 
+void ATListenerManager::setUserLocationListener(ATCocosUserLocationListener *listener) {
+    userLocationListener = listener;
+}
+
+ATCocosUserLocationListener *ATListenerManager::getUserLocationListener() {
+    return userLocationListener;
+}
+
 

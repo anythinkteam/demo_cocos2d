@@ -15,6 +15,8 @@
 #include "ATCocosRewardedVideoAdListener.h"
 #include "ATCocosNativeBannerAdListener.h"
 #include "ATCocosGDPRListener.h"
+#include "ATCocosUserLocationListener.h"
+using namespace std;
 
 
 #define UPARPU_COCOS_SDK_VERSION   "1.0.0"
@@ -30,6 +32,11 @@ public:
     static const char* KEY_HEIGHT;
     static const char* KEY_POS_X;
     static const char* KEY_POS_Y;
+
+    static const char* KEY_BACKGROUND_COLOR;
+    static const char* KEY_TEXT_SIZE;
+
+
     static const char* KEY_MAIN_BG_COLOR;
     static const char* KEY_REFRESH_INTERVEL;
     static const char* KEY_BUTTON_CLOSE_STATUS;
@@ -44,7 +51,39 @@ public:
     static const char* KEY_ADVERTISER_TEXT_COLOR;
     static const char* KEY_BANNER_SIZE_TYPE;
     static const char* KEY_IS_SHOW_CTA;
-    
+
+    static const char* KEY_USER_ID;
+    static const char* KEY_MEDIA_EXT;
+
+    static const int USER_LOCATION_UNKNOWN;
+    static const int USER_LOCATION_IN_EU;
+    static const int USER_LOCATION_OUT_OF_EU;
+
+    static const int GDPR_PERSONALIZED;
+    static const int GDPR_NONPERSONALIZED;
+    static const int GDPR_UNKNOWN;
+
+
+    static const char* KEY_PARENT;
+    static const char* KEY_ICON;
+    static const char* KEY_MAIN_IMAGE;
+    static const char* KEY_TITLE;
+    static const char* KEY_DESC;
+    static const char* KEY_AD_LOGO;
+    static const char* KEY_CTA;
+    static const char* KEY_RATING;
+
+    static const char* KEY_TOP;
+    static const char* KEY_BOTTOM;
+
+    static const char* KEY_INLINE_ADAPTIVE_WIDTH;
+    static const char* KEY_INLINE_ADAPTIVE_ORIENTATION;
+    static const int INLINE_ADAPTIVE_ORIENTATION_CURRENT;
+    static const int INLINE_ADAPTIVE_ORIENTATION_PORTRAIT;
+    static const int INLINE_ADAPTIVE_ORIENTATION_LANDSCAPE;
+
+    static const char* KEY_USE_REWARDED_VIDEO_AS_INTERSTITIAL;
+
 //    const char* KEY_
     
     
@@ -54,7 +93,15 @@ public:
     //iOS + Android
     static void setChannel(const char * channel);
     //iOS + Android
-    static void setCustomData(cocos2d::CCDictionary * customData);
+    static void setSubChannel(const char * subChannel);
+    //iOS + Android
+    static void setCustomData(cocos2d::ValueMap customData);
+    //iOS + Android
+    static void setPlacementCustomData(const char * placementId, cocos2d::ValueMap customData);
+
+    //iOS + Android
+    static void integrationChecking();
+
     //iOS + Android
     static bool initSDK(const char * appId, const char * appKey);
     //iOS + Android
@@ -70,6 +117,10 @@ public:
 
     //iOS + Android.
     static bool isEUTraffic();
+
+    //iOS + Android.
+    static void getUserLocation(ATCocosUserLocationListener * listener);
+
     
     /**
      adtype native
@@ -78,14 +129,15 @@ public:
     static void setNativeAdListener(ATCocosNativeAdListener * listener, const char * placementId);
     
     //iOS + Android.
-    static void loadNativeAd(const char * placementId, cocos2d::CCDictionary  * parameters);
+    static void loadNativeAd(const char * placementId, cocos2d::ValueMap parameters);
     
     //iOS + Android.
     static bool isNativeAdReady(const char * placementId);
     
     //iOS + Android.
-    static void showNativeAd(const char * placementId, cocos2d::CCDictionary  * parameters);
-    
+//    static void showNativeAd(const char * placementId, cocos2d::ValueMap parameters);
+    static void showNativeAd(const char * placementId, std::string parameters);
+
     //iOS + Android.
     static void removeNativeAd(const char * placementId);
     
@@ -96,7 +148,7 @@ public:
     static void setBannerAdListener(ATCocosBannerAdListener * listener, const char * placementId);
     
     //iOS + Android. the parameters support the custom data by k-v
-    static void loadBannerAd(const char * placementId, cocos2d::CCDictionary  * parameters);
+    static void loadBannerAd(const char * placementId, cocos2d::ValueMap parameters);
     
     //iOS + Android.
     static bool isBannerAdReady(const char * placementId);
@@ -104,8 +156,9 @@ public:
     //iOS + Android.
     //parameters support the value:x、y、w、h
     //ios only support x、y, the size support 320*50
-    static void showBannerAd(const char * placementId, cocos2d::CCDictionary  * parameters);
-    
+    static void showBannerAd(const char * placementId, cocos2d::ValueMap parameters);
+    static void showBannerAdInPostion(const char * placementId, std::string postion);
+
     //iOS + Android.
     static void removeBannerAd(const char * placementId);
     
@@ -117,7 +170,7 @@ public:
     static void setNativeBannerAdListener(ATCocosNativeBannerAdListener * listener, const char * placementId);
     
     //iOS + Android.
-    static void loadNativeBannerAd(const char * placementId, cocos2d::CCDictionary  * customData);
+    static void loadNativeBannerAd(const char * placementId, cocos2d::ValueMap customData);
     
     //iOS + Android.
     static bool isNativeBannerAdReady(const char * placementId);
@@ -125,7 +178,7 @@ public:
     //iOS + Android.
     //parameters x、y、w、h
     //补充相关的配置参数
-    static void showNativeBannerAd(const char * placementId, cocos2d::CCDictionary  * rect, cocos2d::CCDictionary  * extra);
+    static void showNativeBannerAd(const char * placementId, cocos2d::ValueMap rect, cocos2d::ValueMap extra);
     
     //iOS + Android.
     static void removeNativeBannerAd(const char * placementId);
@@ -137,7 +190,7 @@ public:
     static void setRewardedVideoAdListener(ATCocosRewardedVideoAdListener * listener, const char * placementId);
     
     //iOS + Android.
-    static void loadRewardedVideoAd(const char * placementId, const char * userId, cocos2d::CCDictionary  * parameters);
+    static void loadRewardedVideoAd(const char * placementId, cocos2d::ValueMap parameters);
     
     //iOS + Android.
     static bool isRewardedVideoAdReady(const char * placementId);
@@ -147,6 +200,8 @@ public:
      **/
     //iOS + Android.
     static void showRewardedVideoAd(const char * placementId);
+    //iOS + Android.
+    static void showRewardedVideoAdInScenario(const char * placementId, const char * scenario);
     
     
     /**
@@ -156,7 +211,7 @@ public:
     static void setInterstitialAdListener(ATCocosInterstitialAdListener * listener, const char * placementId);
     
     //iOS + Android.
-    static void loadInterstitialAd(const char * placementId, cocos2d::CCDictionary  * parameters);
+    static void loadInterstitialAd(const char * placementId, cocos2d::ValueMap parameters);
     
     //iOS + Android.
     static bool isInterstitialAdReady(const char * placementId);
@@ -166,7 +221,9 @@ public:
      **/
     //iOS + Android.
     static void showInterstitialAd(const char * placementId);
-    
+
+    //iOS + Android.
+    static void showInterstitialAdInScenario(const char * placementId, const char * scenario);
  
     /**
      

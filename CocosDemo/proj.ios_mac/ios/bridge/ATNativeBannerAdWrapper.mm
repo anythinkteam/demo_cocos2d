@@ -68,6 +68,7 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
  
  **/
 -(void) showNativeBannerAdWithPlacementID:(NSString*)placementID rect:(NSDictionary*)rectDict extra:(NSDictionary*)extraDict {
+    NSLog(@"ATNativeBannerAdWrapper::showNativeBannerAdWithPlacementID:%@ rect:%@ extra:%@", placementID, rectDict, extraDict);
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([rectDict isKindOfClass:[NSDictionary class]] && rectDict != nil) {
             
@@ -124,6 +125,7 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
 }
 
 -(void) removeNativeBannerAdWithPlacementID:(NSString*)placementID {
+    NSLog(@"ATNativeBannerAdWrapper::removeNativeBannerAdWithPlacementID:%@", placementID);
     dispatch_async(dispatch_get_main_queue(), ^{
         [self->_nativeBannerAdViews[placementID] removeFromSuperview];
         [self->_nativeBannerAdViews removeObjectForKey:placementID];
@@ -131,29 +133,34 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
 }
 
 -(void) showNativeBannerAdWithPlacementID:(NSString*)placementID {
+    NSLog(@"ATNativeBannerAdWrapper::showNativeBannerAdWithPlacementID:%@", placementID);
     dispatch_async(dispatch_get_main_queue(), ^{
         self->_nativeBannerAdViews[placementID].hidden = NO;
     });
 }
 
 -(void) hideNativeBannerAdWithPlacementID:(NSString*)placementID {
+    NSLog(@"ATNativeBannerAdWrapper::hideNativeBannerAdWithPlacementID:%@", placementID);
     dispatch_async(dispatch_get_main_queue(), ^{
         self->_nativeBannerAdViews[placementID].hidden = YES;
     });
 }
 
 -(void) loadNativeBannerAdWithPlacementID:(NSString*)placementID customData:(NSDictionary*)customData  {
+    NSLog(@"ATNativeBannerAdWrapper::loadNativeBannerAdWithPlacementID:%@ customData:%@", placementID, customData);
 //    [self setCallBack:callback forKey:kATSharedCallbackKey];
 //    [self setCallBack:callback forKey:placementID];
     [ATNativeBannerWrapper loadNativeBannerAdWithPlacementID:placementID extra:nil customData:customData delegate:self];
 }
 
 -(BOOL) isNativeBannerAdReadyForPlacementID:(NSString*)placementID {
+    NSLog(@"ATNativeBannerAdWrapper::isNativeBannerAdReadyForPlacementID:%@", placementID);
     return [ATNativeBannerWrapper nativeBannerAdReadyForPlacementID:placementID];
 }
 
 #pragma mark - delegate(s)
 -(void) didFinishLoadingNativeBannerAdWithPlacementID:(NSString *)placementID {
+    NSLog(@"ATNativeBannerAdWrapper::didFinishLoadingNativeBannerAdWithPlacementID:%@", placementID);
     void* callback = [[ATNativeBannerAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -164,6 +171,7 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
 }
 
 -(void) didFailToLoadNativeBannerAdWithPlacementID:(NSString*)placementID error:(NSError*)error {
+    NSLog(@"ATNativeBannerAdWrapper::didFailToLoadNativeBannerAdWithPlacementID:%@ error:%@", placementID, error);
 //    NSLog(@"ATNativeBannerAdWrapper::didFailToLoadNativeBannerAdWithPlacementID:%@ error:%@", placementID, error);
 //    error = error != nil ? error : [NSError errorWithDomain:@"com.AT.Unity3DPackage" code:100001 userInfo:@{NSLocalizedDescriptionKey:@"AT has failed to load native banner ad", NSLocalizedFailureReasonErrorKey:@"AT has failed to load native banner ad"}];
 //    [self invokeCallback:@"OnNativeBannerAdLoadingFailure" placementID:placementID error:error extra:nil];
@@ -188,10 +196,9 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
     }
 }
 
-
 #pragma mark - native banner delegate with networkID and adsouceID
-
 -(void) didShowNativeBannerAdInView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
+    NSLog(@"ATNativeBannerAdWrapper::didShowNativeBannerAdInView:placementID:%@ extra:%@", placementID, extra);
     void* callback = [[ATNativeBannerAdWrapper sharedInstance] callbackForKey:placementID];
     
     if (callback != NULL) {
@@ -200,7 +207,6 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
         const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onNativeBannerShowWithExtra(cPlacementId, cExtra);
     }
-    
 }
 
 -(void) didClickNativeBannerAdInView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
@@ -212,7 +218,6 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
         const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onNativeBannerClickedWithExtra(cPlacementId, cExtra);
     }
-    
 }
 
 -(void) didClickCloseButtonInNativeBannerAdView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
@@ -224,7 +229,6 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
         const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onNativeBannerCloseWithExtra(cPlacementId, cExtra);
     }
-    
 }
 
 -(void) didAutorefreshNativeBannerAdInView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra{
@@ -236,7 +240,6 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
         const char* cExtra = [ATCocosUtils cstringFromExtraNSDictionary:extra];
         pDelegate->onNativeBannerAutoRefreshWithExtra(cPlacementId, cExtra);
     }
-    
 }
 
 -(void) didFailToAutorefreshNativeBannerAdInView:(ATNativeBannerView*)bannerView placementID:(NSString*)placementID extra:(NSDictionary *)extra error:(NSError*)error {
@@ -259,8 +262,8 @@ static NSString *const kATSharedCallbackKey = @"placement_id_placement_holder";
         }
         pDelegate->onNativeBannerAutoRefreshFailWithExtra(cPlacementId, errorDict.jsonString.UTF8String, cExtra);
     }
-    
 }
+
 @end
 
 

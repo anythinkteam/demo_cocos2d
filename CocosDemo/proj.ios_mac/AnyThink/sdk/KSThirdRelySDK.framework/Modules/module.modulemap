@@ -1,6 +1,0 @@
-framework module KSThirdRelySDK {
-  umbrella header "KSThirdRelySDK.h"
-
-  export *
-  module * { export * }
-}

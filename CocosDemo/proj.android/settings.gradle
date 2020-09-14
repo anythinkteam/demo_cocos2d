@@ -2,3 +2,7 @@ include ':libcocos2dx'
 project(':libcocos2dx').projectDir = new File(settingsDir, '../cocos2d/cocos/platform/android/libcocos2dx')
 include ':app'
 project(':app').projectDir = new File(settingsDir, 'app')
+include ':topon_libs_china'
+project(':topon_libs_china').projectDir = new File(settingsDir, 'topon_libs_china')
+include ':topon_libs_non_china'
+project(':topon_libs_non_china').projectDir = new File(settingsDir, 'topon_libs_non_china')

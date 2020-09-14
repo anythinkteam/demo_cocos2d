@@ -6,9 +6,13 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
 #include "ATCocosSdk.h"
+#include "ATNativeItemProperty.h"
+#include "ATNativeProperty.h"
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
 #include "bridge/ATCocosSdk.h"
+#include "bridge/ATNativeItemProperty.h"
+#include "bridge/ATNativeProperty.h"
 #endif
 
 
@@ -121,35 +125,51 @@ bool DemoMainScene::init()
     appKey = "7eae0567827cfe2b22874061763f30c9";
     
     
-    rvPlacementId = "b5d13341598199";
-    interPlacementId = "b5d13340a1dd21";
-    bannerPlacementId = "b5d146f9483215";
-    nativePlacementId = "b5d1333d023691";
-    nativebannerPlacementId = "b5d1333d023691";
+    rvPlacementId = "b5b44a0f115321";
+    interPlacementId = "b5bacad26a752a";
+    bannerPlacementId = "b5bacaccb61c29";
+    nativePlacementId = "b5b0f5663c6e4a";
+    nativebannerPlacementId = "b5c2c6d50e7f44";
     
     
     
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
-    appId = "a5c4ad280995c9";
-    appKey = "7b4e37f819dbee652ef79c4506e14288";
-    rvPlacementId = "b5c4ad2f0de421";
-    interPlacementId = "b5c4ad302ad418";
-    bannerPlacementId = "b5c4ad2fa3ab6d";
-    nativePlacementId = "b5c4ad2d34576b";
-    nativebannerPlacementId = "b5c4ad2d34576b";
+    appId = "a5aa1f9deda26d";
+    appKey = "4f7b9ac17decb9babec83aac078742c7";
+    rvPlacementId = "b5b449fb3d89d7";
+    interPlacementId = "b5baca53984692";
+    bannerPlacementId = "b5baca4f74c3d8";
+    nativePlacementId = "b5aa1fa2cae775";
+    nativebannerPlacementId = "b5aa1fa2cae775";
 #endif
     
     ATCocosSdk::setDebugLog(true);
-    ATCocosSdk::setChannel("test_cocos");
-    cocos2d::CCDictionary * customDict = cocos2d::CCDictionary::create();
-    
-    customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
-    
+    ATCocosSdk::setChannel("test_cocos_channel");
+    ATCocosSdk::setSubChannel("test_cocos_sub_channel");
+
+    //custom rule for app
+    cocos2d::ValueMap customDict;
+    customDict["custom_data_key"] = "custom_data_value";
     ATCocosSdk::setCustomData(customDict);
+
+    //custom rule for placmenet
+    cocos2d::ValueMap plcamentCustomDict;
+    plcamentCustomDict["placement_custom_data_key"] = "placement_custom_data_value";
+    ATCocosSdk::setPlacementCustomData(rvPlacementId, plcamentCustomDict);
+
+    //check is in EU
+    ATCocosSdk::getUserLocation(this);
+
     CCLOG("DemoMainScene::isEUTraffic %s", ATCocosSdk::isEUTraffic()?"YES":"NO");
-    CCLOG("DemoMainScene::getGDPRLevel %d", ATCocosSdk::getGDPRLevel());
+
+    int gdpr_level = ATCocosSdk::getGDPRLevel();
+    CCLOG("DemoMainScene::getGDPRLevel %d", gdpr_level);
+    if (gdpr_level == ATCocosSdk::GDPR_PERSONALIZED) {
+        CCLOG("DemoMainScene 同意上报隐私数据");
+    };
 //    ATCocosSdk::setGDPRLevel(0);
+    ATCocosSdk::integrationChecking();
     ATCocosSdk::initSDK(appId, appKey);
 //    int gdprLevel = ATCocosSdk::getGDPRLevel();
 
@@ -600,8 +620,7 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
     if (type == cocos2d::ui::Widget::TouchEventType::ENDED)//判断点击类型，钮结束按下的
     {
         int tag = ((cocos2d::ui::Button*)pSender)->getTag();
-        switch (tag)
-        {
+        switch (tag) {
             case 1: //show gdpr
                 ATCocosSdk::showGdprAuthWithListener(this);
                 break;
@@ -609,7 +628,19 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
             {
                 ATCocosSdk::setNativeAdListener(this, nativePlacementId);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
-                ATCocosSdk::loadNativeAd(nativePlacementId, NULL);
+                auto glView = Director::getInstance()->getOpenGLView();
+                auto frameSize = glView->getFrameSize();
+                int width = frameSize.width;
+
+
+                std::string widthStr = StringUtils::format("%d", (int)(width/ATCocosSdk::getScreenScale()));
+                std::string heightStr = StringUtils::format("%d", (int)((width * 4 / 5)/ATCocosSdk::getScreenScale()));
+                cocos2d::ValueMap localExtra;
+                localExtra[ATCocosSdk::KEY_WIDTH] = widthStr;
+                localExtra[ATCocosSdk::KEY_HEIGHT] = heightStr;
+                //for toutiao native express
+
+                ATCocosSdk::loadNativeAd(nativePlacementId, localExtra);
 #endif
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
@@ -618,69 +649,76 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
                 auto glView = Director::getInstance()->getOpenGLView();
                 auto frameSize = glView->getFrameSize();
                 int width = frameSize.width;
-                int height = frameSize.height;
 
-                cocos2d::CCDictionary *localDict = cocos2d::CCDictionary::create();
+
                 std::string widthStr = StringUtils::format("%d", width);
-                std::string heightStr = StringUtils::format("%d", width *2/ 3);
-                localDict->setObject(cocos2d::CCString::create(widthStr), "tt_image_width");
-                localDict->setObject(cocos2d::CCString::create(heightStr), "tt_image_height");
+                std::string heightStr = StringUtils::format("%d", width * 4 / 5);
+                cocos2d::ValueMap localExtra;
+                localExtra[ATCocosSdk::KEY_WIDTH] = widthStr;
+                localExtra[ATCocosSdk::KEY_HEIGHT] = heightStr;
                 //for toutiao native express
 
-                ATCocosSdk::loadNativeAd(nativePlacementId, localDict);
+                ATCocosSdk::loadNativeAd(nativePlacementId, localExtra);
 #endif
 
             }
-              
+
                 break;
             case 3: //show native
             {
                 Rect rect = Director::getInstance()->getOpenGLView()->getVisibleRect();
-                
+
                 auto *glView = Director::getInstance()->getOpenGLView();
                 auto frameSize = glView->getFrameSize();
-                
-                
+
+
                 if (ATCocosSdk::isNativeAdReady(nativePlacementId)) {
-                    
+
                     auto glView = Director::getInstance()->getOpenGLView();
                     auto frameSize = glView->getFrameSize();
                     int width = frameSize.width;
                     int height = frameSize.height;
-                    
-                   
-                    
-                    cocos2d::CCDictionary *rectDict = cocos2d::CCDictionary::create();
-                    
+
+
+                    cocos2d::ValueMap rectDict;
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
-                   
-                    std::string widthStr = StringUtils::format("%d", (int)(width/ATCocosSdk::getScreenScale()));
-                    std::string heightStr = StringUtils::format("%d", (int)(width *2/3/ATCocosSdk::getScreenScale()));
-                    std::string yStr = StringUtils::format("%d", (int)((height- width *2/3 - 10)/ATCocosSdk::getScreenScale()));
+                    int ptHight = height/ATCocosSdk::getScreenScale();
+                    int parentWidth = width/ATCocosSdk::getScreenScale();
+                    int parentHeight = (width * 4/5)/ATCocosSdk::getScreenScale();
+                    int appIconSize = (width / 7)/ATCocosSdk::getScreenScale();
+                    int padding = (width / 35)/ATCocosSdk::getScreenScale();
                     
-                    rectDict->setObject(cocos2d::CCString::create("0"), ATCocosSdk::KEY_POS_X);
-                    rectDict->setObject(cocos2d::CCString::create(yStr), ATCocosSdk::KEY_POS_Y);
-                    rectDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                    rectDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
+
+                    ATNativeProperty property = ATNativeProperty();
+                    property.parent = ATNativeItemProperty(0, ptHight - parentHeight, parentWidth, parentHeight, "#ffffff", "", 0);
+                    property.cta = ATNativeItemProperty(parentWidth-appIconSize*2, parentHeight - appIconSize, appIconSize*2, appIconSize, "#2095F1" , "#000000", appIconSize/3);
+                    property.icon = ATNativeItemProperty(0, parentHeight - appIconSize, appIconSize,appIconSize ,"clearColor", "",0);
+                    property.mainImage = ATNativeItemProperty(padding ,padding, parentWidth-2*padding, parentHeight - appIconSize - 2*padding, "#ffffff", "#000000", 14);
+                    property.title = ATNativeItemProperty(appIconSize + padding , parentHeight - appIconSize, parentWidth - 3* appIconSize -2 * padding, appIconSize/2 , "#ffffff" , "#000000", appIconSize/3);
+                    property.desc = ATNativeItemProperty(appIconSize + padding , parentHeight - appIconSize/2, parentWidth - 3* appIconSize -2 * padding, appIconSize/2 , "#ffffff" , "#000000", appIconSize/4);
+                    
 #endif
-                    
-                    
+
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID    // android
-                    std::string widthStr = StringUtils::format("%d", width);
-                    std::string heightStr = StringUtils::format("%d", width *2/ 3);
-                    std::string yStr = StringUtils::format("%d", height- width *2/ 3);
-                    rectDict->setObject(cocos2d::CCString::create("0"), ATCocosSdk::KEY_POS_X);
-                    rectDict->setObject(cocos2d::CCString::create(yStr), ATCocosSdk::KEY_POS_Y);
-                    rectDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                    rectDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
+
+                    int parentWidth = width;
+                    int parentHeight = width * 4 / 5;
+                    int appIconSize = width / 7;
+                    int padding = width / 35;
+
+                    ATNativeProperty property = ATNativeProperty();
+                    property.parent = ATNativeItemProperty(0, height - parentHeight, parentWidth, parentHeight, "#ffffff", "", 0);
+                    property.cta = ATNativeItemProperty(parentWidth-appIconSize*2, parentHeight - appIconSize, appIconSize*2, appIconSize, "#2095F1" , "#000000", appIconSize/3);
+                    property.icon = ATNativeItemProperty(0, parentHeight - appIconSize, appIconSize,appIconSize ,"", "",0);
+                    property.mainImage = ATNativeItemProperty(padding ,padding, parentWidth-2*padding, parentHeight - appIconSize - 2*padding, "#ffffff", "#000000", 14);
+                    property.title = ATNativeItemProperty(appIconSize + padding , parentHeight - appIconSize, parentWidth - 3* appIconSize -2 * padding, appIconSize/2 , "" , "#000000", appIconSize/3);
+                    property.desc = ATNativeItemProperty(appIconSize + padding , parentHeight - appIconSize/2, parentWidth - 3* appIconSize -2 * padding, appIconSize/2 , "#ffffff" , "#000000", appIconSize/4);
+//                    property.adLogo = ATNativeItemProperty(0,0,0,0,"#ffffff","#ffffff",14);
+//                    property.rating = ATNativeItemProperty(0,0,0,0,"#ffffff","#ffffff",14);
 #endif
-                    
-                    
-//                    rectDict->setObject(cocos2d::CCString::create("0"), "x");
-//                    rectDict->setObject(cocos2d::CCString::create(yStr), "y");
-//                    rectDict->setObject(cocos2d::CCString::create(widthStr), "w");
-//                    rectDict->setObject(cocos2d::CCString::create(heightStr), "h");
-                    ATCocosSdk::showNativeAd(nativePlacementId, rectDict);
+                    ATCocosSdk::showNativeAd(nativePlacementId, property.toJsonString());
                 } else {
                     CCLOG("ATCocosSdk::isNativeAdReady is false");
                 }
@@ -692,11 +730,10 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
             case 5: //load native banner
             {
                 ATCocosSdk::setNativeBannerAdListener(this, nativebannerPlacementId);
-                
-                
-                cocos2d::CCDictionary * customDict = cocos2d::CCDictionary::create();
-                
-                #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
+
+                cocos2d::ValueMap extra;
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
                 auto glView = Director::getInstance()->getOpenGLView();
                 auto frameSize = glView->getFrameSize();
                 int width = frameSize.width;
@@ -704,186 +741,207 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
                 
                 std::string widthStr = StringUtils::format("%d", (int)(width/ATCocosSdk::getScreenScale()));
                 std::string heightStr = StringUtils::format("%d", (int)((width * 50 / 320)/ATCocosSdk::getScreenScale()));
-                customDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                customDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
-                
-                #endif
+                extra[ATCocosSdk::KEY_WIDTH] = widthStr;
+                extra[ATCocosSdk::KEY_HEIGHT] = heightStr;
 
-                customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
-                
-                ATCocosSdk::loadNativeBannerAd(nativebannerPlacementId, customDict);
+#endif
+
+                extra["custom_data__key"] = "custom_data_value";
+
+                ATCocosSdk::loadNativeBannerAd(nativebannerPlacementId, extra);
             }
-          
+
                 break;
             case 6: //show native banner
-                if(ATCocosSdk::isNativeBannerAdReady(nativebannerPlacementId)){
+                if (ATCocosSdk::isNativeBannerAdReady(nativebannerPlacementId)) {
                     auto glView = Director::getInstance()->getOpenGLView();
                     auto frameSize = glView->getFrameSize();
                     int width = frameSize.width;
                     int height = frameSize.height;
-                    
-                    cocos2d::CCDictionary * rectDict = cocos2d::CCDictionary::create();
-                    cocos2d::CCDictionary * extraDict = cocos2d::CCDictionary::create();
-                    
+
+
+                    cocos2d::ValueMap rectDict;
+                    cocos2d::ValueMap extraDict;
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
                     std::string widthStr = StringUtils::format("%d", (int)(width/ATCocosSdk::getScreenScale()));
                     std::string heightStr = StringUtils::format("%d", (int)((width * 50 / 320)/ATCocosSdk::getScreenScale()));
                     std::string yStr = StringUtils::format("%d", (int)((height - width * 50 / 320- 10)/ATCocosSdk::getScreenScale()));
-                    
-                    rectDict->setObject(cocos2d::CCString::create("0"), ATCocosSdk::KEY_POS_X);
-                    rectDict->setObject(cocos2d::CCString::create(yStr), ATCocosSdk::KEY_POS_Y);
-                    rectDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                    rectDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
-                    
-                    extraDict->setObject(cocos2d::CCString::create("#ffffff"), ATCocosSdk::KEY_MAIN_BG_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("5"), ATCocosSdk::KEY_REFRESH_INTERVEL);
-                    extraDict->setObject(cocos2d::CCString::create("true"), ATCocosSdk::KEY_BUTTON_CLOSE_STATUS);
-                    extraDict->setObject(cocos2d::CCString::create("#000000"), ATCocosSdk::KEY_BUTTON_CTA_BG);
-                    extraDict->setObject(cocos2d::CCString::create("12"), ATCocosSdk::KEY_BUTTON_CTA_TITLE_FONT);
-                    extraDict->setObject(cocos2d::CCString::create("#ffffff"), ATCocosSdk::KEY_BUTTON_CTA_TITLE_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("12"), ATCocosSdk::KEY_TITLE_FONT);
-                    extraDict->setObject(cocos2d::CCString::create("#000000"), ATCocosSdk::KEY_TITLE_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("12"), ATCocosSdk::KEY_TEXT_FONT);
-                    extraDict->setObject(cocos2d::CCString::create("#000000"), ATCocosSdk::KEY_TEXT_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("10"), ATCocosSdk::KEY_ADVERTISER_TEXT_FONT);
-                    extraDict->setObject(cocos2d::CCString::create("#000000"), ATCocosSdk::KEY_ADVERTISER_TEXT_COLOR);
+
+
+                    rectDict[ATCocosSdk::KEY_POS_X] = "0";
+                    rectDict[ATCocosSdk::KEY_POS_Y] = yStr;
+                    rectDict[ATCocosSdk::KEY_WIDTH] = widthStr;
+                    rectDict[ATCocosSdk::KEY_HEIGHT] = heightStr;
+
+                    rectDict[ATCocosSdk::KEY_MAIN_BG_COLOR] = "#ffffff";
+                    rectDict[ATCocosSdk::KEY_REFRESH_INTERVEL] = "5";
+                    rectDict[ATCocosSdk::KEY_BUTTON_CLOSE_STATUS] = "true";
+                    rectDict[ATCocosSdk::KEY_BUTTON_CTA_BG] = "#000000";
+                    rectDict[ATCocosSdk::KEY_BUTTON_CTA_TITLE_FONT] = "12";
+                    rectDict[ATCocosSdk::KEY_BUTTON_CTA_TITLE_COLOR] = "#ffffff";
+                    rectDict[ATCocosSdk::KEY_TITLE_FONT] = "12";
+                    rectDict[ATCocosSdk::KEY_TITLE_COLOR] = "#000000";
+                    rectDict[ATCocosSdk::KEY_TEXT_FONT] = "12";
+                    rectDict[ATCocosSdk::KEY_TEXT_COLOR] = "#000000";
+                    rectDict[ATCocosSdk::KEY_ADVERTISER_TEXT_FONT] = "10";
+                    rectDict[ATCocosSdk::KEY_ADVERTISER_TEXT_COLOR] = "#000000";
 #endif
-           
-                    
+
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID    // android
                     std::string widthStr = StringUtils::format("%d", width);
                     std::string heightStr = StringUtils::format("%d", width * 150 / 960);
                     std::string yStr = StringUtils::format("%d", height - width * 150 / 960);
-                    rectDict->setObject(cocos2d::CCString::create("0"), ATCocosSdk::KEY_POS_X);
-                    rectDict->setObject(cocos2d::CCString::create(yStr), ATCocosSdk::KEY_POS_Y);
-                    rectDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                    rectDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
 
-                    rectDict->setObject(cocos2d::CCString::create("0"), ATCocosSdk::KEY_POS_X);
-                    rectDict->setObject(cocos2d::CCString::create(yStr), ATCocosSdk::KEY_POS_Y);
-                    rectDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                    rectDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
+                    rectDict[ATCocosSdk::KEY_POS_X] = "0";
+                    rectDict[ATCocosSdk::KEY_POS_Y] = yStr;
+                    rectDict[ATCocosSdk::KEY_WIDTH] = widthStr;
+                    rectDict[ATCocosSdk::KEY_HEIGHT] = heightStr;
 
-                    extraDict->setObject(cocos2d::CCString::create("#ffffff"), ATCocosSdk::KEY_MAIN_BG_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("10000"), ATCocosSdk::KEY_REFRESH_INTERVEL);
-                    extraDict->setObject(cocos2d::CCString::create("false"), ATCocosSdk::KEY_BUTTON_CLOSE_STATUS);
-                    extraDict->setObject(cocos2d::CCString::create("#000000"), ATCocosSdk::KEY_BUTTON_CTA_BG);
-                    extraDict->setObject(cocos2d::CCString::create("#ffffff"), ATCocosSdk::KEY_BUTTON_CTA_TITLE_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("#000000"), ATCocosSdk::KEY_TITLE_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("#000000"), ATCocosSdk::KEY_TEXT_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("#000000"), ATCocosSdk::KEY_ADVERTISER_TEXT_COLOR);
-                    extraDict->setObject(cocos2d::CCString::create("true"), ATCocosSdk::KEY_IS_SHOW_CTA);
-                    extraDict->setObject(cocos2d::CCString::create("3"), ATCocosSdk::KEY_BANNER_SIZE_TYPE);
+                    rectDict[ATCocosSdk::KEY_MAIN_BG_COLOR] = "#ffffff";
+                    rectDict[ATCocosSdk::KEY_REFRESH_INTERVEL] = "10000";
+                    rectDict[ATCocosSdk::KEY_BUTTON_CLOSE_STATUS] = "false";
+                    rectDict[ATCocosSdk::KEY_BUTTON_CTA_BG] = "#000000";
+                    rectDict[ATCocosSdk::KEY_BUTTON_CTA_TITLE_FONT] = "12";
+                    rectDict[ATCocosSdk::KEY_BUTTON_CTA_TITLE_COLOR] = "#ffffff";
+                    rectDict[ATCocosSdk::KEY_TITLE_COLOR] = "#000000";
+                    rectDict[ATCocosSdk::KEY_TEXT_COLOR] = "#000000";
+                    rectDict[ATCocosSdk::KEY_ADVERTISER_TEXT_COLOR] = "#000000";
+                    rectDict[ATCocosSdk::KEY_IS_SHOW_CTA] = "true";
+                    rectDict[ATCocosSdk::KEY_BANNER_SIZE_TYPE] = "3";
+
 #endif
-                    
+
                     ATCocosSdk::showNativeBannerAd(nativebannerPlacementId, rectDict, extraDict);
-                    
-                }else{
+
+                } else {
                     CCLOG("ATCocosSdk::isNativeBannerAdReady is false");
                 }
                 break;
             case 7: //clean native banner
-                  ATCocosSdk::removeNativeBannerAd(nativebannerPlacementId);
+                ATCocosSdk::removeNativeBannerAd(nativebannerPlacementId);
                 break;
             case 8: //load banner
             {
                 ATCocosSdk::setBannerAdListener(this, bannerPlacementId);
-                
-                
-                cocos2d::CCDictionary * customDict = cocos2d::CCDictionary::create();
-                
-             
-                #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
+
+                cocos2d:
+                ValueMap customDict;
+
+
                 auto glView = Director::getInstance()->getOpenGLView();
                 auto frameSize = glView->getFrameSize();
                 int width = frameSize.width;
                 int height = frameSize.height;
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
                 std::string widthStr = StringUtils::format("%d", (int)(width/ATCocosSdk::getScreenScale()));
                 std::string heightStr = StringUtils::format("%d", (int)((width * 50 / 320)/ATCocosSdk::getScreenScale()));
-                customDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                customDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
-              
-                #endif
-                
-//                #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // IOS
-//                cocos2d::CCDictionary * customDict = cocos2d::CCDictionary::create();
-//                customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
-//
-//                ATCocosSdk::loadBannerAd(bannerPlacementId, customDict);
-//                #endif
-              
-                customDict->setObject(cocos2d::CCString::create("custom_data_val"), "custom_data_key");
-                
+#endif
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
+                std::string widthStr = StringUtils::format("%d", width);
+                std::string heightStr = StringUtils::format("%d", width * 50 / 320);
+#endif
+
+                customDict[ATCocosSdk::KEY_WIDTH] = widthStr;
+                customDict[ATCocosSdk::KEY_HEIGHT] = heightStr;
+
+                customDict[ATCocosSdk::KEY_INLINE_ADAPTIVE_WIDTH] = widthStr;
+                customDict[ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION] = ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_CURRENT;
+//                customDict[ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION] = ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_PORTRAIT;
+//                customDict[ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION] = ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_LANDSCAPE;
+
                 ATCocosSdk::loadBannerAd(bannerPlacementId, customDict);
-               
+
             }
-              
+
                 break;
-                
+
             case 9: //show banner
             {
-                if(ATCocosSdk::isBannerAdReady(bannerPlacementId)){
+                if (ATCocosSdk::isBannerAdReady(bannerPlacementId)) {
                     auto glView = Director::getInstance()->getOpenGLView();
                     auto frameSize = glView->getFrameSize();
                     int width = frameSize.width;
                     int height = frameSize.height;
 
-                    cocos2d::CCDictionary * rectDict = cocos2d::CCDictionary::create();
-                    
-                    #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
-                    std::string widthStr = StringUtils::format("%d", (int)(width/ATCocosSdk::getScreenScale()));
-                    std::string heightStr = StringUtils::format("%d", (int)((width * 50 / 320)/ATCocosSdk::getScreenScale()));
-                    std::string yStr = StringUtils::format("%d", (int)((height - width * 50 / 320- 10)/ATCocosSdk::getScreenScale()));
-                    
-                    rectDict->setObject(cocos2d::CCString::create("0"), ATCocosSdk::KEY_POS_X);
-                    rectDict->setObject(cocos2d::CCString::create(yStr), ATCocosSdk::KEY_POS_Y);
-                    rectDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                    rectDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
-                    #endif
-                    
-                    
-                    #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID    // android
-                    std::string widthStr = StringUtils::format("%d", width);
-                    std::string heightStr = StringUtils::format("%d", width * 150 / 960);
-                    std::string yStr = StringUtils::format("%d", height - width * 150 / 960);
-                    rectDict->setObject(cocos2d::CCString::create("0"), ATCocosSdk::KEY_POS_X);
-                    rectDict->setObject(cocos2d::CCString::create(yStr), ATCocosSdk::KEY_POS_Y);
-                    rectDict->setObject(cocos2d::CCString::create(widthStr), ATCocosSdk::KEY_WIDTH);
-                    rectDict->setObject(cocos2d::CCString::create(heightStr), ATCocosSdk::KEY_HEIGHT);
-                    #endif
-                    
-                    ATCocosSdk::showBannerAd(bannerPlacementId, rectDict);
-                }else{
-                     CCLOG("ATCocosSdk::isBannerAdReady is false");
+
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
+//                    cocos2d::ValueMap rectDict;
+//                    std::string widthStr = StringUtils::format("%d", (int)(width/ATCocosSdk::getScreenScale()));
+//                    std::string heightStr = StringUtils::format("%d", (int)((width * 50 / 320)/ATCocosSdk::getScreenScale()));
+//                    std::string yStr = StringUtils::format("%d", (int)((height - width * 50 / 320- 10)/ATCocosSdk::getScreenScale()));
+//
+//                    rectDict[ATCocosSdk::KEY_POS_X] = "0";
+//                    rectDict[ATCocosSdk::KEY_POS_Y] = yStr;
+//                    rectDict[ATCocosSdk::KEY_WIDTH] = widthStr;
+//                    rectDict[ATCocosSdk::KEY_HEIGHT] = heightStr;
+
+#endif
+
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID    // android
+//                    cocos2d::ValueMap rectDict;
+//                    std::string widthStr = StringUtils::format("%d", width);
+//                    std::string heightStr = StringUtils::format("%d", width * 150 / 960);
+//                    std::string yStr = StringUtils::format("%d", height - width * 150 / 960);
+//
+//                    rectDict[ATCocosSdk::KEY_POS_X] = "0";
+//                    rectDict[ATCocosSdk::KEY_POS_Y] = yStr;
+//                    rectDict[ATCocosSdk::KEY_WIDTH] = widthStr;
+//                    rectDict[ATCocosSdk::KEY_HEIGHT] = heightStr;
+#endif
+
+//                    ATCocosSdk::showBannerAd(bannerPlacementId, rectDict);
+                    ATCocosSdk::showBannerAdInPostion(bannerPlacementId, ATCocosSdk::KEY_BOTTOM);
+                } else {
+                    CCLOG("ATCocosSdk::isBannerAdReady is false");
                 }
-              
+
             }
 
                 break;
-                
+
             case 10: //clean banner
-                 ATCocosSdk::removeBannerAd(bannerPlacementId);
+                ATCocosSdk::removeBannerAd(bannerPlacementId);
                 break;
-                
+
             case 11: //load interstitial
+            {
                 ATCocosSdk::setInterstitialAdListener(this, interPlacementId);
-                ATCocosSdk::loadInterstitialAd(interPlacementId, NULL);
+                cocos2d::ValueMap extra;
+                extra[ATCocosSdk::KEY_USE_REWARDED_VIDEO_AS_INTERSTITIAL] = true;
+                ATCocosSdk::loadInterstitialAd(interPlacementId, extra);
+            }
                 break;
             case 12: //show interstitial
-                if(ATCocosSdk::isInterstitialAdReady(interPlacementId)){
-                    ATCocosSdk::showInterstitialAd(interPlacementId);
-                }else{
+                if (ATCocosSdk::isInterstitialAdReady(interPlacementId)) {
+//                    ATCocosSdk::showInterstitialAd(interPlacementId);
+                    ATCocosSdk::showInterstitialAdInScenario(interPlacementId,
+                                                             "f5e54937b0483d");//show with scenario
+                } else {
                     CCLOG("ATCocosSdk::isInterstitialAdReady is false");
                 }
-                
+
                 break;
             case 13: //load rewardedvideo
+            {
                 ATCocosSdk::setRewardedVideoAdListener(this, rvPlacementId);
-                ATCocosSdk::loadRewardedVideoAd(rvPlacementId, NULL, NULL);
+
+                cocos2d::ValueMap extra;
+                extra[ATCocosSdk::KEY_USER_ID] = "test_user_id";
+                extra[ATCocosSdk::KEY_MEDIA_EXT] = "test_user_data";
+
+                ATCocosSdk::loadRewardedVideoAd(rvPlacementId, extra);
+            }
                 break;
             case 14: //show rewardedvideo
                 if(ATCocosSdk::isRewardedVideoAdReady(rvPlacementId)){
-                    ATCocosSdk::showRewardedVideoAd(rvPlacementId);
+//                    ATCocosSdk::showRewardedVideoAd(rvPlacementId);
+                    ATCocosSdk::showRewardedVideoAdInScenario(rvPlacementId, "f5e5492eca9668");//show with scenario
                 }else{
                     CCLOG("ATCocosSdk::isRewardedVideoAdReady is false");
                 }
@@ -955,6 +1013,12 @@ void DemoMainScene::onInterstitalClickedWithExtra(const char * placementId, cons
     log("DemoMainScene::onInterstitalClickedWithExtra %s with extra %s", placementId,extra);
 }
 
+void DemoMainScene::onInterstitalPlayStartWithExtra(const char * placementId, const char * extra) {
+    log("DemoMainScene::onInterstitalPlayStartWithExtra %s with extra %s", placementId,extra);
+}
+void DemoMainScene::onInterstitalPlayEndWithExtra(const char * placementId, const char * extra) {
+    log("DemoMainScene::onInterstitalPlayEndWithExtra %s with extra %s", placementId,extra);
+}
 
 //banner listener
 void DemoMainScene::onBannerAdLoadSuccess(const char * placementId) {
@@ -1012,6 +1076,10 @@ void DemoMainScene::onNativeAdShowWithExtra(const char *placementId, const char 
 void DemoMainScene::onNativeAdClickWithExtra(const char *placementId, const char *extra){
     log("DemoMainScene::onNativeAdClickWithExtra %s with extra %s", placementId,extra);
 }
+
+void DemoMainScene::onNativeAdCloseButtonTappedWithExtra(const char *placementId, const char *extra){
+    log("DemoMainScene::onNativeAdCloseButtonTappedWithExtra %s with extra %s", placementId,extra);
+}
 //native banner
 void DemoMainScene::onNativeBannerAdLoadSuccess(const char * placementId){
     log("DemoMainScene::onNativeBannerAdLoadSuccess %s", placementId);
@@ -1047,4 +1115,16 @@ void DemoMainScene::onNativeBannerAutoRefreshWithExtra(const char *placementId, 
 
 void DemoMainScene::onGDPRDataConsentSet(int dataConsent){
     log("DemoMainScene::onGDPRDataConsentSet %d",dataConsent);
+}
+
+void DemoMainScene::onPageLoadFail(){
+    log("DemoMainScene::onPageLoadFail");
+}
+
+void DemoMainScene::onUserLocation(int location){
+
+    log("DemoMainScene::onUserLocation %d", location);
+    if (location == ATCocosSdk::USER_LOCATION_IN_EU) {
+        log("DemoMainScene::onUserLocation 当前位于欧盟地区");
+    };
 }
