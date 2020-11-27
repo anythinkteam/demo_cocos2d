@@ -17,6 +17,7 @@
 + (NSDictionary *)nsDictionaryFromCCDictionary:(cocos2d::CCDictionary *)ccDictionary;
 + (NSDictionary *)nsDictionaryFromValueMap:(cocos2d::ValueMap)valueMap ;
 + (NSString *)nsStringFromValueMap:(cocos2d::ValueMap)valueMap ;
++ (NSArray *)nsArrayFromValueVector:(cocos2d::ValueVector)valueVector;
 + (const char *)cstringFromExtraNSDictionary:(NSDictionary *)dic;
 
 @end

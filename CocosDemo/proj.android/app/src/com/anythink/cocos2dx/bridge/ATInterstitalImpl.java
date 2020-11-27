@@ -5,7 +5,9 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.anythink.cocos2dx.bridge.utils.ATUtils;
+import com.anythink.cocos2dx.bridge.utils.CommonUtil;
 import com.anythink.core.api.ATAdInfo;
+import com.anythink.core.api.ATAdStatusInfo;
 import com.anythink.core.api.AdError;
 import com.anythink.interstitial.api.ATInterstitial;
 import com.anythink.interstitial.api.ATInterstitialListener;
@@ -84,6 +86,7 @@ public class ATInterstitalImpl {
 
         if (!TextUtils.isEmpty(extra)) {
             try {
+                LogUtils.i(TAG, "loadInterstitial, placementId: " + mPlacementId + ", extra: " + extra);
                 JSONObject jsonObject = new JSONObject(extra);
                 Map<String, Object> localExtra = new HashMap<>();
                 if (jsonObject.has("UseRewardedVideoAsInterstitial")) {
@@ -91,6 +94,9 @@ public class ATInterstitalImpl {
                     LogUtils.i(TAG, "is_use_rewarded_video_as_interstitial: " + useRewardedVideoAsInterstitial);
                     localExtra.put("is_use_rewarded_video_as_interstitial", useRewardedVideoAsInterstitial);
                 }
+
+                CommonUtil.fillMapFromJsonObject(localExtra, jsonObject);
+
                 demoInterstitial.setLocalExtra(localExtra);
             } catch (Throwable e) {
                 e.printStackTrace();
@@ -110,6 +116,33 @@ public class ATInterstitalImpl {
         }
         return mIsReady;
     }
+
+    public String checkAdStatus() {
+
+        if (demoInterstitial != null) {
+            ATAdStatusInfo atAdStatusInfo = demoInterstitial.checkAdStatus();
+            boolean loading = atAdStatusInfo.isLoading();
+            boolean ready = atAdStatusInfo.isReady();
+            ATAdInfo atTopAdInfo = atAdStatusInfo.getATTopAdInfo();
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("isLoading", loading);
+                jsonObject.put("isReady", ready);
+                jsonObject.put("adInfo", atTopAdInfo);
+
+                String result = jsonObject.toString();
+                LogUtils.i(TAG, "intestitial.placementId [" + mPlacementId + "], checkAdStatus: " + result);
+
+                return result;
+            } catch (Throwable e) {
+                e.printStackTrace();
+                LogUtils.i(TAG, "intestitial.placementId [" + mPlacementId + "], error: " + e.getMessage());
+            }
+        }
+        return "";
+    }
+
 
     public void show(Activity activity, String scenario) {
         if (demoInterstitial != null) {

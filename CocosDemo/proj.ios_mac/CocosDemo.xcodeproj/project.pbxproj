@@ -20,32 +20,29 @@
 		294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D631D0D56D500F7F5D4 /* CoreText.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
-		453008BC2477E62B00E6CCDA /* AnyThinkFacebookNativeAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008982477E62B00E6CCDA /* AnyThinkFacebookNativeAdapter.framework */; };
-		453008BD2477E62B00E6CCDA /* AnyThinkFacebookRewardedVideoAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008992477E62B00E6CCDA /* AnyThinkFacebookRewardedVideoAdapter.framework */; };
-		453008BE2477E62B00E6CCDA /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530089A2477E62B00E6CCDA /* FBSDKCoreKit.framework */; };
-		453008BF2477E62B00E6CCDA /* AnyThinkFacebookBannerAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530089B2477E62B00E6CCDA /* AnyThinkFacebookBannerAdapter.framework */; };
-		453008C02477E62B00E6CCDA /* FBAudienceNetworkBiddingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530089C2477E62B00E6CCDA /* FBAudienceNetworkBiddingKit.framework */; };
-		453008C12477E62B00E6CCDA /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530089D2477E62B00E6CCDA /* FBAudienceNetwork.framework */; };
-		453008C22477E62B00E6CCDA /* AnyThinkFacebookInterstitialAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530089E2477E62B00E6CCDA /* AnyThinkFacebookInterstitialAdapter.framework */; };
-		453008D12477E62B00E6CCDA /* AnyThinkSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 453008B02477E62B00E6CCDA /* AnyThinkSDK.bundle */; };
-		453008D22477E62B00E6CCDA /* TraminiSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008B12477E62B00E6CCDA /* TraminiSDK.framework */; };
-		453008D32477E62B00E6CCDA /* AnyThinkBanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008B22477E62B00E6CCDA /* AnyThinkBanner.framework */; };
-		453008D42477E62B00E6CCDA /* AnyThinkSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008B32477E62B00E6CCDA /* AnyThinkSDK.framework */; };
-		453008D62477E62B00E6CCDA /* AnyThinkInterstitial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008B52477E62B00E6CCDA /* AnyThinkInterstitial.framework */; };
-		453008D72477E62B00E6CCDA /* AnyThinkMyOffer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008B62477E62B00E6CCDA /* AnyThinkMyOffer.framework */; };
-		453008D92477E62B00E6CCDA /* AnyThinkSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008B82477E62B00E6CCDA /* AnyThinkSplash.framework */; };
-		453008DA2477E62B00E6CCDA /* AnyThinkRewardedVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008B92477E62B00E6CCDA /* AnyThinkRewardedVideo.framework */; };
-		453008DB2477E62B00E6CCDA /* AnyThinkNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453008BA2477E62B00E6CCDA /* AnyThinkNative.framework */; };
-		453009A1247B65D800E6CCDA /* MTGSDKBidding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530092B247B65D700E6CCDA /* MTGSDKBidding.framework */; };
-		453009A2247B65D800E6CCDA /* AnyThinkMintegralBannerAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530092C247B65D700E6CCDA /* AnyThinkMintegralBannerAdapter.framework */; };
-		453009A3247B65D800E6CCDA /* MTGSDKBanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530092D247B65D700E6CCDA /* MTGSDKBanner.framework */; };
-		453009A4247B65D800E6CCDA /* AnyThinkMintegralInterstitialAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530092E247B65D700E6CCDA /* AnyThinkMintegralInterstitialAdapter.framework */; };
-		453009A5247B65D800E6CCDA /* MTGSDKInterstitial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4530092F247B65D700E6CCDA /* MTGSDKInterstitial.framework */; };
-		453009A6247B65D800E6CCDA /* MTGSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45300930247B65D700E6CCDA /* MTGSDK.framework */; };
-		453009A7247B65D800E6CCDA /* AnyThinkMintegralNativeAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45300931247B65D700E6CCDA /* AnyThinkMintegralNativeAdapter.framework */; };
-		453009A8247B65D800E6CCDA /* AnyThinkMintegralRewardedVideoAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45300932247B65D700E6CCDA /* AnyThinkMintegralRewardedVideoAdapter.framework */; };
-		453009A9247B65D800E6CCDA /* MTGSDKReward.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45300933247B65D700E6CCDA /* MTGSDKReward.framework */; };
-		453009AA247B65D800E6CCDA /* MTGSDKInterstitialVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45300934247B65D700E6CCDA /* MTGSDKInterstitialVideo.framework */; };
+		45D6A99A255913620081B23E /* AnyThinkSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45D6A993255913610081B23E /* AnyThinkSDK.bundle */; };
+		45D6A99B255913620081B23E /* AnyThinkBanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A994255913610081B23E /* AnyThinkBanner.framework */; };
+		45D6A99C255913620081B23E /* AnyThinkSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A995255913610081B23E /* AnyThinkSDK.framework */; };
+		45D6A99D255913620081B23E /* AnyThinkInterstitial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A996255913610081B23E /* AnyThinkInterstitial.framework */; };
+		45D6A99E255913620081B23E /* AnyThinkSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A997255913610081B23E /* AnyThinkSplash.framework */; };
+		45D6A99F255913620081B23E /* AnyThinkRewardedVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A998255913610081B23E /* AnyThinkRewardedVideo.framework */; };
+		45D6A9A0255913620081B23E /* AnyThinkNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A999255913610081B23E /* AnyThinkNative.framework */; };
+		45D6A9A225591BAB0081B23E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9A125591BAB0081B23E /* CoreData.framework */; };
+		45D6A9AB25591C130081B23E /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9AA25591C130081B23E /* GameController.framework */; };
+		45D6A9AD25591C190081B23E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9AC25591C190081B23E /* AdSupport.framework */; };
+		45D6A9AF25591C300081B23E /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9AE25591C240081B23E /* libc++.tbd */; };
+		45D6A9B125591C390081B23E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9B025591C390081B23E /* VideoToolbox.framework */; };
+		45D6A9B325591C4E0081B23E /* libresolv.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9B225591C450081B23E /* libresolv.9.tbd */; };
+		45D6A9B525591C550081B23E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9B425591C550081B23E /* CoreMedia.framework */; };
+		45D6A9B725591C620081B23E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9B625591C5C0081B23E /* libsqlite3.tbd */; };
+		45D6A9B925591C6D0081B23E /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9B825591C680081B23E /* libxml2.tbd */; };
+		45D6A9BB25591C810081B23E /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9BA25591C780081B23E /* libiconv.tbd */; };
+		45D6A9BD25591C910081B23E /* libcupolicy.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9BC25591C910081B23E /* libcupolicy.dylib */; };
+		45D6A9BF25591CB50081B23E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9BE25591CB40081B23E /* UIKit.framework */; };
+		45D6A9C125591CF40081B23E /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9C025591CF30081B23E /* Accounts.framework */; };
+		45D6A9C325591CFA0081B23E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9C225591CFA0081B23E /* AssetsLibrary.framework */; };
+		45D6A9C525591D000081B23E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9C425591D000081B23E /* AddressBook.framework */; };
+		45D6A9C725591D1C0081B23E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45D6A9C625591D1C0081B23E /* MediaPlayer.framework */; };
 		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
 		46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
 		46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7719C43A67006E1F66 /* CloseSelected.png */; };
@@ -60,7 +57,6 @@
 		503AE10517EB98FF00D1A890 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503AE10317EB98FF00D1A890 /* main.cpp */; };
 		503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503AE11A17EB9C5A00D1A890 /* IOKit.framework */; };
 		5087E76317EB910900C73F5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		5087E76717EB910900C73F5D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		5087E76817EB910900C73F5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		5087E76917EB910900C73F5D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		5087E76A17EB910900C73F5D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -76,17 +72,6 @@
 		9B6CC7602472BC9D005D5D9D /* CCSerialization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CC75F2472BC9D005D5D9D /* CCSerialization.cpp */; };
 		AC73CAB224F792D800555415 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC73CAB024F7926A00555415 /* libz.tbd */; };
 		AC73CAB324F792E700555415 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC73CAB124F7927600555415 /* libbz2.1.0.tbd */; };
-		AC775C14250F70A200821160 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C13250F70A200821160 /* GameController.framework */; };
-		AC775C16250F70B500821160 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C15250F70B500821160 /* CoreData.framework */; };
-		AC775C18250F70C000821160 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C17250F70C000821160 /* AdSupport.framework */; };
-		AC775C1B250F70D700821160 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C1A250F70D700821160 /* VideoToolbox.framework */; };
-		AC775C1D250F70EE00821160 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC73CAB024F7926A00555415 /* libz.tbd */; };
-		AC775C1F250F70F900821160 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C1E250F70F800821160 /* CoreMedia.framework */; };
-		AC775C24250F714300821160 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C23250F714300821160 /* UIKit.framework */; };
-		AC775C25250F717E00821160 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C21250F710D00821160 /* libxml2.tbd */; };
-		AC775C26250F71A300821160 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C22250F711F00821160 /* libiconv.tbd */; };
-		AC775C28250F721B00821160 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC775C27250F721A00821160 /* MediaPlayer.framework */; };
-		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -158,7 +143,6 @@
 /* Begin PBXFileReference section */
 		1A88B2631FC3D9C9005C14AE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
-		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1AF87B471F6F77D6007BE51C /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		1AF87B481F6F77D6007BE51C /* AppController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		1AF87B581F6F77D6007BE51C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -173,32 +157,29 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		294D0D631D0D56D500F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
-		453008982477E62B00E6CCDA /* AnyThinkFacebookNativeAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkFacebookNativeAdapter.framework; sourceTree = "<group>"; };
-		453008992477E62B00E6CCDA /* AnyThinkFacebookRewardedVideoAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkFacebookRewardedVideoAdapter.framework; sourceTree = "<group>"; };
-		4530089A2477E62B00E6CCDA /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		4530089B2477E62B00E6CCDA /* AnyThinkFacebookBannerAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkFacebookBannerAdapter.framework; sourceTree = "<group>"; };
-		4530089C2477E62B00E6CCDA /* FBAudienceNetworkBiddingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetworkBiddingKit.framework; sourceTree = "<group>"; };
-		4530089D2477E62B00E6CCDA /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
-		4530089E2477E62B00E6CCDA /* AnyThinkFacebookInterstitialAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkFacebookInterstitialAdapter.framework; sourceTree = "<group>"; };
-		453008B02477E62B00E6CCDA /* AnyThinkSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AnyThinkSDK.bundle; sourceTree = "<group>"; };
-		453008B12477E62B00E6CCDA /* TraminiSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TraminiSDK.framework; sourceTree = "<group>"; };
-		453008B22477E62B00E6CCDA /* AnyThinkBanner.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkBanner.framework; sourceTree = "<group>"; };
-		453008B32477E62B00E6CCDA /* AnyThinkSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkSDK.framework; sourceTree = "<group>"; };
-		453008B52477E62B00E6CCDA /* AnyThinkInterstitial.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkInterstitial.framework; sourceTree = "<group>"; };
-		453008B62477E62B00E6CCDA /* AnyThinkMyOffer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkMyOffer.framework; sourceTree = "<group>"; };
-		453008B82477E62B00E6CCDA /* AnyThinkSplash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkSplash.framework; sourceTree = "<group>"; };
-		453008B92477E62B00E6CCDA /* AnyThinkRewardedVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkRewardedVideo.framework; sourceTree = "<group>"; };
-		453008BA2477E62B00E6CCDA /* AnyThinkNative.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkNative.framework; sourceTree = "<group>"; };
-		4530092B247B65D700E6CCDA /* MTGSDKBidding.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MTGSDKBidding.framework; sourceTree = "<group>"; };
-		4530092C247B65D700E6CCDA /* AnyThinkMintegralBannerAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkMintegralBannerAdapter.framework; sourceTree = "<group>"; };
-		4530092D247B65D700E6CCDA /* MTGSDKBanner.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MTGSDKBanner.framework; sourceTree = "<group>"; };
-		4530092E247B65D700E6CCDA /* AnyThinkMintegralInterstitialAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkMintegralInterstitialAdapter.framework; sourceTree = "<group>"; };
-		4530092F247B65D700E6CCDA /* MTGSDKInterstitial.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MTGSDKInterstitial.framework; sourceTree = "<group>"; };
-		45300930247B65D700E6CCDA /* MTGSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MTGSDK.framework; sourceTree = "<group>"; };
-		45300931247B65D700E6CCDA /* AnyThinkMintegralNativeAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkMintegralNativeAdapter.framework; sourceTree = "<group>"; };
-		45300932247B65D700E6CCDA /* AnyThinkMintegralRewardedVideoAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkMintegralRewardedVideoAdapter.framework; sourceTree = "<group>"; };
-		45300933247B65D700E6CCDA /* MTGSDKReward.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MTGSDKReward.framework; sourceTree = "<group>"; };
-		45300934247B65D700E6CCDA /* MTGSDKInterstitialVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MTGSDKInterstitialVideo.framework; sourceTree = "<group>"; };
+		45D6A993255913610081B23E /* AnyThinkSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AnyThinkSDK.bundle; sourceTree = "<group>"; };
+		45D6A994255913610081B23E /* AnyThinkBanner.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkBanner.framework; sourceTree = "<group>"; };
+		45D6A995255913610081B23E /* AnyThinkSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkSDK.framework; sourceTree = "<group>"; };
+		45D6A996255913610081B23E /* AnyThinkInterstitial.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkInterstitial.framework; sourceTree = "<group>"; };
+		45D6A997255913610081B23E /* AnyThinkSplash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkSplash.framework; sourceTree = "<group>"; };
+		45D6A998255913610081B23E /* AnyThinkRewardedVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkRewardedVideo.framework; sourceTree = "<group>"; };
+		45D6A999255913610081B23E /* AnyThinkNative.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AnyThinkNative.framework; sourceTree = "<group>"; };
+		45D6A9A125591BAB0081B23E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9AA25591C130081B23E /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9AC25591C190081B23E /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9AE25591C240081B23E /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
+		45D6A9B025591C390081B23E /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/VideoToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9B225591C450081B23E /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libresolv.9.tbd; sourceTree = DEVELOPER_DIR; };
+		45D6A9B425591C550081B23E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9B625591C5C0081B23E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
+		45D6A9B825591C680081B23E /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libxml2.tbd; sourceTree = DEVELOPER_DIR; };
+		45D6A9BA25591C780081B23E /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
+		45D6A9BC25591C910081B23E /* libcupolicy.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcupolicy.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libcupolicy.dylib; sourceTree = DEVELOPER_DIR; };
+		45D6A9BE25591CB40081B23E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9C025591CF30081B23E /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Accounts.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9C225591CFA0081B23E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/AssetsLibrary.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9C425591D000081B23E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
+		45D6A9C625591D1C0081B23E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
@@ -210,7 +191,6 @@
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE10317EB98FF00D1A890 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = mac/main.cpp; sourceTree = "<group>"; };
 		503AE10417EB98FF00D1A890 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = mac/Prefix.pch; sourceTree = "<group>"; };
-		503AE11117EB99EE00D1A890 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		503AE11A17EB9C5A00D1A890 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		5087E76F17EB910900C73F5D /* CocosDemo-desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CocosDemo-desktop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5087E78817EB974C00C73F5D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -228,19 +208,6 @@
 		9B6CC75F2472BC9D005D5D9D /* CCSerialization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSerialization.cpp; sourceTree = "<group>"; };
 		AC73CAB024F7926A00555415 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		AC73CAB124F7927600555415 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libbz2.1.0.tbd; sourceTree = DEVELOPER_DIR; };
-		AC775C13250F70A200821160 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
-		AC775C15250F70B500821160 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
-		AC775C17250F70C000821160 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
-		AC775C19250F70CC00821160 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
-		AC775C1A250F70D700821160 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/VideoToolbox.framework; sourceTree = DEVELOPER_DIR; };
-		AC775C1C250F70E300821160 /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libresolv.9.tbd; sourceTree = DEVELOPER_DIR; };
-		AC775C1E250F70F800821160 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
-		AC775C20250F710700821160 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
-		AC775C21250F710D00821160 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libxml2.tbd; sourceTree = DEVELOPER_DIR; };
-		AC775C22250F711F00821160 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
-		AC775C23250F714300821160 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		AC775C27250F721A00821160 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
-		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -279,54 +246,40 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				453009A4247B65D800E6CCDA /* AnyThinkMintegralInterstitialAdapter.framework in Frameworks */,
-				AC775C1D250F70EE00821160 /* libz.tbd in Frameworks */,
-				453008DA2477E62B00E6CCDA /* AnyThinkRewardedVideo.framework in Frameworks */,
-				453009A8247B65D800E6CCDA /* AnyThinkMintegralRewardedVideoAdapter.framework in Frameworks */,
-				453009A3247B65D800E6CCDA /* MTGSDKBanner.framework in Frameworks */,
-				AC775C24250F714300821160 /* UIKit.framework in Frameworks */,
-				453009A7247B65D800E6CCDA /* AnyThinkMintegralNativeAdapter.framework in Frameworks */,
-				453008C02477E62B00E6CCDA /* FBAudienceNetworkBiddingKit.framework in Frameworks */,
+				45D6A99F255913620081B23E /* AnyThinkRewardedVideo.framework in Frameworks */,
+				45D6A9B125591C390081B23E /* VideoToolbox.framework in Frameworks */,
 				AC73CAB324F792E700555415 /* libbz2.1.0.tbd in Frameworks */,
-				453008D32477E62B00E6CCDA /* AnyThinkBanner.framework in Frameworks */,
-				453008C12477E62B00E6CCDA /* FBAudienceNetwork.framework in Frameworks */,
-				453008D22477E62B00E6CCDA /* TraminiSDK.framework in Frameworks */,
-				AC775C16250F70B500821160 /* CoreData.framework in Frameworks */,
-				AC775C1B250F70D700821160 /* VideoToolbox.framework in Frameworks */,
-				453008DB2477E62B00E6CCDA /* AnyThinkNative.framework in Frameworks */,
-				453008D92477E62B00E6CCDA /* AnyThinkSplash.framework in Frameworks */,
-				453008BD2477E62B00E6CCDA /* AnyThinkFacebookRewardedVideoAdapter.framework in Frameworks */,
-				AC775C18250F70C000821160 /* AdSupport.framework in Frameworks */,
-				AC775C1F250F70F900821160 /* CoreMedia.framework in Frameworks */,
-				453009A5247B65D800E6CCDA /* MTGSDKInterstitial.framework in Frameworks */,
-				453009AA247B65D800E6CCDA /* MTGSDKInterstitialVideo.framework in Frameworks */,
+				45D6A9AB25591C130081B23E /* GameController.framework in Frameworks */,
 				294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */,
-				453009A2247B65D800E6CCDA /* AnyThinkMintegralBannerAdapter.framework in Frameworks */,
-				453008D62477E62B00E6CCDA /* AnyThinkInterstitial.framework in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
+				45D6A99D255913620081B23E /* AnyThinkInterstitial.framework in Frameworks */,
 				1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */,
 				D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */,
+				45D6A9BD25591C910081B23E /* libcupolicy.dylib in Frameworks */,
 				AC73CAB224F792D800555415 /* libz.tbd in Frameworks */,
-				AC775C14250F70A200821160 /* GameController.framework in Frameworks */,
-				453009A6247B65D800E6CCDA /* MTGSDK.framework in Frameworks */,
-				453008C22477E62B00E6CCDA /* AnyThinkFacebookInterstitialAdapter.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
-				453008D42477E62B00E6CCDA /* AnyThinkSDK.framework in Frameworks */,
+				45D6A9A225591BAB0081B23E /* CoreData.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
-				453009A9247B65D800E6CCDA /* MTGSDKReward.framework in Frameworks */,
-				AC775C25250F717E00821160 /* libxml2.tbd in Frameworks */,
-				AC775C26250F71A300821160 /* libiconv.tbd in Frameworks */,
-				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
-				453008BC2477E62B00E6CCDA /* AnyThinkFacebookNativeAdapter.framework in Frameworks */,
-				453009A1247B65D800E6CCDA /* MTGSDKBidding.framework in Frameworks */,
-				453008BE2477E62B00E6CCDA /* FBSDKCoreKit.framework in Frameworks */,
+				45D6A9AF25591C300081B23E /* libc++.tbd in Frameworks */,
+				45D6A9B525591C550081B23E /* CoreMedia.framework in Frameworks */,
+				45D6A9B925591C6D0081B23E /* libxml2.tbd in Frameworks */,
+				45D6A99B255913620081B23E /* AnyThinkBanner.framework in Frameworks */,
+				45D6A9A0255913620081B23E /* AnyThinkNative.framework in Frameworks */,
+				45D6A9BF25591CB50081B23E /* UIKit.framework in Frameworks */,
+				45D6A9C725591D1C0081B23E /* MediaPlayer.framework in Frameworks */,
+				45D6A9BB25591C810081B23E /* libiconv.tbd in Frameworks */,
+				45D6A9B325591C4E0081B23E /* libresolv.9.tbd in Frameworks */,
+				45D6A9B725591C620081B23E /* libsqlite3.tbd in Frameworks */,
+				45D6A99C255913620081B23E /* AnyThinkSDK.framework in Frameworks */,
+				45D6A9C525591D000081B23E /* AddressBook.framework in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
+				45D6A99E255913620081B23E /* AnyThinkSplash.framework in Frameworks */,
+				45D6A9C325591CFA0081B23E /* AssetsLibrary.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
-				453008BF2477E62B00E6CCDA /* AnyThinkFacebookBannerAdapter.framework in Frameworks */,
-				453008D72477E62B00E6CCDA /* AnyThinkMyOffer.framework in Frameworks */,
-				AC775C28250F721B00821160 /* MediaPlayer.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				45D6A9C125591CF40081B23E /* Accounts.framework in Frameworks */,
+				45D6A9AD25591C190081B23E /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +288,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */,
-				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
 				8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */,
 				503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */,
 				5087E78B17EB975400C73F5D /* OpenGL.framework in Frameworks */,
@@ -405,18 +357,22 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AC775C27250F721A00821160 /* MediaPlayer.framework */,
-				AC775C23250F714300821160 /* UIKit.framework */,
-				AC775C22250F711F00821160 /* libiconv.tbd */,
-				AC775C21250F710D00821160 /* libxml2.tbd */,
-				AC775C20250F710700821160 /* libsqlite3.tbd */,
-				AC775C1E250F70F800821160 /* CoreMedia.framework */,
-				AC775C1C250F70E300821160 /* libresolv.9.tbd */,
-				AC775C1A250F70D700821160 /* VideoToolbox.framework */,
-				AC775C19250F70CC00821160 /* libc++.tbd */,
-				AC775C17250F70C000821160 /* AdSupport.framework */,
-				AC775C15250F70B500821160 /* CoreData.framework */,
-				AC775C13250F70A200821160 /* GameController.framework */,
+				45D6A9C625591D1C0081B23E /* MediaPlayer.framework */,
+				45D6A9C425591D000081B23E /* AddressBook.framework */,
+				45D6A9C225591CFA0081B23E /* AssetsLibrary.framework */,
+				45D6A9C025591CF30081B23E /* Accounts.framework */,
+				45D6A9BE25591CB40081B23E /* UIKit.framework */,
+				45D6A9BC25591C910081B23E /* libcupolicy.dylib */,
+				45D6A9BA25591C780081B23E /* libiconv.tbd */,
+				45D6A9B825591C680081B23E /* libxml2.tbd */,
+				45D6A9B625591C5C0081B23E /* libsqlite3.tbd */,
+				45D6A9B425591C550081B23E /* CoreMedia.framework */,
+				45D6A9B225591C450081B23E /* libresolv.9.tbd */,
+				45D6A9B025591C390081B23E /* VideoToolbox.framework */,
+				45D6A9AE25591C240081B23E /* libc++.tbd */,
+				45D6A9AC25591C190081B23E /* AdSupport.framework */,
+				45D6A9AA25591C130081B23E /* GameController.framework */,
+				45D6A9A125591BAB0081B23E /* CoreData.framework */,
 				AC73CAB124F7927600555415 /* libbz2.1.0.tbd */,
 				AC73CAB024F7926A00555415 /* libz.tbd */,
 				9B0BA1F22477BF44003F17D7 /* sdk */,
@@ -425,11 +381,8 @@
 				52B47A461A53D09B004E4C60 /* Security.framework */,
 				D6B0611A1803AB670077942B /* CoreMotion.framework */,
 				503AE11A17EB9C5A00D1A890 /* IOKit.framework */,
-				503AE11117EB99EE00D1A890 /* libcurl.dylib */,
 				5087E78A17EB975400C73F5D /* OpenGL.framework */,
 				5087E78817EB974C00C73F5D /* AppKit.framework */,
-				1ACB3243164770DE00914215 /* libcurl.a */,
-				BF170DB412928DE900B8313A /* libz.dylib */,
 				D44C620F132DFF4E0009C878 /* AudioToolbox.framework */,
 				D44C620D132DFF430009C878 /* AVFoundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -440,51 +393,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		453008972477E62B00E6CCDA /* facebook */ = {
+		45D6A992255913610081B23E /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				453008982477E62B00E6CCDA /* AnyThinkFacebookNativeAdapter.framework */,
-				453008992477E62B00E6CCDA /* AnyThinkFacebookRewardedVideoAdapter.framework */,
-				4530089A2477E62B00E6CCDA /* FBSDKCoreKit.framework */,
-				4530089B2477E62B00E6CCDA /* AnyThinkFacebookBannerAdapter.framework */,
-				4530089C2477E62B00E6CCDA /* FBAudienceNetworkBiddingKit.framework */,
-				4530089D2477E62B00E6CCDA /* FBAudienceNetwork.framework */,
-				4530089E2477E62B00E6CCDA /* AnyThinkFacebookInterstitialAdapter.framework */,
-			);
-			path = facebook;
-			sourceTree = "<group>";
-		};
-		453008AF2477E62B00E6CCDA /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				453008B02477E62B00E6CCDA /* AnyThinkSDK.bundle */,
-				453008B12477E62B00E6CCDA /* TraminiSDK.framework */,
-				453008B22477E62B00E6CCDA /* AnyThinkBanner.framework */,
-				453008B32477E62B00E6CCDA /* AnyThinkSDK.framework */,
-				453008B52477E62B00E6CCDA /* AnyThinkInterstitial.framework */,
-				453008B62477E62B00E6CCDA /* AnyThinkMyOffer.framework */,
-				453008B82477E62B00E6CCDA /* AnyThinkSplash.framework */,
-				453008B92477E62B00E6CCDA /* AnyThinkRewardedVideo.framework */,
-				453008BA2477E62B00E6CCDA /* AnyThinkNative.framework */,
+				45D6A993255913610081B23E /* AnyThinkSDK.bundle */,
+				45D6A994255913610081B23E /* AnyThinkBanner.framework */,
+				45D6A995255913610081B23E /* AnyThinkSDK.framework */,
+				45D6A996255913610081B23E /* AnyThinkInterstitial.framework */,
+				45D6A997255913610081B23E /* AnyThinkSplash.framework */,
+				45D6A998255913610081B23E /* AnyThinkRewardedVideo.framework */,
+				45D6A999255913610081B23E /* AnyThinkNative.framework */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		4530092A247B65D700E6CCDA /* mintegral */ = {
-			isa = PBXGroup;
-			children = (
-				4530092B247B65D700E6CCDA /* MTGSDKBidding.framework */,
-				4530092C247B65D700E6CCDA /* AnyThinkMintegralBannerAdapter.framework */,
-				4530092D247B65D700E6CCDA /* MTGSDKBanner.framework */,
-				4530092E247B65D700E6CCDA /* AnyThinkMintegralInterstitialAdapter.framework */,
-				4530092F247B65D700E6CCDA /* MTGSDKInterstitial.framework */,
-				45300930247B65D700E6CCDA /* MTGSDK.framework */,
-				45300931247B65D700E6CCDA /* AnyThinkMintegralNativeAdapter.framework */,
-				45300932247B65D700E6CCDA /* AnyThinkMintegralRewardedVideoAdapter.framework */,
-				45300933247B65D700E6CCDA /* MTGSDKReward.framework */,
-				45300934247B65D700E6CCDA /* MTGSDKInterstitialVideo.framework */,
-			);
-			path = mintegral;
 			sourceTree = "<group>";
 		};
 		46880B7519C43A67006E1F66 /* Resources */ = {
@@ -537,9 +457,7 @@
 		9B0BA1F22477BF44003F17D7 /* sdk */ = {
 			isa = PBXGroup;
 			children = (
-				4530092A247B65D700E6CCDA /* mintegral */,
-				453008AF2477E62B00E6CCDA /* Core */,
-				453008972477E62B00E6CCDA /* facebook */,
+				45D6A992255913610081B23E /* Core */,
 			);
 			name = sdk;
 			path = AnyThink/sdk;
@@ -708,8 +626,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45D6A99A255913620081B23E /* AnyThinkSDK.bundle in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
-				453008D12477E62B00E6CCDA /* AnyThinkSDK.bundle in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
@@ -800,38 +718,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AnyThink/sdk",
-					"$(PROJECT_DIR)/AnyThink/sdk/Baidu",
-					"$(PROJECT_DIR)/AnyThink/sdk/Tapjoy.embeddedframework",
-					"$(PROJECT_DIR)/AnyThink/sdk/NendAd.embeddedframework",
-					"$(PROJECT_DIR)/AnyThink/sdk/OguryOED_1.0.3",
-					"$(PROJECT_DIR)/AnyThink/sdk/thirdRely",
 					"$(PROJECT_DIR)/AnyThink/sdk/Core",
-					"$(PROJECT_DIR)/AnyThink/sdk/pangle",
-					"$(PROJECT_DIR)/AnyThink/sdk/admob",
-					"$(PROJECT_DIR)/AnyThink/sdk/facebook",
-					"$(PROJECT_DIR)/AnyThink/sdk/appnext",
-					"$(PROJECT_DIR)/AnyThink/sdk/maio",
-					"$(PROJECT_DIR)/AnyThink/sdk/fyber",
-					"$(PROJECT_DIR)/AnyThink/sdk/applovin",
-					"$(PROJECT_DIR)/AnyThink/sdk/gdt",
-					"$(PROJECT_DIR)/AnyThink/sdk/baidu",
-					"$(PROJECT_DIR)/AnyThink/sdk/sigmob",
-					"$(PROJECT_DIR)/AnyThink/sdk/startapp",
-					"$(PROJECT_DIR)/AnyThink/sdk/chartboost",
-					"$(PROJECT_DIR)/AnyThink/sdk/ironsource",
-					"$(PROJECT_DIR)/AnyThink/sdk/adcolony",
-					"$(PROJECT_DIR)/AnyThink/sdk/kuaishou",
-					"$(PROJECT_DIR)/AnyThink/sdk/kuaishou/thirdRely",
-					"$(PROJECT_DIR)/AnyThink/sdk/mintegral",
-					"$(PROJECT_DIR)/AnyThink/sdk/ogury",
-					"$(PROJECT_DIR)/AnyThink/sdk/unityads",
-					"$(PROJECT_DIR)/AnyThink/sdk/tapjoy",
-					"$(PROJECT_DIR)/AnyThink/sdk/tapjoy/Tapjoy.embeddedframework",
-					"$(PROJECT_DIR)/AnyThink/sdk/vungle",
-					"$(PROJECT_DIR)/AnyThink/sdk/inmobi",
-					"$(PROJECT_DIR)/AnyThink/sdk/oneway",
-					"$(PROJECT_DIR)/AnyThink/sdk/nend",
-					"$(PROJECT_DIR)/AnyThink/sdk/nend/NendAd.embeddedframework",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -848,17 +735,7 @@
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/AnyThink/sdk/Oneway",
-					"$(PROJECT_DIR)/AnyThink/sdk/Flurry",
-					"$(PROJECT_DIR)/AnyThink/sdk/AppnextIOSSDK",
-					"$(PROJECT_DIR)/AnyThink/sdk/GDT",
-					"$(PROJECT_DIR)/AnyThink/sdk/AppnextNativeAdsSDK",
-					"$(PROJECT_DIR)/AnyThink/sdk",
-					"$(PROJECT_DIR)/AnyThink/sdk/appnext",
-					"$(PROJECT_DIR)/AnyThink/sdk/gdt",
-					"$(PROJECT_DIR)/AnyThink/sdk/oneway",
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/AnyThink/sdk";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
@@ -887,38 +764,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AnyThink/sdk",
-					"$(PROJECT_DIR)/AnyThink/sdk/Baidu",
-					"$(PROJECT_DIR)/AnyThink/sdk/Tapjoy.embeddedframework",
-					"$(PROJECT_DIR)/AnyThink/sdk/NendAd.embeddedframework",
-					"$(PROJECT_DIR)/AnyThink/sdk/OguryOED_1.0.3",
-					"$(PROJECT_DIR)/AnyThink/sdk/thirdRely",
 					"$(PROJECT_DIR)/AnyThink/sdk/Core",
-					"$(PROJECT_DIR)/AnyThink/sdk/pangle",
-					"$(PROJECT_DIR)/AnyThink/sdk/admob",
-					"$(PROJECT_DIR)/AnyThink/sdk/facebook",
-					"$(PROJECT_DIR)/AnyThink/sdk/appnext",
-					"$(PROJECT_DIR)/AnyThink/sdk/maio",
-					"$(PROJECT_DIR)/AnyThink/sdk/fyber",
-					"$(PROJECT_DIR)/AnyThink/sdk/applovin",
-					"$(PROJECT_DIR)/AnyThink/sdk/gdt",
-					"$(PROJECT_DIR)/AnyThink/sdk/baidu",
-					"$(PROJECT_DIR)/AnyThink/sdk/sigmob",
-					"$(PROJECT_DIR)/AnyThink/sdk/startapp",
-					"$(PROJECT_DIR)/AnyThink/sdk/chartboost",
-					"$(PROJECT_DIR)/AnyThink/sdk/ironsource",
-					"$(PROJECT_DIR)/AnyThink/sdk/adcolony",
-					"$(PROJECT_DIR)/AnyThink/sdk/kuaishou",
-					"$(PROJECT_DIR)/AnyThink/sdk/kuaishou/thirdRely",
-					"$(PROJECT_DIR)/AnyThink/sdk/mintegral",
-					"$(PROJECT_DIR)/AnyThink/sdk/ogury",
-					"$(PROJECT_DIR)/AnyThink/sdk/unityads",
-					"$(PROJECT_DIR)/AnyThink/sdk/tapjoy",
-					"$(PROJECT_DIR)/AnyThink/sdk/tapjoy/Tapjoy.embeddedframework",
-					"$(PROJECT_DIR)/AnyThink/sdk/vungle",
-					"$(PROJECT_DIR)/AnyThink/sdk/inmobi",
-					"$(PROJECT_DIR)/AnyThink/sdk/oneway",
-					"$(PROJECT_DIR)/AnyThink/sdk/nend",
-					"$(PROJECT_DIR)/AnyThink/sdk/nend/NendAd.embeddedframework",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -934,17 +780,7 @@
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/AnyThink/sdk/Oneway",
-					"$(PROJECT_DIR)/AnyThink/sdk/Flurry",
-					"$(PROJECT_DIR)/AnyThink/sdk/AppnextIOSSDK",
-					"$(PROJECT_DIR)/AnyThink/sdk/GDT",
-					"$(PROJECT_DIR)/AnyThink/sdk/AppnextNativeAdsSDK",
-					"$(PROJECT_DIR)/AnyThink/sdk",
-					"$(PROJECT_DIR)/AnyThink/sdk/appnext",
-					"$(PROJECT_DIR)/AnyThink/sdk/gdt",
-					"$(PROJECT_DIR)/AnyThink/sdk/oneway",
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/AnyThink/sdk";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",

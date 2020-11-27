@@ -15,15 +15,15 @@
 #include "ATCocosUserLocationListener.h"
 #endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
-#include <ui/UIWidget.h>
-#include "cocos2d.h"
-#include "bridge/ATCocosRewardedVideoAdListener.h"
-#include "bridge/ATCocosInterstitialAdListener.h"
-#include "bridge/ATCocosBannerAdListener.h"
-#include "bridge/ATCocosNativeAdListener.h"
-#include "bridge/ATCocosNativeBannerAdListener.h"
-#include "bridge/ATCocosGDPRListener.h"
-#include "bridge/ATCocosUserLocationListener.h"
+//#include <ui/UIWidget.h>
+//#include "cocos2d.h"
+//#include "bridge/ATCocosRewardedVideoAdListener.h"
+//#include "bridge/ATCocosInterstitialAdListener.h"
+//#include "bridge/ATCocosBannerAdListener.h"
+//#include "bridge/ATCocosNativeAdListener.h"
+//#include "bridge/ATCocosNativeBannerAdListener.h"
+//#include "bridge/ATCocosGDPRListener.h"
+//#include "bridge/ATCocosUserLocationListener.h"
 
 #endif
 

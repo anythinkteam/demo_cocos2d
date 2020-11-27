@@ -28,7 +28,6 @@
 
 -(void) loadInterstitialAdWithPlacementID:(NSString*)placementID extra:(NSDictionary*)customData {
     NSLog(@"ATInterstitialAdWrapper::loadInterstitialWithPlacementID:%@", placementID);
-    //    [self setCallBack:callback forKey:placementID];
     NSLog(@"loadInterstitialExtra = %@", customData);
     [[ATAdManager sharedManager] loadADWithPlacementID:placementID extra:customData delegate:self];
 }
@@ -36,6 +35,17 @@
 -(BOOL) interstitialAdReadyForPlacementID:(NSString*)placementID {
     NSLog(@"ATInterstitialAdWrapper::interstitialReadyForPlacementID:%@", placementID);
     return [[ATAdManager sharedManager] interstitialReadyForPlacementID:placementID];
+}
+
+-(NSString *) checkInterstitialAdStatus:(NSString*)placementID {
+    NSLog(@"ATInterstitialAdWrapper::checkInterstitialAdStatus:%@", placementID);
+    ATCheckLoadModel *checkLoadModel = [[ATAdManager sharedManager] checkInterstitialLoadStatusForPlacementID:placementID];
+    NSMutableDictionary *statusDict = [NSMutableDictionary dictionary];
+    statusDict[@"isLoading"] = @(checkLoadModel.isLoading);
+    statusDict[@"isReady"] = @(checkLoadModel.isReady);
+    statusDict[@"adInfo"] = checkLoadModel.adOfferInfo;
+    NSLog(@"ATInterstitialAdWrapper::statusDict = %@", statusDict);
+    return statusDict.jsonString;
 }
 
 -(void) showInterstitialAdWithPlacementID:(NSString*)placementID {

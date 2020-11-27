@@ -100,6 +100,15 @@
     return [NSString stringWithCString:jsonString.c_str()encoding:[NSString defaultCStringEncoding]];
 }
 
++ (NSArray *)nsArrayFromValueVector:(cocos2d::ValueVector)valueVector {
+    NSMutableArray *array = [NSMutableArray array];
+    int size = (int)valueVector.size();
+    for(int i = 0; i < size; i++) {
+        [array addObject:[NSString stringWithCString:valueVector.at(i).asString().c_str() encoding:[NSString defaultCStringEncoding]]];
+    }
+    return array;
+}
+
 @end
 
 

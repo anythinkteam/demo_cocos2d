@@ -191,6 +191,14 @@ public class ATSDKJniHelper {
         });
     }
 
+    public static void deniedUploadDeviceInfo(String arrayString) {
+        LogUtils.i(TAG, "deniedUploadDeviceInfo " + arrayString);
+        if (!TextUtils.isEmpty(arrayString)) {
+            String[] split = arrayString.split(",");
+            ATSDK.deniedUploadDeviceInfo(split);
+        }
+    }
+
     /**
      * -----------------------------------------------------------Interstitial----------------------------------------------------------------------------
      **/
@@ -261,6 +269,27 @@ public class ATSDKJniHelper {
 
 
     }
+
+    public static String checkInterstitialAdStatus(final String placementId) {
+        LogUtils.i(TAG, "checkRewardedVideoAdStatus,placementId [" + placementId + "]");
+        if (TextUtils.isEmpty(placementId)) {
+            LogUtils.e(TAG, "placementId isEmpty... call failed");
+            return "";
+        }
+        if (sActivity == null) {
+            LogUtils.e(TAG, "JNIHelper must inited ,call method ATSDKJniHelper.init() frist in activity..");
+            return "";
+        }
+        ATInterstitalImpl demoInterstitial = null;
+        if (mATInterstitialMap.containsKey(placementId)) {
+            demoInterstitial = mATInterstitialMap.get(placementId);
+        }
+        if (demoInterstitial == null) {
+            return "";
+        }
+        return demoInterstitial.checkAdStatus();
+    }
+
 
     /**
      * 展示插屏广告
@@ -334,7 +363,7 @@ public class ATSDKJniHelper {
             @Override
             public void run() {
                 finalATRewardVideo.setUserInfo(extraArray[0], extraArray[1]);
-                finalATRewardVideo.loadAd(sActivity);
+                finalATRewardVideo.loadAd(sActivity, extra);
             }
         });
     }
@@ -371,6 +400,20 @@ public class ATSDKJniHelper {
         }
 
         return finalATRewardVideo.isAdReady();
+    }
+
+    public static String checkRewardedVideoAdStatus(final String placementId) {
+        LogUtils.i(TAG, "checkRewardedVideoAdStatus,placementId [" + placementId + "]");
+        if (TextUtils.isEmpty(placementId)) {
+            LogUtils.e(TAG, "placementId isEmpty... call failed");
+            return "";
+        }
+        ATRewardedVideoImpl finalATRewardVideo = mATRewardVideoMap.get(placementId);
+        if (finalATRewardVideo == null) {
+            return "";
+        }
+
+        return finalATRewardVideo.checkAdStatus();
     }
 
     /**

@@ -63,6 +63,39 @@ const int ATCocosSdk::GDPR_PERSONALIZED = 0;
 const int ATCocosSdk::GDPR_NONPERSONALIZED = 1;
 const int ATCocosSdk::GDPR_UNKNOWN= 2;
 
+
+//for android and ios
+const char* ATCocosSdk::OS_VERSION_NAME = "os_vn";
+const char* ATCocosSdk::OS_VERSION_CODE = "os_vc";
+const char* ATCocosSdk::APP_PACKAGE_NAME = "package_name";
+const char* ATCocosSdk::APP_VERSION_NAME = "app_vn";
+const char* ATCocosSdk::APP_VERSION_CODE = "app_vc";
+
+const char* ATCocosSdk::BRAND = "brand";
+const char* ATCocosSdk::MODEL = "model";
+const char* ATCocosSdk::DEVICE_SCREEN_SIZE = "screen";
+const char* ATCocosSdk::MNC = "mnc";
+const char* ATCocosSdk::MCC = "mcc";
+
+const char* ATCocosSdk::LANGUAGE = "language";
+const char* ATCocosSdk::TIMEZONE = "timezone";
+const char* ATCocosSdk::USER_AGENT = "ua";
+const char* ATCocosSdk::ORIENTATION = "orient";
+const char* ATCocosSdk::NETWORK_TYPE = "network_type";
+
+//for android
+const char* ATCocosSdk::INSTALLER = "it_src";
+const char* ATCocosSdk::ANDROID_ID = "android_id";
+const char* ATCocosSdk::GAID = "gaid";
+const char* ATCocosSdk::MAC = "mac";
+const char* ATCocosSdk::IMEI = "imei";
+const char* ATCocosSdk::OAID = "oaid";
+
+//for ios
+const char* ATCocosSdk::IDFA = "idfa";
+const char* ATCocosSdk::IDFV = "idfv";
+
+
 const char* ATCocosSdk::KEY_TOP = "top";
 const char* ATCocosSdk::KEY_BOTTOM = "bottom";
 
@@ -71,6 +104,12 @@ const char* ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION = "inline_adaptive_orien
 const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_CURRENT = 0;
 const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_PORTRAIT = 1;
 const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_LANDSCAPE = 2;
+
+const char* ATCocosSdk::KEY_ADAPTIVE_WIDTH = "adaptive_width";
+const char* ATCocosSdk::KEY_ADAPTIVE_ORIENTATION = "adaptive_orientation";
+const int ATCocosSdk::ADAPTIVE_ORIENTATION_CURRENT = 0;
+const int ATCocosSdk::ADAPTIVE_ORIENTATION_PORTRAIT = 1;
+const int ATCocosSdk::ADAPTIVE_ORIENTATION_LANDSCAPE = 2;
 
 const char* ATCocosSdk::KEY_USE_REWARDED_VIDEO_AS_INTERSTITIAL = "UseRewardedVideoAsInterstitial";
 
@@ -302,6 +341,61 @@ void ATCocosSdk::setPlacementCustomData(const char *placementId, cocos2d::ValueM
     }
 }
 
+void ATCocosSdk::deniedUploadDeviceInfo(cocos2d::ValueVector deniedInfo) {
+
+    if(deniedInfo.empty()) {
+        ATUtil::printLog("deniedUploadDeviceInfo  size = 0");
+        return;
+    }
+
+    //获取java的StringBuilder类
+    jclass class_stringbuilder = JniHelper::getEnv()->FindClass("java/lang/StringBuilder");
+    jmethodID stringbuilder_init = JniHelper::getEnv()->GetMethodID(class_stringbuilder, "<init>", "()V");
+    jobject StringBuilder = JniHelper::getEnv()->NewObject(class_stringbuilder, stringbuilder_init, "");
+    jmethodID StringBuilder_append = JniHelper::getEnv()->GetMethodID(class_stringbuilder, "append",
+                                                                      "(Ljava/lang/String;)Ljava/lang/StringBuilder;");
+
+    jmethodID StringBuilder_toString = JniHelper::getEnv()->GetMethodID(class_stringbuilder, "toString",
+                                                                      "()Ljava/lang/String;");
+
+    int size = deniedInfo.size();
+    std::string deniedinfo;
+    for(int i = 0; i < size; i++) {
+
+        deniedinfo = deniedInfo.at(i).asString();
+        if (i != 0) {
+            JniHelper::getEnv()->CallObjectMethod(StringBuilder, StringBuilder_append,
+                                                  JniHelper::getEnv()->NewStringUTF(","));
+        }
+
+        JniHelper::getEnv()->CallObjectMethod(StringBuilder, StringBuilder_append,
+                                              JniHelper::getEnv()->NewStringUTF(deniedinfo.c_str()));
+    }
+
+//    jstring infoString = JniHelper::getEnv()->CallObjectMethod(StringBuilder, StringBuilder_toString);
+
+    std::string s = "2";
+    s = s + "3";
+
+    ATUtil::printLog("deniedUploadDeviceInfo -----------------");
+    ATUtil::printLog(s.c_str());
+
+
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "deniedUploadDeviceInfo",
+                                              "(Ljava/lang/String;)V");
+
+    if (ret) {
+        ATUtil::printLog("deniedUploadDeviceInfo");
+        info.env->CallStaticVoidMethod(info.classID, info.methodID, JniHelper::getEnv()->CallObjectMethod(StringBuilder, StringBuilder_toString));
+
+    } else {
+        ATUtil::printLog("deniedUploadDeviceInfo error");
+    }
+}
+
+
 /**------------------------------------------- Banner -------------------------------------------------------------**/
 void ATCocosSdk::loadBannerAd(const char *placementId, cocos2d::ValueMap parameters) {
     JniMethodInfo info;
@@ -452,6 +546,22 @@ bool ATCocosSdk::isInterstitialAdReady(const char *placementId) {
     }
 }
 
+char * ATCocosSdk::checkInterstitialAdStatus(const char *placementId) {
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "checkInterstitialAdStatus",
+                                              "(Ljava/lang/String;)Ljava/lang/String;");
+    if (ret) {
+        ATUtil::printLog("checkInterstitialAdStatus");
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
+        jstring result =  (jstring) info.env->CallStaticObjectMethod(info.classID, info.methodID, unitidstr);
+        return ATUtil::jstringTostring(info.env, result);
+    } else {
+        ATUtil::printLog("checkInterstitialAdStatus error");
+        return nullptr;
+    }
+}
+
 
 void ATCocosSdk::showInterstitialAd(const char *placementId) {
     JniMethodInfo info;
@@ -504,6 +614,22 @@ bool ATCocosSdk::isRewardedVideoAdReady(const char *placementId) {
     } else {
         ATUtil::printLog("isRewardedVideoAdReady error");
         return false;
+    }
+}
+
+char * ATCocosSdk::checkRewardedVideoAdStatus(const char *placementId) {
+    JniMethodInfo info;
+
+    bool ret = JniHelper::getStaticMethodInfo(info, UPARPUSDKHELPER, "checkRewardedVideoAdStatus",
+                                              "(Ljava/lang/String;)Ljava/lang/String;");
+    if (ret) {
+        ATUtil::printLog("checkRewardedVideoAdStatus");
+        jstring unitidstr = ATUtil::charTojstring(info.env, placementId);
+        jstring result =  (jstring) info.env->CallStaticObjectMethod(info.classID, info.methodID, unitidstr);
+        return ATUtil::jstringTostring(info.env, result);
+    } else {
+        ATUtil::printLog("checkRewardedVideoAdStatus error");
+        return nullptr;
     }
 }
 
@@ -806,3 +932,5 @@ void ATCocosSdk::setNativeBannerAdListener(ATCocosNativeBannerAdListener *listen
                                                const char *placementId) {
     ATListenerManager::getInstance()->addNativeBannerAdListener(placementId, listener);
 }
+
+

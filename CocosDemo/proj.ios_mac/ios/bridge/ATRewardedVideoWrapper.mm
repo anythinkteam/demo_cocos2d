@@ -41,6 +41,17 @@ static AVAudioSessionCategory AudioSessionCategory;
     return [[ATAdManager sharedManager] rewardedVideoReadyForPlacementID:placementID];
 }
 
+-(NSString *) checkRewardedVideoAdStatus:(NSString*)placementID {
+    NSLog(@"ATRewardedVideoWrapper::checkRewardedVideoAdStatus:%@", placementID);
+    ATCheckLoadModel *checkLoadModel = [[ATAdManager sharedManager] checkRewardedVideoLoadStatusForPlacementID:placementID];
+    NSMutableDictionary *statusDict = [NSMutableDictionary dictionary];
+    statusDict[@"isLoading"] = @(checkLoadModel.isLoading);
+    statusDict[@"isReady"] = @(checkLoadModel.isReady);
+    statusDict[@"adInfo"] = checkLoadModel.adOfferInfo;
+    NSLog(@"ATRewardedVideoWrapper::statusDict = %@", statusDict);
+    return statusDict.jsonString;
+}
+
 -(void) showRewardedVideoWithPlacementID:(NSString*)placementID {
     NSLog(@"ATRewardedVideoWrapper::showRewardedVideoWithPlacementID:%@", placementID);
     AudioSessionCategory = [AVAudioSession sharedInstance].category;

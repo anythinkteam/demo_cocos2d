@@ -4,6 +4,7 @@
 //
 //  Created by Stephen on 2019/7/23.
 //
+#import <Foundation/Foundation.h>
 #import "ATCocosSdk.h"
 //#include "ATCocosRewardedVideoAdListener.h"
 #import "ATCocosUtils.h"
@@ -75,7 +76,44 @@ const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_CURRENT = 0;
 const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_PORTRAIT = 1;
 const int ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_LANDSCAPE = 2;
 
+const char* ATCocosSdk::KEY_ADAPTIVE_WIDTH = "adaptive_width";
+const char* ATCocosSdk::KEY_ADAPTIVE_ORIENTATION = "adaptive_orientation";
+const int ATCocosSdk::ADAPTIVE_ORIENTATION_CURRENT = 0;
+const int ATCocosSdk::ADAPTIVE_ORIENTATION_PORTRAIT = 1;
+const int ATCocosSdk::ADAPTIVE_ORIENTATION_LANDSCAPE = 2;
+
 const char* ATCocosSdk::KEY_USE_REWARDED_VIDEO_AS_INTERSTITIAL = "uses_rewarded_video_flag";
+
+//for android and ios
+const char* ATCocosSdk::OS_VERSION_NAME = "os_vn";
+const char* ATCocosSdk::OS_VERSION_CODE = "os_vc";
+const char* ATCocosSdk::APP_PACKAGE_NAME = "package_name";
+const char* ATCocosSdk::APP_VERSION_NAME = "app_vn";
+const char* ATCocosSdk::APP_VERSION_CODE = "app_vc";
+
+const char* ATCocosSdk::BRAND = "brand";
+const char* ATCocosSdk::MODEL = "model";
+const char* ATCocosSdk::DEVICE_SCREEN_SIZE = "screen";
+const char* ATCocosSdk::MNC = "mnc";
+const char* ATCocosSdk::MCC = "mcc";
+
+const char* ATCocosSdk::LANGUAGE = "language";
+const char* ATCocosSdk::TIMEZONE = "timezone";
+const char* ATCocosSdk::USER_AGENT = "ua";
+const char* ATCocosSdk::ORIENTATION = "orient";
+const char* ATCocosSdk::NETWORK_TYPE = "network_type";
+
+//for android
+const char* ATCocosSdk::INSTALLER = "it_src";
+const char* ATCocosSdk::ANDROID_ID = "android_id";
+const char* ATCocosSdk::GAID = "gaid";
+const char* ATCocosSdk::MAC = "mac";
+const char* ATCocosSdk::IMEI = "imei";
+const char* ATCocosSdk::OAID = "oaid";
+
+//for ios
+const char* ATCocosSdk::IDFA = "idfa";
+const char* ATCocosSdk::IDFV = "idfv";
 
 //iOS + Android
 void ATCocosSdk::setChannel(const char * channel) {
@@ -181,6 +219,12 @@ void ATCocosSdk::getUserLocation(ATCocosUserLocationListener *listener) {
     }];
 }
 
+//iOS + Android.
+void ATCocosSdk::deniedUploadDeviceInfo(cocos2d::ValueVector deniedInfo) {
+    NSArray *deniedInfoArray = [ATCocosUtils nsArrayFromValueVector:deniedInfo];
+    NSLog(@"deniedUploadDeviceInfo deniedInfoArray：%@", deniedInfoArray);
+    [[ATAPI sharedInstance] setDeniedUploadInfoArray:deniedInfoArray];
+}
 
 /**
  adtype rewarded video
@@ -202,6 +246,12 @@ void ATCocosSdk::loadRewardedVideoAd(const char *placementId, cocos2d::ValueMap 
 bool ATCocosSdk::isRewardedVideoAdReady(const char * placementId) {
     NSString *mPlacementId = [ATCocosUtils nsstringFromCString:placementId];
     return  [[ATRewardedVideoWrapper sharedInstance] rewardedVideoReadyForPlacementID:mPlacementId];
+}
+
+//iOS + Android.
+char * ATCocosSdk::checkRewardedVideoAdStatus(const char * placementId) {
+    NSString *mPlacementId = [ATCocosUtils nsstringFromCString:placementId];
+    return (char*)[ATCocosUtils cstringFromNSString:[[ATRewardedVideoWrapper sharedInstance] checkRewardedVideoAdStatus:mPlacementId]];
 }
 
 //iOS + Android.
@@ -239,6 +289,12 @@ void ATCocosSdk::loadInterstitialAd(const char *placementId, cocos2d::ValueMap p
 bool ATCocosSdk::isInterstitialAdReady(const char * placementId) {
     NSString *mPlacementId = [ATCocosUtils nsstringFromCString:placementId];
     return  [[ATInterstitialAdWrapper sharedInstance] interstitialAdReadyForPlacementID:mPlacementId];
+}
+
+//iOS + Android.
+char * ATCocosSdk::checkInterstitialAdStatus(const char * placementId) {
+    NSString *mPlacementId = [ATCocosUtils nsstringFromCString:placementId];
+    return (char*)[ATCocosUtils cstringFromNSString:[[ATInterstitialAdWrapper sharedInstance] checkInterstitialAdStatus:mPlacementId]];
 }
 
 //iOS + Android.

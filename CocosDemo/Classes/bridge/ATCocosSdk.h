@@ -64,6 +64,38 @@ public:
     static const int GDPR_UNKNOWN;
 
 
+    //for android and ios
+    static const char* OS_VERSION_NAME;
+    static const char* OS_VERSION_CODE;
+    static const char* APP_PACKAGE_NAME;
+    static const char* APP_VERSION_NAME;
+    static const char* APP_VERSION_CODE;
+
+    static const char* BRAND;
+    static const char* MODEL;
+    static const char* DEVICE_SCREEN_SIZE;
+    static const char* MNC;
+    static const char* MCC;
+
+    static const char* LANGUAGE;
+    static const char* TIMEZONE;
+    static const char* USER_AGENT;
+    static const char* ORIENTATION;
+    static const char* NETWORK_TYPE;
+
+    //for android
+    static const char* INSTALLER;
+    static const char* ANDROID_ID;
+    static const char* GAID;
+    static const char* MAC;
+    static const char* IMEI;
+    static const char* OAID;
+
+    //for ios
+    static const char* IDFA;
+    static const char* IDFV;
+
+
     static const char* KEY_PARENT;
     static const char* KEY_ICON;
     static const char* KEY_MAIN_IMAGE;
@@ -81,6 +113,12 @@ public:
     static const int INLINE_ADAPTIVE_ORIENTATION_CURRENT;
     static const int INLINE_ADAPTIVE_ORIENTATION_PORTRAIT;
     static const int INLINE_ADAPTIVE_ORIENTATION_LANDSCAPE;
+
+    static const char* KEY_ADAPTIVE_WIDTH;
+    static const char* KEY_ADAPTIVE_ORIENTATION;
+    static const int ADAPTIVE_ORIENTATION_CURRENT;
+    static const int ADAPTIVE_ORIENTATION_PORTRAIT;
+    static const int ADAPTIVE_ORIENTATION_LANDSCAPE;
 
     static const char* KEY_USE_REWARDED_VIDEO_AS_INTERSTITIAL;
 
@@ -120,6 +158,9 @@ public:
 
     //iOS + Android.
     static void getUserLocation(ATCocosUserLocationListener * listener);
+
+    //iOS + Android.
+    static void deniedUploadDeviceInfo(cocos2d::ValueVector deniedInfo);
 
     
     /**
@@ -194,6 +235,9 @@ public:
     
     //iOS + Android.
     static bool isRewardedVideoAdReady(const char * placementId);
+
+    //iOS + Android.
+    static char* checkRewardedVideoAdStatus(const char * placementId);
     
     /**
      
@@ -215,7 +259,10 @@ public:
     
     //iOS + Android.
     static bool isInterstitialAdReady(const char * placementId);
-    
+
+    //iOS + Android.
+    static char* checkInterstitialAdStatus(const char * placementId);
+
     /**
      
      **/

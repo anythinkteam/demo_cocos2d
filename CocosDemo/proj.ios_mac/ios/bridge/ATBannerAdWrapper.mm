@@ -54,11 +54,11 @@ UIEdgeInsets SafeAreaInsets_ATCocosCreatorBanner() {
 //            //GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth 自适应
 //            //GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth 竖屏
 //            //GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth 横屏
-//            CGFloat admobBannerWidth = [customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_INLINE_ADAPTIVE_WIDTH]] doubleValue];
+//            CGFloat admobBannerWidth = [customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_ADAPTIVE_WIDTH]] doubleValue];
 //            GADAdSize admobSize;
-//            if ([customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION]] integerValue] == 1) {
+//            if ([customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_ADAPTIVE_ORIENTATION]] integerValue] == 1) {
 //                admobSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(admobBannerWidth);
-//            } else if ([customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION]] integerValue] == 2) {
+//            } else if ([customData[[ATCocosUtils nsstringFromCString:ATCocosSdk::KEY_ADAPTIVE_ORIENTATION]] integerValue] == 2) {
 //                admobSize = GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(admobBannerWidth);
 //            } else {
 //                admobSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(admobBannerWidth);

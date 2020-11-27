@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import com.anythink.banner.api.ATBannerListener;
 import com.anythink.banner.api.ATBannerView;
 import com.anythink.cocos2dx.bridge.utils.ATUtils;
+import com.anythink.cocos2dx.bridge.utils.CommonUtil;
 import com.anythink.cocos2dx.bridge.utils.Const;
 import com.anythink.core.api.ATAdInfo;
 import com.anythink.core.api.AdError;
@@ -35,7 +36,7 @@ public class ATBannerImpl {
         if (mBannerView == null) {
             mBannerView = new ATBannerView(context);
         }
-        mBannerView.setUnitId(mPlacementId);
+        mBannerView.setPlacementId(mPlacementId);
         mBannerView.setBannerAdListener(new ATBannerListener() {
             @Override
             public void onBannerLoaded() {
@@ -77,6 +78,7 @@ public class ATBannerImpl {
 
         if (!TextUtils.isEmpty(extra)) {//针对 穿山甲第一次banner尺寸不对
             try {
+                LogUtils.i(TAG, "loadBanner, placementId: " + mPlacementId + ", extra: " + extra);
                 JSONObject jsonObject = new JSONObject(extra);
                 int width = 0;
                 int height = 0;
@@ -109,6 +111,13 @@ public class ATBannerImpl {
                     LogUtils.i(TAG, "inline_adaptive_orientation: " + inline_adaptive_orientation);
                     localExtra.put("inline_adaptive_orientation", inline_adaptive_orientation);
                 }
+
+                if (!jsonObject.has("adaptive_type")) {
+                    localExtra.put("adaptive_type", 0);
+                }
+
+                CommonUtil.fillMapFromJsonObject(localExtra, jsonObject);
+
                 mBannerView.setLocalExtra(localExtra);
             } catch (Throwable e) {
                 e.printStackTrace();

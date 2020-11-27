@@ -124,12 +124,12 @@ bool DemoMainScene::init()
     appId = "a5b0e8491845b3";
     appKey = "7eae0567827cfe2b22874061763f30c9";
     
-    
-    rvPlacementId = "b5b44a0f115321";
-    interPlacementId = "b5bacad26a752a";
-    bannerPlacementId = "b5bacaccb61c29";
-    nativePlacementId = "b5b0f5663c6e4a";
-    nativebannerPlacementId = "b5c2c6d50e7f44";
+//    myoffer
+    rvPlacementId = "b5db6c247dbb1e";
+    interPlacementId = "b5db6c26999c31";
+    bannerPlacementId = "b5f33c3231eb91";
+    nativePlacementId = "b5f33878ee0646";
+    nativebannerPlacementId = "b5f33878ee0646";
     
     
     
@@ -152,6 +152,44 @@ bool DemoMainScene::init()
     cocos2d::ValueMap customDict;
     customDict["custom_data_key"] = "custom_data_value";
     ATCocosSdk::setCustomData(customDict);
+    
+    cocos2d::ValueVector vector;
+    vector.push_back(cocos2d::Value(ATCocosSdk::OS_VERSION_NAME));
+    vector.push_back(cocos2d::Value(ATCocosSdk::OS_VERSION_CODE));
+    vector.push_back(cocos2d::Value(ATCocosSdk::APP_PACKAGE_NAME));
+    vector.push_back(cocos2d::Value(ATCocosSdk::APP_VERSION_NAME));
+    vector.push_back(cocos2d::Value(ATCocosSdk::APP_VERSION_CODE));
+
+    vector.push_back(cocos2d::Value(ATCocosSdk::BRAND));
+    vector.push_back(cocos2d::Value(ATCocosSdk::MODEL));
+    vector.push_back(cocos2d::Value(ATCocosSdk::DEVICE_SCREEN_SIZE));
+    vector.push_back(cocos2d::Value(ATCocosSdk::MNC));
+    vector.push_back(cocos2d::Value(ATCocosSdk::MCC));
+    
+    vector.push_back(cocos2d::Value(ATCocosSdk::LANGUAGE));
+    vector.push_back(cocos2d::Value(ATCocosSdk::TIMEZONE));
+    vector.push_back(cocos2d::Value(ATCocosSdk::USER_AGENT));
+    vector.push_back(cocos2d::Value(ATCocosSdk::ORIENTATION));
+    vector.push_back(cocos2d::Value(ATCocosSdk::NETWORK_TYPE));
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID   // Android
+    vector.push_back(cocos2d::Value(ATCocosSdk::INSTALLER));
+    vector.push_back(cocos2d::Value(ATCocosSdk::ANDROID_ID));
+    vector.push_back(cocos2d::Value(ATCocosSdk::GAID));
+    vector.push_back(cocos2d::Value(ATCocosSdk::MAC));
+    vector.push_back(cocos2d::Value(ATCocosSdk::IMEI));
+    vector.push_back(cocos2d::Value(ATCocosSdk::OAID));
+#endif
+
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS   // IOS
+
+    vector.push_back(cocos2d::Value(ATCocosSdk::IDFA));
+    vector.push_back(cocos2d::Value(ATCocosSdk::IDFV));
+#endif
+
+    //隐私上报控制
+    ATCocosSdk::deniedUploadDeviceInfo(vector);
 
     //custom rule for placmenet
     cocos2d::ValueMap plcamentCustomDict;
@@ -166,7 +204,7 @@ bool DemoMainScene::init()
     int gdpr_level = ATCocosSdk::getGDPRLevel();
     CCLOG("DemoMainScene::getGDPRLevel %d", gdpr_level);
     if (gdpr_level == ATCocosSdk::GDPR_PERSONALIZED) {
-        CCLOG("DemoMainScene 同意上报隐私数据");
+        CCLOG("%s", "DemoMainScene 同意上报隐私数据");
     };
 //    ATCocosSdk::setGDPRLevel(0);
     ATCocosSdk::integrationChecking();
@@ -720,7 +758,7 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
 #endif
                     ATCocosSdk::showNativeAd(nativePlacementId, property.toJsonString());
                 } else {
-                    CCLOG("ATCocosSdk::isNativeAdReady is false");
+                    CCLOG("%s", "ATCocosSdk::isNativeAdReady is false");
                 }
             }
                 break;
@@ -816,7 +854,7 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
                     ATCocosSdk::showNativeBannerAd(nativebannerPlacementId, rectDict, extraDict);
 
                 } else {
-                    CCLOG("ATCocosSdk::isNativeBannerAdReady is false");
+                    CCLOG("%s", "ATCocosSdk::isNativeBannerAdReady is false");
                 }
                 break;
             case 7: //clean native banner
@@ -848,10 +886,10 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
                 customDict[ATCocosSdk::KEY_WIDTH] = widthStr;
                 customDict[ATCocosSdk::KEY_HEIGHT] = heightStr;
 
-                customDict[ATCocosSdk::KEY_INLINE_ADAPTIVE_WIDTH] = widthStr;
-                customDict[ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION] = ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_CURRENT;
-//                customDict[ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION] = ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_PORTRAIT;
-//                customDict[ATCocosSdk::KEY_INLINE_ADAPTIVE_ORIENTATION] = ATCocosSdk::INLINE_ADAPTIVE_ORIENTATION_LANDSCAPE;
+                customDict[ATCocosSdk::KEY_ADAPTIVE_WIDTH] = widthStr;
+                customDict[ATCocosSdk::KEY_ADAPTIVE_ORIENTATION] = ATCocosSdk::ADAPTIVE_ORIENTATION_CURRENT;
+//                customDict[ATCocosSdk::KEY_ADAPTIVE_ORIENTATION] = ATCocosSdk::ADAPTIVE_ORIENTATION_PORTRAIT;
+//                customDict[ATCocosSdk::KEY_ADAPTIVE_ORIENTATION] = ATCocosSdk::ADAPTIVE_ORIENTATION_LANDSCAPE;
 
                 ATCocosSdk::loadBannerAd(bannerPlacementId, customDict);
 
@@ -898,7 +936,7 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
 //                    ATCocosSdk::showBannerAd(bannerPlacementId, rectDict);
                     ATCocosSdk::showBannerAdInPostion(bannerPlacementId, ATCocosSdk::KEY_BOTTOM);
                 } else {
-                    CCLOG("ATCocosSdk::isBannerAdReady is false");
+                    CCLOG("%s", "ATCocosSdk::isBannerAdReady is false");
                 }
 
             }
@@ -913,19 +951,23 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
             {
                 ATCocosSdk::setInterstitialAdListener(this, interPlacementId);
                 cocos2d::ValueMap extra;
-                extra[ATCocosSdk::KEY_USE_REWARDED_VIDEO_AS_INTERSTITIAL] = true;
+                extra[ATCocosSdk::KEY_USE_REWARDED_VIDEO_AS_INTERSTITIAL] = false;
                 ATCocosSdk::loadInterstitialAd(interPlacementId, extra);
             }
                 break;
             case 12: //show interstitial
+            {
+                char *interstitialAdStatusInfo = ATCocosSdk::checkInterstitialAdStatus(interPlacementId);
+                CCLOG("DemoMainScene::checkInterstitialAdStatus %s", interstitialAdStatusInfo);
+
                 if (ATCocosSdk::isInterstitialAdReady(interPlacementId)) {
 //                    ATCocosSdk::showInterstitialAd(interPlacementId);
                     ATCocosSdk::showInterstitialAdInScenario(interPlacementId,
                                                              "f5e54937b0483d");//show with scenario
                 } else {
-                    CCLOG("ATCocosSdk::isInterstitialAdReady is false");
+                    CCLOG("%s", "ATCocosSdk::isInterstitialAdReady is false");
                 }
-
+            }
                 break;
             case 13: //load rewardedvideo
             {
@@ -939,13 +981,17 @@ void DemoMainScene::initClickEvent(Ref *pSender, cocos2d::ui::Widget::TouchEvent
             }
                 break;
             case 14: //show rewardedvideo
+            {
+                char *rewardVideoAdStatusInfo = ATCocosSdk::checkRewardedVideoAdStatus(rvPlacementId);
+                CCLOG("DemoMainScene::checkRewardedVideoAdStatus %s", rewardVideoAdStatusInfo);
+
                 if(ATCocosSdk::isRewardedVideoAdReady(rvPlacementId)){
 //                    ATCocosSdk::showRewardedVideoAd(rvPlacementId);
                     ATCocosSdk::showRewardedVideoAdInScenario(rvPlacementId, "f5e5492eca9668");//show with scenario
                 }else{
-                    CCLOG("ATCocosSdk::isRewardedVideoAdReady is false");
+                    CCLOG("%s", "ATCocosSdk::isRewardedVideoAdReady is false");
                 }
-                
+            }
                 break;
         }
     }
